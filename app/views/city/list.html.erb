@@ -1,0 +1,75 @@
+<%= render :partial=>'share/header2' %>
+<!-- content0 -->
+<div id="container">
+	<style>
+		#header_links {display:none} 
+		table.cities{margin:2px 0 2px 0;}
+		td.sheng{font-size:14px;font-weight:bold;width:60px}
+		td.cities{font-size:14px;}
+		td.cities a{margin-right:4px;white-space:nowrap;}
+		#bg{background:#000000;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);width:100%;height:100%;position:absolute;top:0;left:0}
+		#info{height:0px;width:0px;top:50%;left:50%;position:absolute;line-height:1.7}
+		#centerBox{background:#000;width:570px;height:200px;position:absolute;margin:-100px -285px;opacity:0.2;-moz-opacity:0.2;filter:alpha(opacity=20);}
+		#center{text-align:left;font-size:14px;background:#fff;width:554px;height:184px;position:absolute;margin:-92px -277px;overflow:hidden}
+		#center strong{display:block;padding:5px;background:#C5EC83;color:#000;}
+		#center ul,#center li{padding:0;margin:0;list-style:none}
+		#center li{width:80px;float:left;padding-left:15px;}
+	</style>
+	<div class="container">
+		<div id="content">
+			<p id="wwwTips" style="padding-left:4px;margin-bottom:4px;font-size:14px;">
+				请先选择您所在的城市：
+			</p>
+			<div id="cityTable">
+				<% Province.find(:all).each do |p| %>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cities">
+					<tr>
+						<td valign="top" align="center" class="sheng"><%= p.name %></td>
+						<td class="cities">
+							<% City.find_all_by_pvid(p.id).each do |c| %>
+							<a href="http://<%= c.slug %>.sh800.com"><%= c.name %></a>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+				<% end %>
+			</div>
+			<!-- other sites0 -->
+			<div class="otherlink" style="text-align:left;border-top:1px solid #EBEBEB;padding-top:4px;">
+				全球免费生活网站：
+				<a href="http://www.ebayclassifieds.com">美国</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.ca">加拿大</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.com">英格兰</a>&nbsp;&nbsp;
+				<a href="http://edinburgh.gumtree.com">苏格兰</a>&nbsp;&nbsp;
+				<a href="http://cardiff.gumtree.com">威尔斯</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.ie">爱尔兰</a>&nbsp;&nbsp;
+				<a href="http://www.loquo.com">西班牙</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.fr">法国</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.be">比利时</a>&nbsp;&nbsp;
+				<a href="http://www.marktplaats.nl">荷兰</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.de">德国</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.ch">瑞士</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.at">奥地利</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.it">意大利</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.pl">波兰</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.co.za">南非</a>&nbsp;&nbsp;
+				<a href="http://www.slando.cz">捷克共和国</a>&nbsp;&nbsp;
+				<a href="http://www.slando.sk">斯洛伐克</a>&nbsp;&nbsp;
+				<a href="http://www.slando.hu">匈牙利</a>&nbsp;&nbsp;
+				<a href="http://www.slando.com.ua">乌克兰</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.com.tr">土耳其</a>&nbsp;&nbsp;
+				<a href="http://www.slando.ru">俄罗斯</a>&nbsp;&nbsp;
+				<a href="http://www.quikr.com">印度</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.com.hk">中国香港</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.com.tw">中国台湾</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.sg">新加坡</a>&nbsp;&nbsp;
+				<a href="http://www.kijiji.co.jp">日本</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.com.au">澳大利亚</a>&nbsp;&nbsp;
+				<a href="http://www.gumtree.co.nz">新西兰</a>&nbsp;&nbsp;
+				<a href="http://www.sh800.com">中国</a>&nbsp;&nbsp;
+			</div>
+			<!-- other sites1 -->
+		</div>
+	</div>
+</div>
+<!-- content1 -->

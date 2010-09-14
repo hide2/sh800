@@ -9,7 +9,7 @@ CREATE TABLE `category` (
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `msg_count` int(10) NOT NULL default 0,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -32,7 +32,7 @@ CREATE TABLE `message` (
   `status` enum('ACTIVE','IN_ACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
   `is_zhiding` tinyint(1) NOT NULL default 0,
   `is_tuiguang` tinyint(1) NOT NULL default 0,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS `province`;
 CREATE TABLE `province` (
   `id` int(10) NOT NULL auto_increment,
   `name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -50,7 +50,7 @@ CREATE TABLE `city` (
   `pvid` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -60,7 +60,7 @@ CREATE TABLE `area` (
   `city_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`),
   CONSTRAINT `fk_area_city_id` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -73,6 +73,6 @@ CREATE TABLE `user` (
   `crypted_password` varchar(40) NOT NULL,
   `email` varchar(40),
   `phone` varchar(40),
-  `created_at` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

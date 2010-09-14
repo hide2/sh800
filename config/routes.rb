@@ -1,6 +1,11 @@
 Sh800::Application.routes.draw do
   
   root :to => "welcome#index"
+  resources :city do
+    collection do
+      get 'list'
+    end
+  end
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
