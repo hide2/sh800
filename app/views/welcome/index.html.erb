@@ -1,0 +1,213 @@
+<!-- header0 -->
+<div id="header" class="nohist">
+	<span id="header_links" style="float: right; text-align: right;">
+		<span id="loginBox">
+			<a href="/zhuce">注册</a> | <a href="/denglu">登录</a>
+		<br>
+		</span>
+		<span style="font-size: 20px; line-height: 1.5;">
+		<strong>
+		<a href="/fabu">免费发布信息</a></strong> | <a href="/xiugai">修改删除信息</a>
+		</span>
+	</span>
+	<a href="/" id="logo"><img src="/images/logo.gif" alt="800生活网"></a>
+	<a href="/" id="area">北京</a>
+	<div style="clear: both;"></div>
+</div>
+<!-- header1 -->
+
+<!-- content0 -->
+<div id="container">
+	<div class="blank5"></div>
+	<!-- categories0 -->
+	<div id="categories" class="nohist">
+		<table width="100%" border="0" cellpadding="0" cellspacing="5">
+			<tbody>
+				<tr>
+					<td>
+						<!-- 1.物品交易0 -->
+						<% @pc1 = Category.find(1) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc1.slug%>" target="_blank"><%= @pc1.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc1.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+					</td>
+					<td>
+						<!-- 2.二手车买卖0 -->
+						<% @pc2 = Category.find(2) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc2.slug%>/" target="_blank"><%= @pc2.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc2.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+						<!-- 3.房屋租售0 -->
+						<% @pc3 = Category.find(3) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc3.slug%>/" target="_blank"><%= @pc3.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc3.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+						<!-- 4.宠物0 -->
+						<% @pc4 = Category.find(4) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc4.slug%>/" target="_blank"><%= @pc4.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc4.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+					</td>
+					<td>
+						<!-- 5.招聘0 -->
+						<% @pc5 = Category.find(5) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc5.slug%>/" target="_blank"><%= @pc5.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc5.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+					</td>
+					<td>
+						<!-- 6.兼职0 -->
+						<% @pc6 = Category.find(6) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc6.slug%>/" target="_blank"><%= @pc6.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc6.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+						<!-- 7.求职0 -->
+						<% @pc7 = Category.find(7) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc7.slug%>/" target="_blank"><%= @pc7.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc7.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+						<!-- 8.交友活动0 -->
+						<% @pc8 = Category.find(8) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc8.slug%>/" target="_blank"><%= @pc8.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc8.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+					</td>
+					<td>
+						<!-- 9.生活服务0 -->
+						<% @pc9 = Category.find(9) %>
+						<div class="block">
+							<h2>
+								<a href="/<%= @pc9.slug%>/" target="_blank"><%= @pc9.name %></a>
+							</h2>
+						</div>
+						<% Category.find_all_by_parent_category_id(@pc9.id).each do |c| %>
+						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<br/>
+						<% end %>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- search0 -->
+		<form id="search" method="get" action="/search/" style="float: right; padding: 0pt 5px; text-align: right;">
+			<input size="18" name="query" type="text">
+			<select name="categoryEnglishName">
+				<option selected="selected" value="root">请选择类目</option>
+				<option value="ershou">物品交易</option>
+				<option value="cheliang">二手车买卖</option>
+				<option value="fang">房屋租售</option>
+				<option value="chongwuleimu">宠物</option>
+				<option value="gongzuo">招聘</option>
+				<option value="jianzhi">兼职</option>
+				<option value="qiuzhi">求职</option>
+				<option value="huodong">交友活动</option>
+				<option value="fuwu">生活服务</option>
+			</select>
+			<input value="搜索" title="在百姓网搜索" type="submit">
+		</form>
+		<!-- search1 -->
+	</div>
+	<!-- categories1 -->
+	<!-- cities0 -->
+	<div id="cities" class="nohist">
+		<h3>全国其他城市</h3>
+		<!-- city1 -->
+		<div style="float: left; width: 33%;">
+			<a href="http://shijiazhuang.baixing.com/">石家庄</a>
+			<br>
+			<a href="http://qinhuangdao.baixing.com/">秦皇岛</a>
+			<br>
+			<a href="http://shenyang.baixing.com/">沈阳</a>
+			<br>
+			<a href="http://jinan.baixing.com/">济南</a>
+			<br>
+			<a href="http://qingdao.baixing.com/">青岛</a>
+		</div>
+		<!-- city2 -->
+		<div style="float: left; width: 33%;">
+			<a href="http://beijing.baixing.com/">北京</a>
+			<br>
+			<a href="http://shanghai.baixing.com/">上海</a>
+			<br>
+			<a href="http://tianjin.baixing.com/">天津</a>
+			<br>
+		</div>
+		<!-- city3 -->
+		<div style="float: left; width: 33%;">
+			<a href="http://www.baixing.com/">广东</a>
+			<br>
+			<a href="http://www.baixing.com/">辽宁</a>
+			<br>
+			<a href="http://www.baixing.com/">江苏</a>
+			<br>
+			<a href="http://www.baixing.com/">湖北</a>
+			<br>
+			<a href="http://www.baixing.com/">所有城市</a>
+		</div>
+	</div>
+	<!-- cities1 -->
+</div>
+<!-- content1 -->
+
+<!-- footer0 -->
+<div id="footer" class="nohist">
+	<a target="_blank" href="/about.html">关于800生活网</a> | 
+	<a target="_blank" href="/user.html">用户协议</a> | 
+	<a target="_blank" href="/help.html">帮助</a> | 
+	<a target="_blank" href="/feedback/?type=1">举报不良信息</a> | 
+	<a target="_blank" href="/feedback/?type=2">联系我们</a>
+	<br>
+	© 2010 800生活网
+</div>
+<!-- footer1 -->
+
+<!-- Google Analytics0 -->
+<!-- Google Analytics1 -->

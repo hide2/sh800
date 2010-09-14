@@ -1,14 +1,41 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Sh800</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Language" content="zh-CN">
+	<title>800生活网</title>
+	<style type="text/css">
+		body{line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:12px;}
+		body,hr,form,p,img{margin:0;padding:0;border:0;}
+		a:link{color:#06C;text-decoration:none;}a:visited{color:#800080;text-decoration:none;}
+		.nohist a:visited{color:#06C;}.nohist a:hover,a:hover{color:#F00;text-decoration:underline;}
+		#header,#footer,#container{width:980px;margin:0 auto;clear:both;padding:0 10px;}#header{padding:8px 10px;border-bottom:1px solid #CCC;background:#FFFCCC;}
+		#footer{border-top:1px solid #ccc;padding-top:10px;text-align:center;}
+		#content{width:770px;float:left;}#content h1{font-size:20px;font-family:黑体;font-weight:normal;margin:5px 0;}
+		#content h1 i{color:olive;}#contentp{font-size:14px;line-height:23px;}#content img{margin:0 0 0 3px;}
+		#sidebar{width:170px;float:right;border-left:1px solid #C0C0C0;padding:10px;}
+		.block h2{background-color:#C5EC83;margin:0;padding:2px 5px;font-size:14px;}
+		.block h3{margin:0;padding:2px 0;font-size:14px;}
+		.blank5,.blank10{height:10px;clear:both;overflow:hidden;}.blank5{height:5px;}
+		h3{margin:0;font-size:14px;}#logo{margin:0 5px 0 0;display:block;float:left;}
+		#area{margin:18px 5px 0 5px;display:block;float:left;font-size:30px;font-family:微软雅黑,黑体;font-weight:bold;color:#0D0057;line-height:1;}
+		#categories{width:810px;padding:5px 0;margin-right:5px;float:left;background-color:white;border:1px solid #B1D5F2;}
+		#categories table{font-size:14px;}#categories h2{margin:0;padding:2px 0;background-color:#C5EC83;}
+		#categories h2 a{color:black;font-size:14px;}#categories td{vertical-align:top;width:20%;}
+		#categories a,#categories span{padding-left:5px;}#categories small{padding-left:2px;font-size:9px;color:#666;}
+		#cities{width:150px;padding:5px;float:left;border:1px solid #B1D5F2;}
+		#filter a,#filter strong{padding-left:5px;}
+		.datagrid ul,.datagrid ol{margin:0;padding:0;}.datagrid li{line-height:2;font-size:14px;list-style:none;}
+		.datagrid ol a,.datagrid li,.datagrid b,.datagrid i,.datagrid em{padding-left:5px;font-style:normal;}
+		.datagrid ol li i{color:olive;}.datagrid ol li b{font-weight:normal;color:#666;}.datagrid ol li em a{background:#EEE;padding:2px;}
+		.datagrid ul li em a,.datagrid ul li em a:hover{color:black;}
+		.datagrid .head{background:#C5EC83;font-weight:bold;}.datagrid .head a{color:black;}
+		.datagrid .line{overflow:hidden;height:1px;background:#C5EC83;}
+	</style>
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 </head>
 <body>
-
 <%= yield %>
-
 </body>
 </html>
