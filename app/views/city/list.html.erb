@@ -1,75 +1,130 @@
-<%= render :partial=>'share/header2' %>
-<!-- content0 -->
+<style>
+	body{line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:12px;background:#FFFCCC;}
+	body,hr,form,p,img{margin:0;padding:0;border:0;}
+	a:link{color:#06C;text-decoration:none;}
+	a:visited{color:#800080;text-decoration:none;}
+	.nohist a:visited{color:#06C;}
+	.nohist a:hover,a:hover{color:#F00;text-decoration:underline;}
+	#header,#subheader,#footer,#container{width:960px;margin:0 auto;padding:0 10px 10px 10px;}
+	#header{padding:4px 10px;background:#FFFCCC;}
+	#footer{padding-top:10px;text-align:center;}
+	#container{background:#FFFFFF;border:1px solid #B1D5F2;}
+	#subheader{background:#FFFFFF;padding:5px 0 5px 0;}
+	#content{background:#FFFFFF;width:800px;float:left}
+	#sidebar{width:160px;float:right;border-left:1px solid #C5EC83/*#C0C0C0*/;padding:5px 0px 5px 10px;}
+	.block h2{background-color:#C5EC83;margin:0;padding:2px 5px;font-size:14px;}
+	.block h3{margin:0;padding:2px 0;font-size:14px;}
+	.blank5,.blank10{height:10px;clear:both;overflow:hidden;}
+	.blank5{height:5px;}
+	.datagrid ul,.datagrid ol{margin:0;padding:0;}
+	.datagrid li{line-height:2;font-size:14px;list-style:none;}
+	table.tab{table-layout:auto;}
+	table.tab td{font-size:14px;padding:0 8px;text-align:center;border-bottom:1px solid #C5EC83;}
+	table.tab .on{border:1px solid #C5EC83;border-bottom:0;font-weight:bold;}
+	table.tab a:visited{color:#06C;}
+	table.tab a:hover,a:hover{color:#F00;text-decoration:underline;}
+	#filter{padding:5px 5px;border:1px solid #C5EC83;line-height:1.8}
+	#filter a,#filter strong{padding-left:5px;}
+	#filter a:visited{color:#06C;}
+	#filter a:hover,a:hover{color:#F00;text-decoration:underline;}
+	.datagrid ol{margin-top:5px;}
+	.datagrid ol a,.datagrid li,.datagrid b,.datagrid i,.datagrid em{padding-left:5px;font-style:normal;}
+	.datagrid ol li i{color:olive;}
+	.datagrid ol li b{font-weight:normal;color:#666;}
+	.datagrid ol li em a{background:#EEE;padding:2px;}
+	.datagrid ul li em a,.datagrid ul li em a:hover{color:black;}
+	.datagrid .head{background:#C5EC83;font-weight:bold;}
+	.datagrid .head a{color:black;}
+	.datagrid .line{overflow:hidden;height:1px;background:#C5EC83;}
+	h1{font-size:20px;font-family:微软雅黑,黑体;font-weight:normal;margin:5px 0;}
+	h1 i{color:olive;}
+	#content p{font-size:14px;line-height:23px;}
+	#content img{margin:0 0 0 3px;}
+	#logo{margin:0 5px 0 0;display:block;float:left;}
+	#area{margin:18px 5px 0 5px;display:block;float:left;font-size:30px;font-family:微软雅黑,黑体;font-weight:bold;color:#0D0057;line-height:1;}
+	h3{margin:0;font-size:14px;}
+	#categories{width:810px;padding:5px 0;margin-left:-5px;float:left;background-color:white;}
+	#categories table{font-size:14px;}
+	#categories h2{margin:0;padding:2px 0;background-color:#C5EC83;}
+	#categories h2 a{color:black;font-size:14px;}
+	#categories td{vertical-align:top;width:20%;}
+	#categories a,#categories span{padding-left:5px;}
+	#categories small{padding-left:2px;font-size:9px;color:#666;}
+	#header_links {display:none} /* #22531 [维护]切换城市header多了登录及发布信息的链接 */
+	table.cities{margin:2px 0 2px 0;}
+	td.sheng{font-size:14px;font-weight:bold;width:60px}
+	td.cities{font-size:14px;}
+	td.cities a{margin-right:4px;white-space:nowrap;}
+	#bg{background:#000000;opacity: 0.6;-moz-opacity:0.6; filter:alpha(opacity=60); width:100%; height:100%;position:absolute; top:0; left:0}
+	#info{height:0px; width:0px;top:50%; left:50%;position:absolute;  line-height:1.7}
+	#centerBox{background:#000;width:570px; height:200px; position:absolute; margin:-100px -285px;opacity: 0.2;-moz-opacity:0.2; filter:alpha(opacity=20);}
+	#center{text-align:left;font-size:14px;background:#fff;width:554px; height:184px; position:absolute; margin:-92px -277px;overflow:hidden}
+	#center strong{ display:block; padding:5px; background:#C5EC83; color:#000;}
+	#center ul,#center li{ padding:0; margin:0; list-style:none}
+	#center li{ width:80px; float:left; padding-left:15px;}
+</style>
+
+<div id="header" class="nohist"></div>
+
 <div id="container">
-	<style>
-		#header_links {display:none} 
-		table.cities{margin:2px 0 2px 0;}
-		td.sheng{font-size:14px;font-weight:bold;width:60px}
-		td.cities{font-size:14px;}
-		td.cities a{margin-right:4px;white-space:nowrap;}
-		#bg{background:#000000;opacity:0.6;-moz-opacity:0.6;filter:alpha(opacity=60);width:100%;height:100%;position:absolute;top:0;left:0}
-		#info{height:0px;width:0px;top:50%;left:50%;position:absolute;line-height:1.7}
-		#centerBox{background:#000;width:570px;height:200px;position:absolute;margin:-100px -285px;opacity:0.2;-moz-opacity:0.2;filter:alpha(opacity=20);}
-		#center{text-align:left;font-size:14px;background:#fff;width:554px;height:184px;position:absolute;margin:-92px -277px;overflow:hidden}
-		#center strong{display:block;padding:5px;background:#C5EC83;color:#000;}
-		#center ul,#center li{padding:0;margin:0;list-style:none}
-		#center li{width:80px;float:left;padding-left:15px;}
-	</style>
 	<div class="container">
-		<div id="content">
-			<p id="wwwTips" style="padding-left:4px;margin-bottom:4px;font-size:14px;">
-				请先选择您所在的城市：
+		<div id="subheader">
+			<div id="maintitle" style="float:left;">
+				<a href="/" id="logo"><img src="/images/logo.gif" alt="800生活网" /></a>
+			</div>
+			<p id="wwwTips" style="margin-top:25px;margin-bottom: 5px;font-size:14px;">
+				&nbsp;&nbsp;&nbsp;请选择您所在的城市：
 			</p>
-			<div id="cityTable">
-				<% Province.find(:all).each do |p| %>
-				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cities">
-					<tr>
-						<td valign="top" align="center" class="sheng"><%= p.name %></td>
-						<td class="cities">
-							<% City.find_all_by_pvid(p.id).each do |c| %>
-							<a href="http://<%= c.slug %>.sh800.com"><%= c.name %></a>
-							<% end %>
-						</td>
-					</tr>
-				</table>
-				<% end %>
-			</div>
-			<!-- other sites0 -->
-			<div class="otherlink" style="text-align:left;border-top:1px solid #EBEBEB;padding-top:4px;">
-				全球免费生活网站：
-				<a href="http://www.ebayclassifieds.com">美国</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.ca">加拿大</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.com">英格兰</a>&nbsp;&nbsp;
-				<a href="http://edinburgh.gumtree.com">苏格兰</a>&nbsp;&nbsp;
-				<a href="http://cardiff.gumtree.com">威尔斯</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.ie">爱尔兰</a>&nbsp;&nbsp;
-				<a href="http://www.loquo.com">西班牙</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.fr">法国</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.be">比利时</a>&nbsp;&nbsp;
-				<a href="http://www.marktplaats.nl">荷兰</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.de">德国</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.ch">瑞士</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.at">奥地利</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.it">意大利</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.pl">波兰</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.co.za">南非</a>&nbsp;&nbsp;
-				<a href="http://www.slando.cz">捷克共和国</a>&nbsp;&nbsp;
-				<a href="http://www.slando.sk">斯洛伐克</a>&nbsp;&nbsp;
-				<a href="http://www.slando.hu">匈牙利</a>&nbsp;&nbsp;
-				<a href="http://www.slando.com.ua">乌克兰</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.com.tr">土耳其</a>&nbsp;&nbsp;
-				<a href="http://www.slando.ru">俄罗斯</a>&nbsp;&nbsp;
-				<a href="http://www.quikr.com">印度</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.com.hk">中国香港</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.com.tw">中国台湾</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.sg">新加坡</a>&nbsp;&nbsp;
-				<a href="http://www.kijiji.co.jp">日本</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.com.au">澳大利亚</a>&nbsp;&nbsp;
-				<a href="http://www.gumtree.co.nz">新西兰</a>&nbsp;&nbsp;
-				<a href="http://www.sh800.com">中国</a>&nbsp;&nbsp;
-			</div>
-			<!-- other sites1 -->
 		</div>
+		<div id="cityTable" style="border-top:1px solid #C5EC83;padding-top:4px;">
+			<% Province.find(:all).each do |p| %>
+			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cities">
+				<tr>
+					<td valign="top" align="center" class="sheng"><%= p.name %></td>
+					<td class="cities">
+						<% City.find_all_by_pvid(p.id).each do |c| %>
+						<a href="http://<%= c.slug %>.sh800.com"><%= c.name %></a>
+						<% end %>
+					</td>
+				</tr>
+			</table>
+			<% end %>
+		</div>
+		<!-- other sites0 -->
+		<div class="otherlink" style="text-align:left;border-top:1px solid #EBEBEB;padding-top:10px;">
+			全球免费生活网站：
+			<a href="http://www.ebayclassifieds.com">美国</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.ca">加拿大</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.com">英格兰</a>&nbsp;&nbsp;
+			<a href="http://edinburgh.gumtree.com">苏格兰</a>&nbsp;&nbsp;
+			<a href="http://cardiff.gumtree.com">威尔斯</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.ie">爱尔兰</a>&nbsp;&nbsp;
+			<a href="http://www.loquo.com">西班牙</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.fr">法国</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.be">比利时</a>&nbsp;&nbsp;
+			<a href="http://www.marktplaats.nl">荷兰</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.de">德国</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.ch">瑞士</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.at">奥地利</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.it">意大利</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.pl">波兰</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.co.za">南非</a>&nbsp;&nbsp;
+			<a href="http://www.slando.cz">捷克共和国</a>&nbsp;&nbsp;
+			<a href="http://www.slando.sk">斯洛伐克</a>&nbsp;&nbsp;
+			<a href="http://www.slando.hu">匈牙利</a>&nbsp;&nbsp;
+			<a href="http://www.slando.com.ua">乌克兰</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.com.tr">土耳其</a>&nbsp;&nbsp;
+			<a href="http://www.slando.ru">俄罗斯</a>&nbsp;&nbsp;
+			<a href="http://www.quikr.com">印度</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.com.hk">中国香港</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.com.tw">中国台湾</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.sg">新加坡</a>&nbsp;&nbsp;
+			<a href="http://www.kijiji.co.jp">日本</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.com.au">澳大利亚</a>&nbsp;&nbsp;
+			<a href="http://www.gumtree.co.nz">新西兰</a>&nbsp;&nbsp;
+			<a href="http://www.sh800.com">中国</a>&nbsp;&nbsp;
+		</div>
+		<!-- other sites1 -->
 	</div>
 </div>
 <!-- content1 -->

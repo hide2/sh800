@@ -1,0 +1,119 @@
+<style>
+	body{line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:12px;background:#FFFCCC;}
+	body,hr,form,p,img{margin:0;padding:0;border:0;}
+	a:link{color:#06C;text-decoration:none;}
+	a:visited{color:#800080;text-decoration:none;}
+	.nohist a:visited{color:#06C;}
+	.nohist a:hover,a:hover{color:#F00;text-decoration:underline;}
+	#header,#subheader,#footer,#container{width:980px;margin:0 auto;padding:0 10px 10px 10px;}
+	#header{padding:4px 10px;background:#FFFCCC;}
+	#footer{padding-top:10px;text-align:center;}
+	#container{background:#FFFFFF;border:1px solid #B1D5F2;}
+	#subheader{background:#FFFFFF;padding:5px 0 5px 0;}
+	#content{background:#FFFFFF;width:800px;float:left}
+	#sidebar{width:160px;float:right;border-left:1px solid #C5EC83/*#C0C0C0*/;padding:5px 0px 5px 10px;}
+	.block h2{background-color:#C5EC83;margin:0;padding:2px 5px;font-size:14px;}
+	.block h3{margin:0;padding:2px 0;font-size:14px;}
+	.blank5,.blank10{height:10px;clear:both;overflow:hidden;}
+	.blank5{height:5px;}
+	.datagrid ul,.datagrid ol{margin:0;padding:0;}
+	.datagrid li{line-height:2;font-size:14px;list-style:none;}
+	table.tab{table-layout:auto;}
+	table.tab td{font-size:14px;padding:0 8px;text-align:center;border-bottom:1px solid #C5EC83;}
+	table.tab .on{border:1px solid #C5EC83;border-bottom:0;font-weight:bold;}
+	table.tab a:visited{color:#06C;}
+	table.tab a:hover,a:hover{color:#F00;text-decoration:underline;}
+	#filter{padding:5px 5px;border:1px solid #C5EC83;line-height:1.8}
+	#filter a,#filter strong{padding-left:5px;}
+	#filter a:visited{color:#06C;}
+	#filter a:hover,a:hover{color:#F00;text-decoration:underline;}
+	.datagrid ol{margin-top:5px;}
+	.datagrid ol a,.datagrid li,.datagrid b,.datagrid i,.datagrid em{padding-left:5px;font-style:normal;}
+	.datagrid ol li i{color:olive;}
+	.datagrid ol li b{font-weight:normal;color:#666;}
+	.datagrid ol li em a{background:#EEE;padding:2px;}
+	.datagrid ul li em a,.datagrid ul li em a:hover{color:black;}
+	.datagrid .head{background:#C5EC83;font-weight:bold;}
+	.datagrid .head a{color:black;}
+	.datagrid .line{overflow:hidden;height:1px;background:#C5EC83;}
+	h1{font-size:20px;font-family:微软雅黑,黑体;font-weight:normal;margin:5px 0;}
+	h1 i{color:olive;}
+	#content p{font-size:14px;line-height:23px;}
+	#content img{margin:0 0 0 3px;}
+	#logo{margin:0 5px 0 0;display:block;float:left;}
+	#area{margin:18px 5px 0 5px;display:block;float:left;font-size:30px;font-family:微软雅黑,黑体;font-weight:bold;color:#0D0057;line-height:1;}
+	h3{margin:0;font-size:14px;}
+	#categories{width:810px;padding:5px 0;margin-left:-5px;float:left;background-color:white;}
+	#categories table{font-size:14px;}
+	#categories h2{margin:0;padding:2px 0;background-color:#C5EC83;}
+	#categories h2 a{color:black;font-size:14px;}
+	#categories td{vertical-align:top;width:20%;}
+	#categories a,#categories span{padding-left:5px;}
+	#categories small{padding-left:2px;font-size:9px;color:#666;}
+</style>
+
+<!-- header0 -->
+<div id="header" class="nohist">
+	<span id="header_links" style="float:right;text-align:right">
+	<a href="/fabu" rel="nofollow" target="_blank">免费发布信息</a>
+	| <a href="/xiugai" rel="nofollow" target="_blank">修改删除信息</a>
+	| <a href="/help.html" rel="nofollow" target="_blank">帮助</a></span>
+	<a href="/">北京800生活网</a> &raquo; 交友活动
+	<div style="clear:both"></div>
+</div>
+<!-- header1 -->
+
+<!-- content0 -->
+<div id="container">
+	<!-- subheader0 -->
+	<div id="subheader" style="padding-bottom:0">
+		<h1>北京交友活动类目信息</h1>
+		<div id="filter" class="nohist">
+			<form method="get">
+				子类目:
+				<a href="/message/list?category=nvzhaonan" target="_self">女找男</a>
+				<a href="/message/list?category=nanzhaonv" target="_self">男找女</a>
+				<a href="/message/list?category=zhenghun" target="_self">征婚</a>
+				<a href="/message/list?category=yiqinvyou" target="_self">一起运动/旅游</a>
+				<a href="/message/list?category=pinche" target="_self">拼车顺风车</a>
+				<a href="/message/list?category=xunrenqishi" target="_self">寻人/寻物</a>
+				<br/>
+				<table cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td valign="top" style="white-space:nowrap;">所在地:</td>
+						<td><strong>全北京</strong>
+						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=haidian" target="_self">海淀</a>
+						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=chaoyang" target="_self">朝阳</a>
+						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=dongcheng" target="_self">东城</a>
+					</tr>
+				</table>
+				<input type="text" name="keyword" id="query" alt="搜索: 请输入关键字" size="50" class="tips hasTips" value=""/>
+				<input name="category" type="hidden" value="jiaoyou"/> <input type="submit" value="搜索" class="submit"/>
+				<br/>
+			</form>
+		</div>
+	</div>
+	<!-- subheader1 -->
+	<!-- message0 -->
+	<div id="content" style="padding-top:5px;float:none;">
+		<div id="datagrid" class="datagrid" style="background:white;">
+			<ol>
+				<li class="head">北京交友活动类目信息</li>
+				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
+				<li>9月15日<a target="_blank" href="/message/67570574">找四川的男朋友</a></li>
+				<li>9月15日<a target="_blank" href="/message/67570574">去平谷采摘大桃吃农家饭</a></li>
+				<li>9月15日<a target="_blank" href="/message/67570574">京西草原张家大院</a><i>图</i></li>
+				<li>9月15日<a target="_blank" href="/message/67570574">诚心找女朋友</a></li>
+				<li>9月15日<a target="_blank" href="/message/67570574">一起开心女</a><i>图</i></li>
+				<li>9月15日<a target="_blank" href="/message/67570574">寻找回盐城或者靠近的车子</a></li>
+			</ol>
+			<div class="line"></div>
+		</div>
+		<div id="pager" class="nohist" style="font-family: Tahoma,Arial,Helvetica,sans-serif;font-size: 18px;margin: 5px;">
+			<a href="/message/list?category=jiaoyou&page=2" target="_self" class="next">下一页</a> <small>（共8700条信息）</small>
+		</div>
+	</div>
+	<!-- message0 -->
+	<div style="clear:both;"></div>
+</div>
+<!-- content1 -->

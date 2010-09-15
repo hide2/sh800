@@ -1,4 +1,50 @@
-<%= render :partial=>'share/header' %>
+<style type="text/css">
+	body{line-height:1.6;font-family:Arial,Helvetica,sans-serif;font-size:12px;}
+	body,hr,form,p,img{margin:0;padding:0;border:0;}
+	a:link{color:#06C;text-decoration:none;}a:visited{color:#800080;text-decoration:none;}
+	.nohist a:visited{color:#06C;}.nohist a:hover,a:hover{color:#F00;text-decoration:underline;}
+	#header,#footer,#container{width:980px;margin:0 auto;clear:both;padding:0 10px;}#header{padding:8px 10px;border-bottom:1px solid #CCC;background:#FFFCCC;}
+	#footer{border-top:1px solid #ccc;padding-top:10px;text-align:center;}
+	#content{width:770px;float:left;}#content h1{font-size:20px;font-family:黑体;font-weight:normal;margin:5px 0;}
+	#content h1 i{color:olive;}#contentp{font-size:14px;line-height:23px;}#content img{margin:0 0 0 3px;}
+	#sidebar{width:170px;float:right;border-left:1px solid #C0C0C0;padding:10px;}
+	.block h2{background-color:#C5EC83;margin:0;padding:2px 5px;font-size:14px;}
+	.block h3{margin:0;padding:2px 0;font-size:14px;}
+	.blank5,.blank10{height:10px;clear:both;overflow:hidden;}.blank5{height:5px;}
+	h3{margin:0;font-size:14px;}#logo{margin:0 5px 0 0;display:block;float:left;}
+	#area{margin:18px 5px 0 5px;display:block;float:left;font-size:30px;font-family:微软雅黑,黑体;font-weight:bold;color:#0D0057;line-height:1;}
+	#categories{width:810px;padding:5px 0;margin-right:5px;float:left;background-color:white;border:1px solid #B1D5F2;}
+	#categories table{font-size:14px;}#categories h2{margin:0;padding:2px 0;background-color:#C5EC83;}
+	#categories h2 a{color:black;font-size:14px;}#categories td{vertical-align:top;width:20%;}
+	#categories a,#categories span{padding-left:5px;}#categories small{padding-left:2px;font-size:9px;color:#666;}
+	#cities{width:150px;padding:5px;float:left;border:1px solid #B1D5F2;}
+	#filter a,#filter strong{padding-left:5px;}
+	.datagrid ul,.datagrid ol{margin:0;padding:0;}.datagrid li{line-height:2;font-size:14px;list-style:none;}
+	.datagrid ol a,.datagrid li,.datagrid b,.datagrid i,.datagrid em{padding-left:5px;font-style:normal;}
+	.datagrid ol li i{color:olive;}.datagrid ol li b{font-weight:normal;color:#666;}.datagrid ol li em a{background:#EEE;padding:2px;}
+	.datagrid ul li em a,.datagrid ul li em a:hover{color:black;}
+	.datagrid .head{background:#C5EC83;font-weight:bold;}.datagrid .head a{color:black;}
+	.datagrid .line{overflow:hidden;height:1px;background:#C5EC83;}
+</style>
+
+<!-- header0 -->
+<div id="header" class="nohist">
+	<span id="header_links" style="float: right; text-align: right;">
+		<span id="loginBox">
+			<a href="/zhuce">注册</a> | <a href="/denglu">登录</a>
+		<br/>>
+		</span>
+		<span style="font-size: 20px; line-height: 1.5;">
+		<strong>
+		<a href="/fabu">免费发布信息</a></strong> | <a href="/xiugai">修改删除信息</a>
+		</span>
+	</span>
+	<a href="/" id="logo"><img src="/images/logo.gif" alt="800生活网"></a>
+	<a href="/" id="area">北京</a>
+	<div style="clear: both;"></div>
+</div>
+<!-- header1 -->
+
 <!-- content0 -->
 <div id="container">
 	<div class="blank5"></div>
@@ -12,11 +58,11 @@
 						<% @pc1 = Category.find(1) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc1.slug%>" target="_blank"><%= @pc1.name %></a>
+								<a href="/message/list?category=<%= @pc1.slug%>" target="_blank"><%= @pc1.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc1.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -25,33 +71,33 @@
 						<% @pc2 = Category.find(2) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc2.slug%>/" target="_blank"><%= @pc2.name %></a>
+								<a href="/message/list?category=<%= @pc2.slug%>" target="_blank"><%= @pc2.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc2.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 						<!-- 3.房屋租售0 -->
 						<% @pc3 = Category.find(3) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc3.slug%>/" target="_blank"><%= @pc3.name %></a>
+								<a href="/message/list?category=<%= @pc3.slug%>" target="_blank"><%= @pc3.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc3.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 						<!-- 4.宠物0 -->
 						<% @pc4 = Category.find(4) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc4.slug%>/" target="_blank"><%= @pc4.name %></a>
+								<a href="/message/list?category=<%= @pc4.slug%>" target="_blank"><%= @pc4.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc4.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -60,11 +106,11 @@
 						<% @pc5 = Category.find(5) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc5.slug%>/" target="_blank"><%= @pc5.name %></a>
+								<a href="/message/list?category=<%= @pc5.slug%>" target="_blank"><%= @pc5.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc5.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -73,33 +119,33 @@
 						<% @pc6 = Category.find(6) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc6.slug%>/" target="_blank"><%= @pc6.name %></a>
+								<a href="/message/list?category=<%= @pc6.slug%>" target="_blank"><%= @pc6.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc6.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 						<!-- 7.求职0 -->
 						<% @pc7 = Category.find(7) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc7.slug%>/" target="_blank"><%= @pc7.name %></a>
+								<a href="/message/list?category=<%= @pc7.slug%>" target="_blank"><%= @pc7.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc7.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 						<!-- 8.交友活动0 -->
 						<% @pc8 = Category.find(8) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc8.slug%>/" target="_blank"><%= @pc8.name %></a>
+								<a href="/message/list?category=<%= @pc8.slug%>" target="_blank"><%= @pc8.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc8.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -108,11 +154,11 @@
 						<% @pc9 = Category.find(9) %>
 						<div class="block">
 							<h2>
-								<a href="/<%= @pc9.slug%>/" target="_blank"><%= @pc9.name %></a>
+								<a href="/message/list?category=<%= @pc9.slug%>" target="_blank"><%= @pc9.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc9.id).each do |c| %>
-						<a href="/<%= c.slug%>/" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -120,9 +166,9 @@
 			</tbody>
 		</table>
 		<!-- search0 -->
-		<form id="search" method="get" action="/search/" style="float: right; padding: 0pt 5px; text-align: right;">
-			<input size="18" name="query" type="text">
-			<select name="categoryEnglishName">
+		<form id="search" method="get" action="/search" style="float: right; padding: 0pt 5px; text-align: right;">
+			<input size="18" name="keyword" type="text">
+			<select name="category">
 				<option selected="selected" value="root">请选择类目</option>
 				<option value="ershou">物品交易</option>
 				<option value="cheliang">二手车买卖</option>
@@ -144,35 +190,158 @@
 		<h3>全国其他城市</h3>
 		<!-- city1 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://shijiazhuang.baixing.com/">石家庄</a>
-			<br>
-			<a href="http://qinhuangdao.baixing.com/">秦皇岛</a>
-			<br>
-			<a href="http://shenyang.baixing.com/">沈阳</a>
-			<br>
-			<a href="http://jinan.baixing.com/">济南</a>
-			<br>
-			<a href="http://qingdao.baixing.com/">青岛</a>
+			<a href="http://shijiazhuang.800shenghuo.coom/">石家庄</a>
+			<br/>
+			<a href="http://langfang.800shenghuo.coom/">廊坊</a>
+			<br/>
+			<a href="http://baoding.800shenghuo.coom/">保定</a>
+			<br/>
+			<a href="http://shenyang.800shenghuo.coom/">沈阳</a>
+			<br/>
+			<a href="http://jinan.800shenghuo.coom/">济南</a>
+			<br/>
+			<a href="http://zhengzhou.800shenghuo.coom/">郑州</a>
+			<br/>
+			<a href="http://tangshan.800shenghuo.coom/">唐山</a>
+			<br/>
+			<a href="http://guangzhou.800shenghuo.coom/">广州</a>
+			<br/>
+			<a href="http://taiyuan.800shenghuo.coom/">太原</a>
+			<br/>
+			<a href="http://qingdao.800shenghuo.coom/">青岛</a>
+			<br/>
+			<a href="http://xian.800shenghuo.coom/">西安</a>
+			<br/>
+			<a href="http://cangzhou.800shenghuo.coom/">沧州</a>
+			<br/>
+			<a href="http://weifang.800shenghuo.coom/">潍坊</a>
+			<br/>
+			<a href="http://dalian.800shenghuo.coom/">大连</a>
+			<br/>
+			<a href="http://xingtai.800shenghuo.coom/">邢台</a>
+			<br/>
+			<a href="http://shenzhen.800shenghuo.coom/">深圳</a>
+			<br/>
+			<a href="http://wuhan.800shenghuo.coom/">武汉</a>
+			<br/>
+			<a href="http://changchun.800shenghuo.coom/">长春</a>
+			<br/>
+			<a href="http://handan.800shenghuo.coom/">邯郸</a>
+			<br/>
+			<a href="http://haerbin.800shenghuo.coom/">哈尔滨</a>
 		</div>
 		<!-- city2 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://beijing.baixing.com/">北京</a>
-			<br>
-			<a href="http://shanghai.baixing.com/">上海</a>
-			<br>
-			<a href="http://tianjin.baixing.com/">天津</a>
-			<br>
+			<a href="http://shanghai.800shenghuo.coom/">上海</a>
+			<br/>
+			<a href="http://beijing.800shenghuo.coom/">北京</a>
+			<br/>
+			<a href="http://tianjin.800shenghuo.coom/">天津</a>
+			<br/>
+			<a href="http://haerbin.800shenghuo.coom/">哈尔滨</a>
+			<br/>
+			<a href="http://changchun.800shenghuo.coom/">长春</a>
+			<br/>
+			<a href="http://shenyang.800shenghuo.coom/">沈阳</a>
+			<br/>
+			<a href="http://dalian.800shenghuo.coom/">大连</a>
+			<br/>
+			<a href="http://jinan.800shenghuo.coom/">济南</a>
+			<br/>
+			<a href="http://qingdao.800shenghuo.coom/">青岛</a>
+			<br/>
+			<a href="http://shijiazhuang.800shenghuo.coom/">石家庄</a>
+			<br/>
+			<a href="http://taiyuan.800shenghuo.coom/">太原</a>
+			<br/>
+			<a href="http://zhengzhou.800shenghuo.coom/">郑州</a>
+			<br/>
+			<a href="http://xian.800shenghuo.coom/">西安</a>
+			<br/>
+			<a href="http://chongqing.800shenghuo.coom/">重庆</a>
+			<br/>
+			<a href="http://chengdu.800shenghuo.coom/">成都</a>
+			<br/>
+			<a href="http://wuhan.800shenghuo.coom/">武汉</a>
+			<br/>
+			<a href="http://changsha.800shenghuo.coom/">长沙</a>
+			<br/>
+			<a href="http://nanjing.800shenghuo.coom/">南京</a>
+			<br/>
+			<a href="http://suzhou.800shenghuo.coom/">苏州</a>
+			<br/>
+			<a href="http://hangzhou.800shenghuo.coom/">杭州</a>
+			<br/>
+			<a href="http://ningbo.800shenghuo.coom/">宁波</a>
+			<br/>
+			<a href="http://xiamen.800shenghuo.coom/">厦门</a>
+			<br/>
+			<a href="http://hefei.800shenghuo.coom/">合肥</a>
+			<br/>
+			<a href="http://guangzhou.800shenghuo.coom/">广州</a>
+			<br/>
+			<a href="http://shenzhen.800shenghuo.coom/">深圳</a>
+			<br/>
+			<a href="http://nanning.800shenghuo.coom/">南宁</a>
+			<br/>
+			<a href="http://haikou.800shenghuo.coom/">海口</a>
 		</div>
 		<!-- city3 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://www.baixing.com/">广东</a>
-			<br>
-			<a href="http://www.baixing.com/">辽宁</a>
-			<br>
-			<a href="http://www.baixing.com/">江苏</a>
-			<br>
-			<a href="http://www.baixing.com/">湖北</a>
-			<br>
+			<a href="http://guangdong.800shenghuo.coom/">广东</a>
+			<br/>
+			<a href="http://liaoning.800shenghuo.coom/">辽宁</a>
+			<br/>
+			<a href="http://jiangsu.800shenghuo.coom/">江苏</a>
+			<br/>
+			<a href="http://hubei.800shenghuo.coom/">湖北</a>
+			<br/>
+			<a href="http://sichuan.800shenghuo.coom/">四川</a>
+			<br/>
+			<a href="http://shanxi.800shenghuo.coom/">陕西</a>
+			<br/>
+			<a href="http://heilongjiang.800shenghuo.coom/">黑龙江</a>
+			<br/>
+			<a href="http://shandong.800shenghuo.coom/">山东</a>
+			<br/>
+			<a href="http://anhui.800shenghuo.coom/">安徽</a>
+			<br/>
+			<a href="http://guangxi.800shenghuo.coom/">广西</a>
+			<br/>
+			<a href="http://gansu.800shenghuo.coom/">甘肃</a>
+			<br/>
+			<a href="http://xinjiang.800shenghuo.coom/">新疆</a>
+			<br/>
+			<a href="http://ningxia.800shenghuo.coom/">宁夏</a>
+			<br/>
+			<a href="http://hainan.800shenghuo.coom/">海南</a>
+			<br/>
+			<a href="http://hebei.800shenghuo.coom/">河北</a>
+			<br/>
+			<a href="http://shanxi.800shenghuo.coom/">山西</a>
+			<br/>
+			<a href="http://henan.800shenghuo.coom/">河南</a>
+			<br/>
+			<a href="http://jilin.800shenghuo.coom/">吉林</a>
+			<br/>
+			<a href="http://neimenggu.800shenghuo.coom/">内蒙古</a>
+			<br/>
+			<a href="http://zhejiang.800shenghuo.coom/">浙江</a>
+			<br/>
+			<a href="http://fujian.800shenghuo.coom/">福建</a>
+			<br/>
+			<a href="http://yunnan.800shenghuo.coom/">云南</a>
+			<br/>
+			<a href="http://jiangxi.800shenghuo.coom/">江西</a>
+			<br/>
+			<a href="http://hunan.800shenghuo.coom/">湖南</a>
+			<br/>
+			<a href="http://guizhou.800shenghuo.coom/">贵州</a>
+			<br/>
+			<a href="http://xizang.800shenghuo.coom/">西藏</a>
+			<br/>
+			<a href="http://qinghai.800shenghuo.coom/">青海</a>
+			<br/>
 			<a href="/city/list">所有城市</a>
 		</div>
 	</div>
