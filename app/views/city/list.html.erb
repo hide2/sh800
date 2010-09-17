@@ -82,7 +82,7 @@
 				<tr>
 					<td valign="top" align="center" class="sheng"><%= p.name %></td>
 					<td class="cities">
-						<% City.find_all_by_pvid(p.id).each do |c| %>
+						<% City.find_all_by_province_id(p.id).each do |c| %>
 						<a href="http://<%= c.slug %>.sh800.com"><%= c.name %></a>
 						<% end %>
 					</td>
