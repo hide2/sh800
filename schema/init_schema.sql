@@ -47,7 +47,7 @@ CREATE TABLE `province` (
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` int(10) NOT NULL auto_increment,
-  `pvid` int(10) NOT NULL,
+  `province_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
@@ -61,8 +61,7 @@ CREATE TABLE `area` (
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
-  PRIMARY KEY  (`id`),
-  CONSTRAINT `fk_area_city_id` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`) ON UPDATE CASCADE
+  PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 DROP TABLE IF EXISTS `user`;

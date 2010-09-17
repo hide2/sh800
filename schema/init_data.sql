@@ -145,11 +145,13 @@ insert into `province`(`id`,`name`) values
 (27,'青海'),
 (28,'新疆');
 
-insert into `city`(`pvid`,`name`,`slug`) values
-(1,'北京','beijing'),
-(1,'上海','shanghai'),
-(1,'天津','tianjin'),
-(1,'重庆','chongqing'),
+insert into `city`(`id`,`province_id`,`name`,`slug`) values
+(1,1,'北京','beijing'),
+(2,1,'上海','shanghai'),
+(3,1,'天津','tianjin'),
+(4,1,'重庆','chongqing');
+
+insert into `city`(`province_id`,`name`,`slug`) values
 (2,'沈阳','shenyang'),
 (2,'大连','dalian'),
 (2,'抚顺','fushun'),
@@ -493,3 +495,42 @@ insert into `city`(`pvid`,`name`,`slug`) values
 (28,'塔城','tacheng'),
 (28,'吐鲁番','tulufan'),
 (28,'和田','hetian');
+
+insert into `area`(`id`,`city_id`,`name`,`slug`) values
+(1,1,'海淀','haidian'),
+(2,1,'朝阳','chaoyang'),
+(3,1,'东城','dongcheng'),
+(4,1,'西城','xicheng'),
+(5,1,'崇文','chongwen'),
+(6,1,'宣武','xuanwu'),
+(7,1,'丰台','fengtai'),
+(8,1,'石景山','shijingshan'),
+(9,1,'房山','fangshan'),
+(10,1,'大兴','daxing'),
+(11,1,'通州','tongzhou'),
+(12,1,'顺义','shunyi'),
+(13,1,'昌平','changping'),
+(14,1,'密云','miyun'),
+(15,1,'怀柔','huairou'),
+(16,1,'延庆','yanqing'),
+(17,1,'平谷','pinggu'),
+(18,1,'门头沟','mentougou'),
+(21,2,'黄浦','huangpu'),
+(22,2,'静安','jingan'),
+(23,2,'卢湾','luwan'),
+(24,2,'徐汇','xuhui'),
+(25,2,'长宁','changning'),
+(26,2,'闸北','zhabei'),
+(27,2,'普陀','putuo'),
+(28,2,'虹口','hongkou'),
+(29,2,'杨浦','yangpu'),
+(30,2,'浦东','pudong'),
+(31,2,'闵行','minxing'),
+(32,2,'松江','songjiang'),
+(33,2,'宝山','baoshan'),
+(34,2,'嘉定','jiading'),
+(35,2,'青浦','qingpu'),
+(36,2,'奉贤','fengxian'),
+(37,2,'南汇','nanhui'),
+(38,2,'金山','jinshan'),
+(39,2,'崇明','chongming');
