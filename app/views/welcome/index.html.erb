@@ -62,7 +62,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc1.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -75,7 +75,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc2.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 						<!-- 3.房屋租售0 -->
@@ -86,7 +86,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc3.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 						<!-- 4.宠物0 -->
@@ -97,7 +97,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc4.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -110,7 +110,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc5.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -123,7 +123,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc6.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 						<!-- 7.求职0 -->
@@ -134,7 +134,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc7.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 						<!-- 8.交友活动0 -->
@@ -145,7 +145,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc8.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -158,7 +158,7 @@
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc9.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= c.msg_count %>)</small>
+						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
 						<br/>
 						<% end %>
 					</td>

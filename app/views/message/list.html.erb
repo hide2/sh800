@@ -67,7 +67,7 @@
 <div id="container">
 	<!-- subheader0 -->
 	<div id="subheader" style="padding-bottom:0">
-		<h1>北京交友活动类目信息</h1>
+		<h1><%= @ct.name + @category.name%>类目信息</h1>
 		<div id="filter" class="nohist">
 			<form method="get">
 				子类目:
@@ -100,12 +100,9 @@
 			<ol>
 				<li class="head">北京交友活动类目信息</li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
-				<li>9月15日<a target="_blank" href="/message/67570574">找四川的男朋友</a></li>
-				<li>9月15日<a target="_blank" href="/message/67570574">去平谷采摘大桃吃农家饭</a></li>
-				<li>9月15日<a target="_blank" href="/message/67570574">京西草原张家大院</a><i>图</i></li>
-				<li>9月15日<a target="_blank" href="/message/67570574">诚心找女朋友</a></li>
-				<li>9月15日<a target="_blank" href="/message/67570574">一起开心女</a><i>图</i></li>
-				<li>9月15日<a target="_blank" href="/message/67570574">寻找回盐城或者靠近的车子</a></li>
+				<% @messages.each do |m| %>
+				<li><%= m.publish_time.strftime("%m") %>月<%= m.publish_time.strftime("%d") %>日<a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a></li>
+				<% end %>
 			</ol>
 			<div class="line"></div>
 		</div>

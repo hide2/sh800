@@ -18,6 +18,8 @@ class ApplicationController < ActionController::Base
         end
       end
       redirect_to "http://" + ct + "." + SITE_DOMAIN + request.fullpath
+    else
+      @ct = City.find_by_slug(request.subdomain)
     end
   end
 

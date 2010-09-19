@@ -8,7 +8,6 @@ CREATE TABLE `category` (
   `parent_category_id` int(10),
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
-  `msg_count` int(10) NOT NULL default 0,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -27,7 +26,7 @@ CREATE TABLE `message` (
   `other_attrs` varchar(4096),
   `content` varchar(65535),
   `images_path` varchar(4096),
-  `view_count` int(10) NOT NULL default 0,
+  `views_count` int(10) NOT NULL default 0,
   `ip` varchar(255),
   `status` enum('ACTIVE','IN_ACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
   `is_zhiding` tinyint(1) NOT NULL default 0,
