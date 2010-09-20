@@ -32,6 +32,8 @@ CREATE TABLE `message` (
   `status` enum('ACTIVE','IN_ACTIVE','DELETED') NOT NULL DEFAULT 'ACTIVE',
   `is_zhiding` tinyint(1) NOT NULL default 0,
   `is_tuiguang` tinyint(1) NOT NULL default 0,
+  `is_deleted` tinyint(1) NOT NULL default 0,
+  `is_archived` tinyint(1) NOT NULL default 0,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
