@@ -70,7 +70,7 @@
 	<div class="container">
 		<div id="subheader">
 			<div id="maintitle" style="float:left;">
-				<a href="/" id="logo"><img src="/images/logo.gif" alt="800生活网" /></a>
+				<a href="/" id="logo"><img src="/images/logo.gif" alt="<%= SITE_TITLE %>" /></a>
 			</div>
 			<p id="wwwTips" style="margin-top:25px;margin-bottom: 5px;font-size:14px;">
 				&nbsp;&nbsp;&nbsp;请选择您所在的城市：
@@ -83,7 +83,7 @@
 					<td valign="top" align="center" class="sheng"><%= p.name %></td>
 					<td class="cities">
 						<% City.find_all_by_province_id(p.id).each do |c| %>
-						<a href="http://<%= c.slug %>.sh800.com"><%= c.name %></a>
+						<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>
 						<% end %>
 					</td>
 				</tr>
@@ -122,9 +122,13 @@
 			<a href="http://www.kijiji.co.jp">日本</a>&nbsp;&nbsp;
 			<a href="http://www.gumtree.com.au">澳大利亚</a>&nbsp;&nbsp;
 			<a href="http://www.gumtree.co.nz">新西兰</a>&nbsp;&nbsp;
-			<a href="http://www.sh800.com">中国</a>&nbsp;&nbsp;
+			<a href="http://www.800shenghuo.com">中国</a>&nbsp;&nbsp;
 		</div>
 		<!-- other sites1 -->
 	</div>
 </div>
 <!-- content1 -->
+
+<%
+	@title = SITE_TITLE + "所有城市"
+%>

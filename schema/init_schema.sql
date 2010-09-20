@@ -17,6 +17,7 @@ CREATE TABLE `message` (
   `id` bigint(20) NOT NULL auto_increment,
   `user_id` bigint(20),
   `password` varchar(255),
+  `parent_category_id` int(10) NOT NULL,
   `category_id` int(10) NOT NULL,
   `city_id` int(10),
   `area_id` int(10),

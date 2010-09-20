@@ -39,8 +39,8 @@
 		<a href="/fabu">免费发布信息</a></strong> | <a href="/xiugai">修改删除信息</a>
 		</span>
 	</span>
-	<a href="/" id="logo"><img src="/images/logo.gif" alt="800生活网"></a>
-	<a href="/" id="area">北京</a>
+	<a href="/" id="logo"><img src="/images/logo.gif" alt="<%= SITE_TITLE %>"></a>
+	<a href="/" id="area"><%=@ct.name%></a>
 	<div style="clear: both;"></div>
 </div>
 <!-- header1 -->
@@ -48,8 +48,30 @@
 <!-- content0 -->
 <div id="container">
 	<div class="blank5"></div>
-	<!-- categories0 -->
 	<div id="categories" class="nohist">
+		<!-- area0 -->
+		<%
+			@as = Area.find_all_by_city_id(@ct.id)
+			if @as.size > 0
+		%>
+		<div id="areas">
+			<% if params[:area] %>
+			<%	@a = Area.find_by_slug(params[:area]) %>
+			<a href="/">全<%=@ct.name%></a>
+			<% else %>
+			<span>全北京</span>
+			<% end %>
+			<% @as.each do |a| %>
+			<% 	if @a && @a.slug == a.slug %>
+			<span><%=a.name%></span>
+			<% 	else %>
+			<a href="/?area=<%=a.slug%>"><%=a.name%></a>
+			<% 	end %>
+			<% end %>
+		</div>
+		<%	end %>
+		<!-- area1 -->
+		<!-- categories0 -->
 		<table width="100%" border="0" cellpadding="0" cellspacing="5">
 			<tbody>
 				<tr>
@@ -58,11 +80,11 @@
 						<% @pc1 = Category.find(1) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc1.slug%>" target="_blank"><%= @pc1.name %></a>
+								<a href="/message/list?category=<%= @pc1.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc1.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc1.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -71,33 +93,33 @@
 						<% @pc2 = Category.find(2) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc2.slug%>" target="_blank"><%= @pc2.name %></a>
+								<a href="/message/list?category=<%= @pc2.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc2.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc2.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 						<!-- 3.房屋租售0 -->
 						<% @pc3 = Category.find(3) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc3.slug%>" target="_blank"><%= @pc3.name %></a>
+								<a href="/message/list?category=<%= @pc3.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc3.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc3.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 						<!-- 4.宠物0 -->
 						<% @pc4 = Category.find(4) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc4.slug%>" target="_blank"><%= @pc4.name %></a>
+								<a href="/message/list?category=<%= @pc4.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc4.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc4.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -106,11 +128,11 @@
 						<% @pc5 = Category.find(5) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc5.slug%>" target="_blank"><%= @pc5.name %></a>
+								<a href="/message/list?category=<%= @pc5.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc5.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc5.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -119,33 +141,33 @@
 						<% @pc6 = Category.find(6) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc6.slug%>" target="_blank"><%= @pc6.name %></a>
+								<a href="/message/list?category=<%= @pc6.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc6.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc6.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 						<!-- 7.求职0 -->
 						<% @pc7 = Category.find(7) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc7.slug%>" target="_blank"><%= @pc7.name %></a>
+								<a href="/message/list?category=<%= @pc7.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc7.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc7.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 						<!-- 8.交友活动0 -->
 						<% @pc8 = Category.find(8) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc8.slug%>" target="_blank"><%= @pc8.name %></a>
+								<a href="/message/list?category=<%= @pc8.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc8.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc8.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 					</td>
@@ -154,17 +176,18 @@
 						<% @pc9 = Category.find(9) %>
 						<div class="block">
 							<h2>
-								<a href="/message/list?category=<%= @pc9.slug%>" target="_blank"><%= @pc9.name %></a>
+								<a href="/message/list?category=<%= @pc9.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= @pc9.name %></a>
 							</h2>
 						</div>
 						<% Category.find_all_by_parent_category_id(@pc9.id).each do |c| %>
-						<a href="/message/list?category=<%= c.slug%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}") %>)</small>
+						<a href="/message/list?category=<%= c.slug%><%=@a ? '&area=' + @a.slug : ''%>" target="_blank"><%= c.name %></a><small>(<%= Message.count(:conditions => "category_id = #{c.id} and city_id = #{@ct.id}" + (@a ? " and area_id = #{@a.id.to_s}" : "")) %>)</small>
 						<br/>
 						<% end %>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+		<!-- categories1 -->
 		<!-- search0 -->
 		<form id="search" method="get" action="/search" style="float: right; padding: 0pt 5px; text-align: right;">
 			<input size="18" name="keyword" type="text">
@@ -184,7 +207,6 @@
 		</form>
 		<!-- search1 -->
 	</div>
-	<!-- categories1 -->
 	<!-- cities0 -->
 	<div id="cities" class="nohist">
 		<h3>全国其他城市</h3>
@@ -348,3 +370,8 @@
 	<!-- cities1 -->
 </div>
 <!-- content1 -->
+
+<%
+	@title = @ct.name + SITE_TITLE
+	@title = @ct.name + @a.name + SITE_TITLE if @a
+%>

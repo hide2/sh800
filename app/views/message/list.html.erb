@@ -58,7 +58,12 @@
 	<a href="/fabu" rel="nofollow" target="_blank">免费发布信息</a>
 	| <a href="/xiugai" rel="nofollow" target="_blank">修改删除信息</a>
 	| <a href="/help.html" rel="nofollow" target="_blank">帮助</a></span>
-	<a href="/">北京800生活网</a> &raquo; 交友活动
+	<a href="/"><%=@ct.name+SITE_TITLE%></a>
+	<% if !@pc %>
+	 &raquo; <%=@c.name%>
+	<% else %>
+	 &raquo; <a href="/message/list?category=<%=@pc.slug%>"><%=@pc.name%></a> &raquo; <%=@c.name%>
+	<% end %>
 	<div style="clear:both"></div>
 </div>
 <!-- header1 -->
@@ -67,26 +72,43 @@
 <div id="container">
 	<!-- subheader0 -->
 	<div id="subheader" style="padding-bottom:0">
-		<h1><%= @ct.name + @category.name%>类目信息</h1>
+		<h1><%= @ct.name + (@a ? @a.name : "") + @c.name%></h1>
 		<div id="filter" class="nohist">
 			<form method="get">
+				<% if @cc.size > 0 %>
 				子类目:
-				<a href="/message/list?category=nvzhaonan" target="_self">女找男</a>
-				<a href="/message/list?category=nanzhaonv" target="_self">男找女</a>
-				<a href="/message/list?category=zhenghun" target="_self">征婚</a>
-				<a href="/message/list?category=yiqinvyou" target="_self">一起运动/旅游</a>
-				<a href="/message/list?category=pinche" target="_self">拼车顺风车</a>
-				<a href="/message/list?category=xunrenqishi" target="_self">寻人/寻物</a>
+				<% 	@cc.each do |c| %>
+				<a href="/message/list?category=<%=c.slug%>" target="_self"><%=c.name%></a>
+				<% 	end %>
 				<br/>
+				<% end %>
+				<!-- area0 -->
+				<%
+					@as = Area.find_all_by_city_id(@ct.id)
+					if @as.size > 0
+				%>
 				<table cellpadding="0" cellspacing="0" border="0">
 					<tr>
 						<td valign="top" style="white-space:nowrap;">所在地:</td>
-						<td><strong>全北京</strong>
-						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=haidian" target="_self">海淀</a>
-						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=chaoyang" target="_self">朝阳</a>
-						<a style="white-space:nowrap;" href="/message/list?category=jiaoyou&areaName=dongcheng" target="_self">东城</a>
+						<td>
+						<% if params[:area] %>
+						<%	@a = Area.find_by_slug(params[:area]) %>
+						<a href="/message/list?category=<%=@c.slug%>">全<%=@ct.name%></a>
+						<% else %>
+						<strong>全北京</strong>
+						<% end %>
+						<% @as.each do |a| %>
+						<% 	if @a && @a.slug == a.slug %>
+						<strong><%=a.name%></strong>
+						<% 	else %>
+						<a href="/message/list?category=<%=@c.slug%>&area=<%=a.slug%>"><%=a.name%></a>
+						<% 	end %>
+						<% end %>
+						</td>
 					</tr>
 				</table>
+				<%	end %>
+				<!-- area1 -->
 				<input type="text" name="keyword" id="query" alt="搜索: 请输入关键字" size="50" class="tips hasTips" value=""/>
 				<input name="category" type="hidden" value="jiaoyou"/> <input type="submit" value="搜索" class="submit"/>
 				<br/>
@@ -98,19 +120,30 @@
 	<div id="content" style="padding-top:5px;float:none;">
 		<div id="datagrid" class="datagrid" style="background:white;">
 			<ol>
-				<li class="head">北京交友活动类目信息</li>
+				<li class="head">北京<%=@c.name%></li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
-				<% @messages.each do |m| %>
-				<li><%= m.publish_time.strftime("%m") %>月<%= m.publish_time.strftime("%d") %>日<a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a></li>
+				<% @ms.each do |m| %>
+				<li><%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a></li>
 				<% end %>
 			</ol>
 			<div class="line"></div>
 		</div>
 		<div id="pager" class="nohist" style="font-family: Tahoma,Arial,Helvetica,sans-serif;font-size: 18px;margin: 5px;">
-			<a href="/message/list?category=jiaoyou&page=2" target="_self" class="next">下一页</a> <small>（共8700条信息）</small>
+			<% if @has_prev_page %>
+			<a href="/message/list?category=<%=@c.slug%>&page=<%=@page-1%>" target="_self" class="prev">上一页</a> 
+			<% end %>
+			<% if @has_next_page %>
+			<a href="/message/list?category=<%=@c.slug%>&page=<%=@page+1%>" target="_self" class="next">下一页</a> 
+			<% end %>
+			<small>（共<%=@total%>条信息）</small>
 		</div>
 	</div>
 	<!-- message0 -->
 	<div style="clear:both;"></div>
 </div>
 <!-- content1 -->
+
+<%
+	@title = @ct.name + @c.name + " - " + SITE_TITLE
+	@title = @ct.name + @a.name + @c.name + " - " + SITE_TITLE if @a
+%>
