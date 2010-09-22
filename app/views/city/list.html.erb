@@ -73,23 +73,42 @@
 				<a href="/" id="logo"><img src="/images/logo.gif" alt="<%= SITE_TITLE %>" /></a>
 			</div>
 			<p id="wwwTips" style="margin-top:25px;margin-bottom: 5px;font-size:14px;">
-				&nbsp;&nbsp;&nbsp;请选择您所在的城市：
+				&nbsp;&nbsp;&nbsp;
+				<% if !@ps %>
+				请选择您所在的城市：
+				<% end %>
 			</p>
 		</div>
 		<div id="cityTable" style="border-top:1px solid #C5EC83;padding-top:4px;">
-			<% Province.find(:all).each do |p| %>
-			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cities">
-				<tr>
-					<td valign="top" align="center" class="sheng"><%= p.name %></td>
-					<td class="cities">
-						<% City.find_all_by_province_id(p.id).each do |c| %>
-						<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>
-						<% end %>
-					</td>
-				</tr>
-			</table>
+			<%
+				if @ps
+			%>
+			<div style="font-size: 14px; margin: 10px 0pt;">
+				<strong><%= @ps.name %>所有城市:</strong>
+				&nbsp;&nbsp;&nbsp;
+				<% City.find_all_by_province_id(@ps.id).each do |c| %>
+				<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>&nbsp;
+				<% end %>
+			</div>
+			<div style="font-size: 14px; margin: 10px 0pt;">
+				<a href="http://www.800shenghuo.com/city/list">查看全国所有城市</a>
+			</div>
+			<% else %>
+				<% Province.find(:all).each do |p| %>
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="cities">
+					<tr>
+						<td valign="top" align="center" class="sheng"><%= p.name %></td>
+						<td class="cities">
+							<% City.find_all_by_province_id(p.id).each do |c| %>
+							<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>
+							<% end %>
+						</td>
+					</tr>
+				</table>
+				<% end %>
 			<% end %>
 		</div>
+		<% if !@ps %>
 		<!-- other sites0 -->
 		<div class="otherlink" style="text-align:left;border-top:1px solid #EBEBEB;padding-top:10px;">
 			全球免费生活网站：
@@ -125,6 +144,7 @@
 			<a href="http://www.800shenghuo.com">中国</a>&nbsp;&nbsp;
 		</div>
 		<!-- other sites1 -->
+		<% end %>
 	</div>
 </div>
 <!-- content1 -->
