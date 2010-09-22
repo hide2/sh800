@@ -87,11 +87,11 @@
 				<strong><%= @ps.name %>所有城市:</strong>
 				&nbsp;&nbsp;&nbsp;
 				<% City.find_all_by_province_id(@ps.id).each do |c| %>
-				<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>&nbsp;
+				<a href="http://<%=c.slug%>.<%=SITE_DOMAIN%>"><%= c.name %></a>&nbsp;
 				<% end %>
 			</div>
 			<div style="font-size: 14px; margin: 10px 0pt;">
-				<a href="http://www.800shenghuo.com/city/list">查看全国所有城市</a>
+				<a href="http://www.<%=SITE_DOMAIN%>/city/list">查看全国所有城市</a>
 			</div>
 			<% else %>
 				<% Province.find(:all).each do |p| %>
@@ -100,7 +100,7 @@
 						<td valign="top" align="center" class="sheng"><%= p.name %></td>
 						<td class="cities">
 							<% City.find_all_by_province_id(p.id).each do |c| %>
-							<a href="http://<%= c.slug %>.800shenghuo.com"><%= c.name %></a>
+							<a href="http://<%=c.slug%>.<%=SITE_DOMAIN%>"><%= c.name %></a>
 							<% end %>
 						</td>
 					</tr>
@@ -141,7 +141,7 @@
 			<a href="http://www.kijiji.co.jp">日本</a>&nbsp;&nbsp;
 			<a href="http://www.gumtree.com.au">澳大利亚</a>&nbsp;&nbsp;
 			<a href="http://www.gumtree.co.nz">新西兰</a>&nbsp;&nbsp;
-			<a href="http://www.800shenghuo.com">中国</a>&nbsp;&nbsp;
+			<a href="http://www.<%=SITE_DOMAIN%>">中国</a>&nbsp;&nbsp;
 		</div>
 		<!-- other sites1 -->
 		<% end %>
