@@ -93,16 +93,16 @@
 						<td>
 						<% if params[:area] %>
 						<%	@a = Area.find_by_slug(params[:area]) %>
-						<a href="/message/list?category=<%=@c.slug%>">全<%=@ct.name%></a>
+							<a href="/message/list?category=<%=@c.slug%>">全<%=@ct.name%></a>
 						<% else %>
-						<strong>全北京</strong>
+							<strong>全<%=@ct.name%></strong>
 						<% end %>
 						<% @as.each do |a| %>
-						<% 	if @a && @a.slug == a.slug %>
-						<strong><%=a.name%></strong>
-						<% 	else %>
-						<a href="/message/list?category=<%=@c.slug%>&area=<%=a.slug%>"><%=a.name%></a>
-						<% 	end %>
+							<% 	if @a && @a.slug == a.slug %>
+								<strong><%=a.name%></strong>
+							<% else %>
+								<a href="/message/list?category=<%=@c.slug%>&area=<%=a.slug%>"><%=a.name%></a>
+							<% 	end %>
 						<% end %>
 						</td>
 					</tr>
@@ -120,7 +120,7 @@
 	<div id="content" style="padding-top:5px;float:none;">
 		<div id="datagrid" class="datagrid" style="background:white;">
 			<ol>
-				<li class="head">北京<%=@c.name%></li>
+				<li class="head"><%=@ct.name+@c.name%></li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
 				<% @ms.each do |m| %>
 				<li><%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a></li>

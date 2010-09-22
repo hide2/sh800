@@ -56,17 +56,17 @@
 		%>
 		<div id="areas">
 			<% if params[:area] %>
-			<%	@a = Area.find_by_slug(params[:area]) %>
-			<a href="/">全<%=@ct.name%></a>
+				<%	@a = Area.find_by_slug(params[:area]) %>
+				<a href="/">全<%=@ct.name%></a>
 			<% else %>
-			<span>全北京</span>
+				<span>全<%=@ct.name%></span>
 			<% end %>
 			<% @as.each do |a| %>
-			<% 	if @a && @a.slug == a.slug %>
-			<span><%=a.name%></span>
-			<% 	else %>
-			<a href="/?area=<%=a.slug%>"><%=a.name%></a>
-			<% 	end %>
+				<% 	if @a && @a.slug == a.slug %>
+					<span><%=a.name%></span>
+				<% 	else %>
+					<a href="/?area=<%=a.slug%>"><%=a.name%></a>
+				<% 	end %>
 			<% end %>
 		</div>
 		<%	end %>
