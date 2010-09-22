@@ -52,6 +52,7 @@ CREATE TABLE `city` (
   `province_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
+  `is_capital` tinyint(1) NOT NULL default 0,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

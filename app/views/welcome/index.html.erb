@@ -212,158 +212,32 @@
 		<h3>全国其他城市</h3>
 		<!-- city1 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://shijiazhuang.<%=SITE_DOMAIN%>/">石家庄</a>
+			<%
+				rcs_slugs = City::RELATED_CITY[@ct.slug]
+				if rcs_slugs
+					@rcs = rcs_slugs.map{|s|City.find_by_slug(s)}
+				else
+					ctp = Province.find(@ct.province_id)
+					@rcs = City.find_by_sql("select * from city where province_id = #{ctp.id} and id != #{@ct.id}")
+				end
+				@rcs.each do |c| %>
+			<a href="http://<%=c.slug%>.<%=SITE_DOMAIN%>/"><%=c.name%></a>
 			<br/>
-			<a href="http://langfang.<%=SITE_DOMAIN%>/">廊坊</a>
-			<br/>
-			<a href="http://baoding.<%=SITE_DOMAIN%>/">保定</a>
-			<br/>
-			<a href="http://shenyang.<%=SITE_DOMAIN%>/">沈阳</a>
-			<br/>
-			<a href="http://jinan.<%=SITE_DOMAIN%>/">济南</a>
-			<br/>
-			<a href="http://zhengzhou.<%=SITE_DOMAIN%>/">郑州</a>
-			<br/>
-			<a href="http://tangshan.<%=SITE_DOMAIN%>/">唐山</a>
-			<br/>
-			<a href="http://guangzhou.<%=SITE_DOMAIN%>/">广州</a>
-			<br/>
-			<a href="http://taiyuan.<%=SITE_DOMAIN%>/">太原</a>
-			<br/>
-			<a href="http://qingdao.<%=SITE_DOMAIN%>/">青岛</a>
-			<br/>
-			<a href="http://xian.<%=SITE_DOMAIN%>/">西安</a>
-			<br/>
-			<a href="http://cangzhou.<%=SITE_DOMAIN%>/">沧州</a>
-			<br/>
-			<a href="http://weifang.<%=SITE_DOMAIN%>/">潍坊</a>
-			<br/>
-			<a href="http://dalian.<%=SITE_DOMAIN%>/">大连</a>
-			<br/>
-			<a href="http://xingtai.<%=SITE_DOMAIN%>/">邢台</a>
-			<br/>
-			<a href="http://shenzhen.<%=SITE_DOMAIN%>/">深圳</a>
-			<br/>
-			<a href="http://wuhan.<%=SITE_DOMAIN%>/">武汉</a>
-			<br/>
-			<a href="http://changchun.<%=SITE_DOMAIN%>/">长春</a>
-			<br/>
-			<a href="http://handan.<%=SITE_DOMAIN%>/">邯郸</a>
-			<br/>
-			<a href="http://haerbin.<%=SITE_DOMAIN%>/">哈尔滨</a>
+			<% end %>
 		</div>
 		<!-- city2 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://shanghai.<%=SITE_DOMAIN%>/">上海</a>
+			<% City.find_by_sql("select * from city where is_capital = 1 and slug != 'huhehaote' and slug != 'wulumuqi' and slug != 'yinchuan' and slug != 'xining'").each do |c| %>
+			<a href="http://<%=c.slug%>.<%=SITE_DOMAIN%>/"><%=c.name%></a>
 			<br/>
-			<a href="http://beijing.<%=SITE_DOMAIN%>/">北京</a>
-			<br/>
-			<a href="http://tianjin.<%=SITE_DOMAIN%>/">天津</a>
-			<br/>
-			<a href="http://haerbin.<%=SITE_DOMAIN%>/">哈尔滨</a>
-			<br/>
-			<a href="http://changchun.<%=SITE_DOMAIN%>/">长春</a>
-			<br/>
-			<a href="http://shenyang.<%=SITE_DOMAIN%>/">沈阳</a>
-			<br/>
-			<a href="http://dalian.<%=SITE_DOMAIN%>/">大连</a>
-			<br/>
-			<a href="http://jinan.<%=SITE_DOMAIN%>/">济南</a>
-			<br/>
-			<a href="http://qingdao.<%=SITE_DOMAIN%>/">青岛</a>
-			<br/>
-			<a href="http://shijiazhuang.<%=SITE_DOMAIN%>/">石家庄</a>
-			<br/>
-			<a href="http://taiyuan.<%=SITE_DOMAIN%>/">太原</a>
-			<br/>
-			<a href="http://zhengzhou.<%=SITE_DOMAIN%>/">郑州</a>
-			<br/>
-			<a href="http://xian.<%=SITE_DOMAIN%>/">西安</a>
-			<br/>
-			<a href="http://chongqing.<%=SITE_DOMAIN%>/">重庆</a>
-			<br/>
-			<a href="http://chengdu.<%=SITE_DOMAIN%>/">成都</a>
-			<br/>
-			<a href="http://wuhan.<%=SITE_DOMAIN%>/">武汉</a>
-			<br/>
-			<a href="http://changsha.<%=SITE_DOMAIN%>/">长沙</a>
-			<br/>
-			<a href="http://nanjing.<%=SITE_DOMAIN%>/">南京</a>
-			<br/>
-			<a href="http://suzhou.<%=SITE_DOMAIN%>/">苏州</a>
-			<br/>
-			<a href="http://hangzhou.<%=SITE_DOMAIN%>/">杭州</a>
-			<br/>
-			<a href="http://ningbo.<%=SITE_DOMAIN%>/">宁波</a>
-			<br/>
-			<a href="http://xiamen.<%=SITE_DOMAIN%>/">厦门</a>
-			<br/>
-			<a href="http://hefei.<%=SITE_DOMAIN%>/">合肥</a>
-			<br/>
-			<a href="http://guangzhou.<%=SITE_DOMAIN%>/">广州</a>
-			<br/>
-			<a href="http://shenzhen.<%=SITE_DOMAIN%>/">深圳</a>
-			<br/>
-			<a href="http://nanning.<%=SITE_DOMAIN%>/">南宁</a>
-			<br/>
-			<a href="http://haikou.<%=SITE_DOMAIN%>/">海口</a>
+			<% end %>
 		</div>
 		<!-- city3 -->
 		<div style="float: left; width: 33%;">
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=广东">广东</a>
+			<% Province.find_by_sql("select * from province where id > 1").each do |p| %>
+			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=<%=p.name%>"><%=p.name%></a>
 			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=辽宁">辽宁</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=江苏">江苏</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=湖北">湖北</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=四川">四川</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=陕西">陕西</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=黑龙江">黑龙江</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=山东">山东</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=安徽">安徽</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=广西">广西</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=甘肃">甘肃</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=新疆">新疆</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=宁夏">宁夏</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=海南">海南</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=河北">河北</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=山西">山西</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=河南">河南</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=吉林">吉林</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=内蒙古">内蒙古</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=浙江">浙江</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=福建">福建</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=云南">云南</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=江西">江西</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=湖南">湖南</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=贵州">贵州</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=西藏">西藏</a>
-			<br/>
-			<a href="http://www.<%=SITE_DOMAIN%>/city/list?province=青海">青海</a>
-			<br/>
+			<% end %>
 			<a href="http://www.<%=SITE_DOMAIN%>/city/list">所有城市</a>
 		</div>
 	</div>
