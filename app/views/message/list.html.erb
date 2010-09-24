@@ -55,9 +55,10 @@
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
-	<a href="/fabu" rel="nofollow" target="_blank">免费发布信息</a>
-	| <a href="/xiugai" rel="nofollow" target="_blank">修改删除信息</a>
-	| <a href="/help.html" rel="nofollow" target="_blank">帮助</a></span>
+		<a href="/message/new?category=<%=@c.name%>" rel="nofollow" target="_blank">免费发布信息</a>
+		| <a href="/message/edit" rel="nofollow" target="_blank">修改删除信息</a>
+		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
+	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
 	<% if !@pc %>
 	 &raquo; <%=@c.name%>
