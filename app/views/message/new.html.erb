@@ -1,3 +1,32 @@
+<script>
+function changeCategory() {
+	$('#setCategory').hide();
+	$('#categoryItem').show();
+}
+function chooseParentCategory(id) {
+	$('#secondCategory').find('div').hide();
+	$('#sub_category_' + id).show();
+}
+function chooseSubCategory(pid, sid, m) {
+	$('#parent_category_id').val(pid);
+	$('#category_id').val(sid);
+	$('#categoryItem').hide();
+	$('#chosen_category').html(m);
+	$('#setCategory').show();
+}
+function chooseArea() {
+	var area_id = $('#select_area').val();
+	if(area_id != "") {
+		$('#select_area_location').append($('#location_' + area_id).html());
+	} else {
+		$('#select_area_location').append($('#location_0').html());
+	}
+	$('#select_location').remove();
+	$('#select_area_location').find('select.tmp_select_location').attr("id", "select_location");
+	$('#select_area_location').find('select.tmp_select_location').attr("name", "location_id");
+}
+</script>
+
 <style type="text/css">
 	body { background:none repeat scroll 0 0 #FFFCCC; font-family:Arial,Helvetica,sans-serif; font-size:12px;
 	line-height:1.6; } body, hr, form, p, img { border:0 none; margin:0; padding:0; } a:link { color:#0066CC;
@@ -79,7 +108,7 @@
 	color:#000;line-height:1.5; font-size:14px;} #content #secondCategory div{border:1px solid #7F9DB9; padding:1px;
 	background:#fff; position: relative; z-index:98} #categoryCheck{ position:relative; z-index:99} #content
 	#secondCategory a:hover{background:#316AC5; color:#fff;text-decoration:none; } #content #secondCategory
-	a.on{background:#316AC5; color:#fff;text-decoration:none;} #jiantou,#categoryBox{ display:none;} #seCategory small{
+	a.on{background:#316AC5; color:#fff;text-decoration:none;} #jiantou,#categoryBox{ display:none;} #setCategory small{
 	font-size:12px;} #postNav{ line-height:1.8;} #bangui{border:1px solid #fff; position:absolute; background:#FAFAFA;
 	top:42px; margin-left:700px; width:270px; padding:5px 10px; font-size:12px} #content select{ font-size:14px;}
 	span.red{color:red} /*beta*/ img.imgBorderBeta{padding:9px;background:#FFF;border:1px solid #EBEBEB;margin:2px;}
@@ -112,6 +141,24 @@
 				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
 				<div id="formInputBox">
 					<!-- choose category0 -->
+					<div class="item" id="setCategory" style="display:none">
+						<table>
+							<tr>
+								<td valign="top" class="attribute">
+									<span class="red">*</span>选择类目：
+								</td>
+								<td valign="top" class="inputTd">
+									<div id="postNav">
+										<span id="chosen_category">物品交易 » 二手手机</span>
+										<small><a onclick="return changeCategory()" href="#">重选类目</a></small>
+										<small id="number_of_messages" style="color: rgb(0, 153, 0);">本类目一天可以发布3条信息。</small>
+									</div>
+								</td>
+							</tr>
+						</table>
+						<input id="parent_category_id" type="hidden" name="parent_category_id" value="1" />
+						<input id="category_id" type="hidden" name="category_id" value="1001" />
+					</div>
 					<div class="item" id="categoryItem">
 						<table>
 							<tr>
@@ -120,31 +167,33 @@
 								</td>
 								<td valign="top" id="firstCategory">
 									<div>
-										<% Category.find_by_sql("select * from category where parent_category_id is null").each do |c| %>
-										<a href="#" onclick="alert('<%=c.slug%>');"><%=c.name%></a>
+										<% @pcs = Category.find_by_sql("select * from category where parent_category_id is null") %>
+										<% @pcs.each do |pc| %>
+										<a href="#" onclick="chooseParentCategory(<%=pc.id%>);"><%=pc.name%></a>
 										<% end %>
 									</div>
-									<input type="hidden" name="parent_category_id" value="1" />
-									<input type="hidden" name="category_id" value="1001" />
 								</td>
 
 								<td valign="middle" style="vertical-align:middle">
 									<img id="jiantou" src="/images/right_arrow.gif"	align="absmiddle" style="display:block" />
 								</td>
 								<td>
-									<div id="secondCategory" style="display: block;">
-										<div>
+									<div id="secondCategory">
+										<% @pcs.each do |pc| %>
+										<div id="sub_category_<%=pc.id%>" style="display: none">
 											<table>
 												<tr>
+													<% (pc.sub_categories / 7).each do |g| %>
 													<td>
-														<a href="/fabu/beijing/?category=chongwujiaoyi" title="chongwujiaoyi" hidefocus="true" onclick="return clickSecondCategory(this);">宠物买卖</a>
-														<a href="/fabu/beijing/?category=chongwulingyang" title="chongwulingyang" hidefocus="true" onclick="return clickSecondCategory(this);">宠物免费赠送</a>
-														<a href="/fabu/beijing/?category=chongwuyongpin" title="chongwuyongpin" hidefocus="true" onclick="return clickSecondCategory(this);">宠物用品/食品</a>
-														<a href="/fabu/beijing/?category=chongwupeizhong" title="chongwupeizhong" hidefocus="true" onclick="return clickSecondCategory(this);">宠物服务/配种</a>
+														<% g.each do |c| %>
+														<a href="#" onclick="chooseSubCategory(<%=pc.id%>, <%=c.id%>, '<%=pc.name%> » <%=c.name%>');"><%=c.name%></a>
+														<% end %>
 													</td>
+													<% end %>
 												</tr>
 											</table>
 										</div>
+										<% end %>
 									</div>
 								</td>
 							</tr>
@@ -167,24 +216,35 @@
 					<!-- input title1 -->
 					<!-- input location0 -->
 					<div class="item">
+						<div id="location_0" style="display:none">
+							<select style="width:100px;" class="tmp_select_location">
+							<option value=""></option>
+							</select>
+						</div>
+						<% Area.find_all_by_city_id(@ct.id).each do |a| %>
+						<div id="location_<%=a.id%>" style="display:none">
+							<select style="width:100px;" class="tmp_select_location">
+							<option value=""></option>
+							<% Location.find_all_by_area_id(a.id).each do |l| %>
+							<option value="<%=l.id%>"><%=l.name%></option>
+							<% end %>
+							</select>
+						</div>
+						<% end %>
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
 									<span class="red">*</span>所在地区：
 								</td>
-								<td valign="top" class="inputTd">
-									<select name="area_id" style="width:100px;">
+								<td id="select_area_location" valign="top" class="inputTd">
+									<select id="select_area" name="area_id" style="width:100px;" onchange="chooseArea()">
 										<option value=""></option>
-										<option value="1">海淀</option>
-										<option value="2" selected>朝阳</option>
-										<option value="3">东城</option>
+										<% Area.find_all_by_city_id(@ct.id).each do |a| %>
+										<option value="<%=a.id%>"><%=a.name%></option>
+										<% end %>
 									</select>
-									<select name="location_id" style="width:100px;">
+									<select id="select_location" name="location_id" style="width:100px;">
 										<option value=""></option>
-										<option value="1" selected>CBD</option>
-										<option value="2">安贞</option>
-										<option value="3">百子湾</option>
-										<option value="4">朝阳公园</option>
 									</select>
 								</td>
 							</tr>
@@ -271,3 +331,7 @@
 	</div>
 </div>
 <!-- content1 -->
+
+<%
+	@title = "免费发布信息(无需注册) - " + SITE_TITLE
+%>

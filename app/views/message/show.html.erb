@@ -86,7 +86,7 @@
 	
 		<p>发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
 		<br/>
-		所在地：<%=@a.name%>，<%=@m.location%>
+		所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
 		<br/>
 		<% @m.other_attrs.split('^&*').each do |t| %>
 			<%=t.split('#$%')[0]%>：<%=t.split('#$%')[1]%>

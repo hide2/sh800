@@ -41,7 +41,7 @@ class MessageController < ApplicationController
   def create
     if session[:user_id]
     else
-      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location=>params[:location_id], :title=>params[:title], :content=>params[:content], :password=>params[:password])
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :content=>params[:content], :password=>params[:password])
     end
     redirect_to message_path(m)
   end

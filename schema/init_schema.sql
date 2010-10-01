@@ -19,11 +19,11 @@ CREATE TABLE `message` (
   `password` varchar(255),
   `parent_category_id` int(10) NOT NULL,
   `category_id` int(10) NOT NULL,
-  `city_id` int(10),
-  `area_id` int(10),
+  `city_id` int(10) NOT NULL,
+  `area_id` int(10) NOT NULL,
+  `location_id` int(10),
   `title` varchar(255) NOT NULL,
   `publish_time` timestamp NOT NULL,
-  `location` varchar(255) NOT NULL,
   `other_attrs` varchar(4096),
   `content` varchar(65535),
   `images_path` varchar(4096),
@@ -63,6 +63,15 @@ CREATE TABLE `area` (
   `city_id` int(10) NOT NULL,
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `location`;
+CREATE TABLE `location` (
+  `id` int(10) NOT NULL auto_increment,
+  `area_id` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
