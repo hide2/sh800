@@ -5,14 +5,31 @@ function changeCategory() {
 }
 function chooseParentCategory(id) {
 	$('#secondCategory').find('div').hide();
+	$('#jiantou').show();
 	$('#sub_category_' + id).show();
 }
-function chooseSubCategory(pid, sid, m) {
+function chooseSubCategory(pid, sid, m, c) {
 	$('#parent_category_id').val(pid);
 	$('#category_id').val(sid);
 	$('#categoryItem').hide();
 	$('#chosen_category').html(m);
 	$('#setCategory').show();
+	$('#formInputBox').find('div.item').each(function() {
+		if($(this).attr('item_for')) {
+			var fors = $(this).attr('item_for').split('_');
+			var show_this_item = false;
+			for(var i=0;i<fors.length;i++) {
+				if(fors[i] == c) {
+					show_this_item = true;
+				}
+			}
+			if(show_this_item) {
+				$(this).show();
+			} else {
+				$(this).hide();
+			}
+		}
+	});
 }
 function chooseArea() {
 	var area_id = $('#select_area').val();
@@ -136,6 +153,10 @@ function chooseArea() {
 	<div id="sidebar"></div>
 	<div id="content" style="float:none;">
 		<div id="postTable">
+			<div style="padding-left: 124px;">
+				推荐：我们建议您注册成为<%=SITE_TITLE%>的注册用户，这样发布管理信息更方便。
+				<a target="_blank" href="/zhuce">点击这里注册</a>
+			</div>
 			<!-- post form0 -->
 			<form id="postForm" method="POST" action="/message">
 				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
@@ -149,7 +170,7 @@ function chooseArea() {
 								</td>
 								<td valign="top" class="inputTd">
 									<div id="postNav">
-										<span id="chosen_category">物品交易 » 二手手机</span>
+										<span id="chosen_category"> » </span>
 										<small><a onclick="return changeCategory()" href="#">重选类目</a></small>
 										<small id="number_of_messages" style="color: rgb(0, 153, 0);">本类目一天可以发布3条信息。</small>
 									</div>
@@ -175,7 +196,7 @@ function chooseArea() {
 								</td>
 
 								<td valign="middle" style="vertical-align:middle">
-									<img id="jiantou" src="/images/right_arrow.gif"	align="absmiddle" style="display:block" />
+									<img id="jiantou" src="/images/right_arrow.gif"	align="absmiddle" style="display:none" />
 								</td>
 								<td>
 									<div id="secondCategory">
@@ -186,7 +207,7 @@ function chooseArea() {
 													<% (pc.sub_categories / 7).each do |g| %>
 													<td>
 														<% g.each do |c| %>
-														<a href="#" onclick="chooseSubCategory(<%=pc.id%>, <%=c.id%>, '<%=pc.name%> » <%=c.name%>');"><%=c.name%></a>
+														<a href="#" onclick="chooseSubCategory(<%=pc.id%>, <%=c.id%>, '<%=pc.name%> » <%=c.name%>', '<%=c.slug%>');"><%=c.name%></a>
 														<% end %>
 													</td>
 													<% end %>
@@ -208,29 +229,53 @@ function chooseArea() {
 									<span class="red">*</span>标题：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="text" name="title" size="50" maxlength="25" />
+									<input type="text" class="input" name="title" size="50" maxlength="25" />
 								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- input title1 -->
+					<!-- input gongqiu0 -->
+					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">
+									<span class="red">*</span>供求：
+								</td>
+								<td class="inputTd">
+									<input id="zhuanrang" type="radio" name="other_attrs_供求" value="转让"><label for="zhuanrang">转让</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qiugou" type="radio" name="other_attrs_供求" value="求购"><label for="qiugou">求购</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input gongqiu1 -->
 					<!-- input location0 -->
 					<div class="item">
 						<div id="location_0" style="display:none">
 							<select style="width:100px;" class="tmp_select_location">
-							<option value=""></option>
+							<option value="">&nbsp;</option>
 							</select>
 						</div>
-						<% Area.find_all_by_city_id(@ct.id).each do |a| %>
+						<%
+							Area.find_all_by_city_id(@ct.id).each do |a|
+								ls = Location.find_all_by_area_id(a.id)
+								if !ls.empty?
+						%>
 						<div id="location_<%=a.id%>" style="display:none">
 							<select style="width:100px;" class="tmp_select_location">
-							<option value=""></option>
-							<% Location.find_all_by_area_id(a.id).each do |l| %>
+							<option value="">&nbsp;</option>
+							<% ls.each do |l| %>
 							<option value="<%=l.id%>"><%=l.name%></option>
 							<% end %>
 							</select>
 						</div>
-						<% end %>
+						<%
+								end
+							end
+						%>
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -238,25 +283,350 @@ function chooseArea() {
 								</td>
 								<td id="select_area_location" valign="top" class="inputTd">
 									<select id="select_area" name="area_id" style="width:100px;" onchange="chooseArea()">
-										<option value=""></option>
+										<option value="">&nbsp;</option>
 										<% Area.find_all_by_city_id(@ct.id).each do |a| %>
 										<option value="<%=a.id%>"><%=a.name%></option>
 										<% end %>
 									</select>
-									<select id="select_location" name="location_id" style="width:100px;">
-										<option value=""></option>
+									<select id="select_location" name="location_id" style="width:100px;display:<%= (@ct.slug == 'beijing' || @ct.slug == 'shanghai') ? '':'none' %>">
+										<option value="">&nbsp;</option>
 									</select>
 								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- input location1 -->
+					<!-- input jutididian0 -->
+					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_wupinqiugou" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">具体地点：</td>
+								<td class="inputTd">
+									<input type="text" maxlength="30" size="20" class="input" name="other_attrs_具体地点" value="">
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input jutididian1 -->
+					<!-- input diannaotype0 -->
+					<div class="item" item_for="diannao" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="bijiben" type="radio" name="other_attrs_类型" value="笔记本"><label for="bijiben">笔记本</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="shangwangben" type="radio" name="other_attrs_类型" value="上网本/iPad"><label for="shangwangben">上网本/iPad</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="taishiji" type="radio" name="other_attrs_类型" value="台式机"><label for="taishiji">台式机</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="xianshiqi" type="radio" name="other_attrs_类型" value="显示器"><label for="xianshiqi">显示器</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="yingpan" type="radio" name="other_attrs_类型" value="硬盘"><label for="yingpan">硬盘</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="neicun" type="radio" name="other_attrs_类型" value="内存"><label for="neicun">内存</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitadiannao" type="radio" name="other_attrs_类型" value="其他"><label for="qitadiannao">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input diannaotype1 -->
+					<!-- input shoujitype0 -->
+					<div class="item" item_for="shouji" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="nuojiya" type="radio" name="other_attrs_类型" value="诺基亚"><label for="nuojiya">诺基亚</label>
+									&nbsp;&nbsp;
+									<input id="iphone" type="radio" name="other_attrs_类型" value="iPhone"><label for="iphone">iPhone</label>
+									&nbsp;&nbsp;
+									<input id="sanxing" type="radio" name="other_attrs_类型" value="三星"><label for="sanxing">三星</label>
+									&nbsp;&nbsp;
+									<input id="suoai" type="radio" name="other_attrs_类型" value="索爱"><label for="suoai">索爱</label>
+									&nbsp;&nbsp;
+									<input id="motuoluola" type="radio" name="other_attrs_类型" value="摩托罗拉"><label for="motuoluola">摩托罗拉</label>
+									&nbsp;&nbsp;
+									<input id="heimei" type="radio" name="other_attrs_类型" value="黑莓"><label for="heimei">黑莓</label>
+									&nbsp;&nbsp;
+									<input id="xiapu" type="radio" name="other_attrs_类型" value="夏普"><label for="xiapu">夏普</label>
+									&nbsp;&nbsp;
+									<input id="lg" type="radio" name="other_attrs_类型" value="LG"><label for="lg">LG</label>
+									&nbsp;&nbsp;
+									<input id="htc" type="radio" name="other_attrs_类型" value="多普达/HTC"><label for="htc">多普达/HTC</label>
+									&nbsp;&nbsp;
+									<input id="guochan" type="radio" name="other_attrs_类型" value="国产品牌"><label for="guochan">国产品牌</label>
+									&nbsp;&nbsp;
+									<input id="qitashouji" type="radio" name="other_attrs_类型" value="其他"><label for="qitashouji">其他</label>
+									&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input shoujitype1 -->
+					<!-- input zhaoxiangjitype0 -->
+					<div class="item" item_for="zhaoxiangji" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="zhaoxiangji" type="radio" name="other_attrs_类型" value="照相机"><label for="zhaoxiangji">照相机</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="shexiangji" type="radio" name="other_attrs_类型" value="摄像机"><label for="shexiangji">摄像机</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitazhaoxiangji" type="radio" name="other_attrs_类型" value="其他"><label for="qitazhaoxiangji">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input zhaoxiangjitype1 -->
+					<!-- input shumatype0 -->
+					<div class="item" item_for="shuma" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="mp3" type="radio" name="other_attrs_类型" value="MP3"><label for="mp3">MP3</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="mp4" type="radio" name="other_attrs_类型" value="MP4"><label for="mp4">MP4</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="youxiji" type="radio" name="other_attrs_类型" value="游戏机"><label for="youxiji">游戏机</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitashuma" type="radio" name="other_attrs_类型" value="其他"><label for="qitashuma">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input shumatype1 -->
+					<!-- input dianqitype0 -->
+					<div class="item" item_for="dianqi" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="bingxiang" type="radio" name="other_attrs_类型" value="冰箱"><label for="bingxiang">冰箱</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="kongtiao" type="radio" name="other_attrs_类型" value="空调"><label for="kongtiao">空调</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="dianshi" type="radio" name="other_attrs_类型" value="电视"><label for="dianshi">电视</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="xiyiji" type="radio" name="other_attrs_类型" value="洗衣机"><label for="xiyiji">洗衣机</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitadianqi" type="radio" name="other_attrs_类型" value="其他"><label for="qitadianqi">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input dianqitype1 -->
+					<!-- input jiajutype0 -->
+					<div class="item" item_for="jiaju" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="chuang" type="radio" name="other_attrs_类型" value="床/床垫"><label for="chuang">床/床垫</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="guizi" type="radio" name="other_attrs_类型" value="柜子"><label for="guizi">柜子</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="zhuoyi" type="radio" name="other_attrs_类型" value="桌椅"><label for="zhuoyi">桌椅</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="shafa" type="radio" name="other_attrs_类型" value="沙发"><label for="shafa">沙发</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitajiaju" type="radio" name="other_attrs_类型" value="其他"><label for="qitajiaju">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input jiajutype1 -->
+					<!-- input fushitype0 -->
+					<div class="item" item_for="fushi" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="nvzhuang" type="radio" name="other_attrs_类型" value="女装"><label for="nvzhuang">女装</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="nanzhuang" type="radio" name="other_attrs_类型" value="男装"><label for="nanzhuang">男装</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="zhongxingzhuang" type="radio" name="other_attrs_类型" value="中性装"><label for="zhongxingzhuang">中性装</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="shiping" type="radio" name="other_attrs_类型" value="饰品"><label for="shiping">饰品</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitafushi" type="radio" name="other_attrs_类型" value="其他"><label for="qitafushi">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input fushitype1 -->
+					<!-- input xiemaotype0 -->
+					<div class="item" item_for="xiemao" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="nvxie" type="radio" name="other_attrs_类型" value="女鞋"><label for="nvxie">女鞋</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="nanxie" type="radio" name="other_attrs_类型" value="男鞋"><label for="nanxie">男鞋</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="xiangbao" type="radio" name="other_attrs_类型" value="箱包"><label for="xiangbao">箱包</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitaxiemao" type="radio" name="other_attrs_类型" value="其他"><label for="qitaxiemao">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input xiemaotype1 -->
+					<!-- input yingertype0 -->
+					<div class="item" item_for="yinger" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="yingershiping" type="radio" name="other_attrs_类型" value="食品"><label for="yingershiping">食品</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="yingerfushi" type="radio" name="other_attrs_类型" value="服饰"><label for="yingerfushi">服饰</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="wanju" type="radio" name="other_attrs_类型" value="玩具"><label for="wanju">玩具</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="yingeryongpin" type="radio" name="other_attrs_类型" value="用品"><label for="yingeryongpin">用品</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitayinger" type="radio" name="other_attrs_类型" value="其他"><label for="qitayinger">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input yingertype1 -->
+					<!-- input shutype0 -->
+					<div class="item" item_for="shu" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="tushu" type="radio" name="other_attrs_类型" value="图书"><label for="tushu">图书</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="baozhi" type="radio" name="other_attrs_类型" value="报纸"><label for="baozhi">报纸</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="zazhi" type="radio" name="other_attrs_类型" value="杂志"><label for="zazhi">杂志</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="cd" type="radio" name="other_attrs_类型" value="光盘/CD"><label for="cd">光盘/CD</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="cidai" type="radio" name="other_attrs_类型" value="磁带"><label for="cidai">磁带</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitashu" type="radio" name="other_attrs_类型" value="其他"><label for="qitashu">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input shutype1 -->
+					<!-- input yueqiype0 -->
+					<div class="item" item_for="yueqi" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="yueqi" type="radio" name="other_attrs_类型" value="乐器"><label for="yueqi">乐器</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="wenju" type="radio" name="other_attrs_类型" value="文具"><label for="wenju">文具</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="bangongshebei" type="radio" name="other_attrs_类型" value="办公设备"><label for="bangongshebei">办公设备</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitayueqi" type="radio" name="other_attrs_类型" value="其他"><label for="qitayueqi">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input yueqitype1 -->
+					<!-- input quanype0 -->
+					<div class="item" item_for="quan" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">类型：</td>
+								<td class="inputTd">
+									<input id="huiyuanka" type="radio" name="other_attrs_类型" value="会员卡/打折卡"><label for="huiyuanka">会员卡/打折卡</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="dianyingpiao" type="radio" name="other_attrs_类型" value="门票/电影票"><label for="dianyingpiao">门票/电影票</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="liquan" type="radio" name="other_attrs_类型" value="抵用券/礼券"><label for="liquan">抵用券/礼券</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="jifen" type="radio" name="other_attrs_类型" value="积分"><label for="jifen">积分</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="qitaquan" type="radio" name="other_attrs_类型" value="其他"><label for="qitaquan">其他</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input quantype1 -->
+					<!-- input chengse0 -->
+					<div class="item" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_yueqi_yundongqicai_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
+						<table>
+							<tr>
+								<td valign="top" class="attribute">
+									成色：
+								</td>
+								<td valign="top" class="inputTd">
+									<select name="other_attrs_成色" style="width:100px;">
+										<option value="">&nbsp;</option>
+										<option value="全新">全新</option>
+										<option value="95成新">95成新</option>
+										<option value="9成新">9成新</option>
+										<option value="8成新">8成新</option>
+										<option value="7成新">7成新</option>
+										<option value="6成新及以下">6成新及以下</option>
+									</select>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!-- input chengse1 -->
+					<!-- input jiage0 -->
+					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche_zhengzu_hezu_ershoufang_xiezilou_jingyingzhuanrang_duanzu" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">
+									<span class="red">*</span>价格：
+								</td>
+								<td class="inputTd">
+									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_价格" style="text-align: right;" value="元">
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input jiage1 -->
+					<!-- input faburen0 -->
+					<div class="item" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_fushi_xiemao_yinger_huazhuangping_yueqi_yundongqicai_shoucang_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
+						<table>
+							<tr>
+								<td class="attribute">
+									<span class="red">*</span>发布人：
+								</td>
+								<td class="inputTd">
+									<input id="shangjia" type="radio" name="other_attrs_发布人" value="商家"><label for="shangjia">商家</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+									<input id="geren" type="radio" name="other_attrs_发布人" value="个人"><label for="geren">个人</label>
+									&nbsp;&nbsp;&nbsp;&nbsp;
+								</td>
+					      </tr>
+						</table>
+					</div>
+					<!-- input faburen1 -->
 					<!-- input content0 -->
 					<div class="item">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
-									内容：
+									<span class="red">*</span>描述：
 								</td>
 								<td valign="top" class="inputTd">
 									<textarea name="content" style="width:500px" rows="7" cols="70" class="textarea field">

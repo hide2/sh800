@@ -40,8 +40,9 @@ class MessageController < ApplicationController
   
   def create
     if session[:user_id]
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :content=>params[:content], :user_id=>session[:user_id], :ip=>request.remote_ip)
     else
-      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :content=>params[:content], :password=>params[:password])
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :content=>params[:content], :password=>params[:password], :ip=>request.remote_ip)
     end
     redirect_to message_path(m)
   end
