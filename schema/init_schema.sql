@@ -1,7 +1,9 @@
+-- create database
 DROP DATABASE IF EXISTS `sh800`;
 CREATE DATABASE `sh800` DEFAULT CHARSET utf8 COLLATE utf8_general_ci;
 USE `sh800`;
 
+-- create table category
 DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(10) NOT NULL auto_increment,
@@ -12,6 +14,7 @@ CREATE TABLE `category` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table message
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` bigint(20) NOT NULL auto_increment,
@@ -38,6 +41,7 @@ CREATE TABLE `message` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table province
 DROP TABLE IF EXISTS `province`;
 CREATE TABLE `province` (
   `id` int(10) NOT NULL auto_increment,
@@ -46,6 +50,7 @@ CREATE TABLE `province` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table city
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city` (
   `id` int(10) NOT NULL auto_increment,
@@ -57,6 +62,7 @@ CREATE TABLE `city` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table area
 DROP TABLE IF EXISTS `area`;
 CREATE TABLE `area` (
   `id` int(10) NOT NULL auto_increment,
@@ -67,6 +73,7 @@ CREATE TABLE `area` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table location
 DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
   `id` int(10) NOT NULL auto_increment,
@@ -76,6 +83,7 @@ CREATE TABLE `location` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(10) NOT NULL auto_increment,
