@@ -252,6 +252,8 @@ function chooseArea() {
 						</table>
 					</div>
 					<!-- input gongqiu1 -->
+					<% @areas = Area.find_all_by_city_id(@ct.id) %>
+					<% if !@areas.blank? %>
 					<!-- input location0 -->
 					<div class="item">
 						<div id="location_0" style="display:none">
@@ -260,7 +262,7 @@ function chooseArea() {
 							</select>
 						</div>
 						<%
-							Area.find_all_by_city_id(@ct.id).each do |a|
+							@areas.each do |a|
 								ls = Location.find_all_by_area_id(a.id)
 								if !ls.empty?
 						%>
@@ -284,7 +286,7 @@ function chooseArea() {
 								<td id="select_area_location" valign="top" class="inputTd">
 									<select id="select_area" name="area_id" style="width:100px;" onchange="chooseArea()">
 										<option value="">&nbsp;</option>
-										<% Area.find_all_by_city_id(@ct.id).each do |a| %>
+										<% @areas.each do |a| %>
 										<option value="<%=a.id%>"><%=a.name%></option>
 										<% end %>
 									</select>
@@ -296,6 +298,7 @@ function chooseArea() {
 						</table>
 					</div>
 					<!-- input location1 -->
+					<% end %>
 					<!-- input jutididian0 -->
 					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_wupinqiugou" style="display: none">
 						<table>
