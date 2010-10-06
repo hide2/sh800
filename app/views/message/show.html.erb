@@ -88,8 +88,8 @@
 		<br/>
 		所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
 		<br/>
-		<% @m.other_attrs.split('^&*').each do |t| %>
-			<%=t.split('#$%')[0]%>：<%=t.split('#$%')[1]%>
+		<% @m.other_attrs.split(Message::PS).each do |t| %>
+			<%=t.split(Message::KVS)[0]%>：<%=t.split(Message::KVS)[1]%>
 			<br/>
 		<% end if @m.other_attrs%>
 		

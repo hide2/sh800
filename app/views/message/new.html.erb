@@ -229,29 +229,12 @@ function chooseArea() {
 									<span class="red">*</span>标题：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="text" class="input" name="title" size="50" maxlength="25" />
+									<input type="text" class="input" name="title" size="50" maxlength="50" />
 								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- input title1 -->
-					<!-- input gongqiu0 -->
-					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
-						<table>
-							<tr>
-								<td class="attribute">
-									<span class="red">*</span>供求：
-								</td>
-								<td class="inputTd">
-									<input id="zhuanrang" type="radio" name="other_attrs_供求" value="转让"><label for="zhuanrang">转让</label>
-									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="qiugou" type="radio" name="other_attrs_供求" value="求购"><label for="qiugou">求购</label>
-									&nbsp;&nbsp;&nbsp;&nbsp;
-								</td>
-					      </tr>
-						</table>
-					</div>
-					<!-- input gongqiu1 -->
 					<% @areas = Area.find_all_by_city_id(@ct.id) %>
 					<% if !@areas.blank? %>
 					<!-- input location0 -->
@@ -633,11 +616,6 @@ function chooseArea() {
 								</td>
 								<td valign="top" class="inputTd">
 									<textarea name="content" style="width:500px" rows="7" cols="70" class="textarea field">
-
-
-
-
-
 
 联系方式：</textarea>
 								</td>
