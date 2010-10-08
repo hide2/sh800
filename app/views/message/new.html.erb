@@ -1,7 +1,7 @@
 <script>
 function changeCategory() {
-	$('#setCategory').hide();
-	$('#categoryItem').show();
+	$('#selectedCategory').hide();
+	$('#setCategory').show();
 }
 function chooseParentCategory(id) {
 	$('#secondCategory').find('div').hide();
@@ -11,9 +11,9 @@ function chooseParentCategory(id) {
 function chooseSubCategory(pid, sid, m, c) {
 	$('#parent_category_id').val(pid);
 	$('#category_id').val(sid);
-	$('#categoryItem').hide();
+	$('#setCategory').hide();
 	$('#chosen_category').html(m);
-	$('#setCategory').show();
+	$('#selectedCategory').show();
 	$('#formInputBox').find('div.item').each(function() {
 		if($(this).attr('item_for')) {
 			var fors = $(this).attr('item_for').split('_');
@@ -41,6 +41,56 @@ function chooseArea() {
 	$('#select_location').remove();
 	$('#select_area_location').find('select.tmp_select_location').attr("id", "select_location");
 	$('#select_area_location').find('select.tmp_select_location').attr("name", "location_id");
+}
+function formValidation() {
+	var no_error = true;
+	$('div.required').each(function() {
+		if(!$(this).is(":hidden")) {
+			var _id = $(this).attr("id");
+			var _e = false;
+			if(_id == "setCategory") {
+				_e = true;
+			} else if(_id == "setTitle") {
+				if($(this).find('input').val() == "") {
+					_e = true;
+				}
+			} else if(_id == "setArea") {
+				if($('#select_area').val() == "") {
+					_e = true;
+				}
+			} else if(_id == "setFaburen") {
+				if(!$('#shangjia')[0].checked && !$('#geren')[0].checked) {
+					_e = true;
+				}
+			} else if(_id == "setContact") {
+				if($(this).find('textarea').val().replace(/(.*\n.*)*联系方式：/,"") == "") {
+					_e = true;
+				}
+			} else if(_id == "setPassword") {
+				if($(this).find('input').val() == "") {
+					_e = true;
+				}
+			} else if(_id == "setPasswordConfirm") {
+				if($(this).find('input').val() == "" || $(this).find('input').val() != $('#setPassword').find('input').val()) {
+					_e = true;
+				}
+			}
+			if(_e) {
+				no_error = false;
+				$(this).find("div.checkError").html($(this).attr('validationMsg'));
+			} else {
+				$(this).find("div.checkError").html("");
+			}
+		}
+	});
+	if(no_error) {
+		if($('#setPrice').find('input').val() == "元") {
+			$('#setPrice').find('input').removeAttr('name');
+		}
+		return true;
+	} else {
+		return false;
+	}
 }
 </script>
 
@@ -103,7 +153,7 @@ function chooseArea() {
 	width:150px; float:left; padding-bottom:5px; margin-left:5px;} #categoryBox h2{line-height:1.7; padding-left:5px;
 	background:#F3F3F3; border-top:1px solid #EBEBEB; border-bottom:1px solid #EBEBEB;} #categoryBox
 	li{font-size:14px;line-height:1.7; width:140px;padding-left:5px;} .checkError{ background:#FEE9E1
-	url(http://static.baixing.net/images/css/global/error.gif) no-repeat 3px 4px; padding-left:20px; font-size:12px;
+	url(/images/error.gif) no-repeat 3px 4px; padding-left:20px; font-size:12px;
 	color:#FF0000} .error,.ok,.load{padding:2px 5px 2px 25px; color:#000; font-size:12px;} .error{ border:1px solid
 	#FF0000; background:#FEE9E1 url(http://static.baixing.net/images/css/global/error.gif) no-repeat 5px 6px;} .ok{
 	border:1px solid #5EBF01; background: #E7FBC0 url(http://static.baixing.net/images/css/global/ok.gif) no-repeat 5px
@@ -125,7 +175,7 @@ function chooseArea() {
 	color:#000;line-height:1.5; font-size:14px;} #content #secondCategory div{border:1px solid #7F9DB9; padding:1px;
 	background:#fff; position: relative; z-index:98} #categoryCheck{ position:relative; z-index:99} #content
 	#secondCategory a:hover{background:#316AC5; color:#fff;text-decoration:none; } #content #secondCategory
-	a.on{background:#316AC5; color:#fff;text-decoration:none;} #jiantou,#categoryBox{ display:none;} #setCategory small{
+	a.on{background:#316AC5; color:#fff;text-decoration:none;} #jiantou,#categoryBox{ display:none;} #selectedCategory small{
 	font-size:12px;} #postNav{ line-height:1.8;} #bangui{border:1px solid #fff; position:absolute; background:#FAFAFA;
 	top:42px; margin-left:700px; width:270px; padding:5px 10px; font-size:12px} #content select{ font-size:14px;}
 	span.red{color:red} /*beta*/ img.imgBorderBeta{padding:9px;background:#FFF;border:1px solid #EBEBEB;margin:2px;}
@@ -158,11 +208,11 @@ function chooseArea() {
 				<a target="_blank" href="/zhuce">点击这里注册</a>
 			</div>
 			<!-- post form0 -->
-			<form id="postForm" method="POST" action="/message">
+			<form id="postForm" method="POST" action="/message" onsubmit="return formValidation();">
 				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
 				<div id="formInputBox">
 					<!-- choose category0 -->
-					<div class="item" id="setCategory" style="display:none">
+					<div class="item" id="selectedCategory" style="display:none">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -180,7 +230,7 @@ function chooseArea() {
 						<input id="parent_category_id" type="hidden" name="parent_category_id" value="1" />
 						<input id="category_id" type="hidden" name="category_id" value="1001" />
 					</div>
-					<div class="item" id="categoryItem">
+					<div class="item required" id="setCategory" validationMsg="请选择一个大类目和一个小类目！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -217,12 +267,15 @@ function chooseArea() {
 										<% end %>
 									</div>
 								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
+								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- choose category1 -->
 					<!-- input title0 -->
-					<div class="item">
+					<div class="item required" id="setTitle" validationMsg="请填写信息标题！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -231,6 +284,9 @@ function chooseArea() {
 								<td valign="top" class="inputTd">
 									<input type="text" class="input" name="title" size="50" maxlength="50" />
 								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -238,7 +294,7 @@ function chooseArea() {
 					<% @areas = Area.find_all_by_city_id(@ct.id) %>
 					<% if !@areas.blank? %>
 					<!-- input location0 -->
-					<div class="item">
+					<div class="item required" id="setArea" validationMsg="请选择您所在的地区！">
 						<div id="location_0" style="display:none">
 							<select style="width:100px;" class="tmp_select_location">
 							<option value="">&nbsp;</option>
@@ -276,6 +332,9 @@ function chooseArea() {
 									<select id="select_location" name="location_id" style="width:100px;display:<%= (@ct.slug == 'beijing' || @ct.slug == 'shanghai') ? '':'none' %>">
 										<option value="">&nbsp;</option>
 									</select>
+								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
 								</td>
 							</tr>
 						</table>
@@ -577,21 +636,22 @@ function chooseArea() {
 					</div>
 					<!-- input chengse1 -->
 					<!-- input jiage0 -->
-					<div class="item" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche_zhengzu_hezu_ershoufang_xiezilou_jingyingzhuanrang_duanzu" style="display: none">
+					<div class="item required" id="setPrice" validationMsg="请填写价格！" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche_zhengzu_hezu_ershoufang_xiezilou_jingyingzhuanrang_duanzu" style="display: none">
 						<table>
 							<tr>
-								<td class="attribute">
-									<span class="red">*</span>价格：
-								</td>
+								<td class="attribute">价格：</td>
 								<td class="inputTd">
 									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_价格" style="text-align: right;" value="元">
+								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
 								</td>
 					      </tr>
 						</table>
 					</div>
 					<!-- input jiage1 -->
 					<!-- input faburen0 -->
-					<div class="item" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_fushi_xiemao_yinger_huazhuangping_yueqi_yundongqicai_shoucang_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
+					<div class="item required" id="setFaburen" validationMsg="请选择发布人！" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_fushi_xiemao_yinger_huazhuangping_yueqi_yundongqicai_shoucang_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">
@@ -603,12 +663,15 @@ function chooseArea() {
 									<input id="geren" type="radio" name="other_attrs_发布人" value="个人"><label for="geren">个人</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
+								</td>
 					      </tr>
 						</table>
 					</div>
 					<!-- input faburen1 -->
 					<!-- input content0 -->
-					<div class="item">
+					<div class="item required" id="setContact" validationMsg="请填写您的联系方式！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -619,33 +682,42 @@ function chooseArea() {
 
 联系方式：</textarea>
 								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
+								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- input content1 -->
 					<!-- input password0 -->
-					<div class="item">
+					<div class="item required" id="setPassword" validationMsg="请设置一个密码并牢记（密码用来修改和删除信息）！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
 									<span class="red">*</span>设置密码：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="password" name="password" value="" class="input required" maxlength="16" size="20"/>
+									<input type="password" name="password" value="" class="input" maxlength="16" size="20"/>
+								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
 								</td>
 							</tr>
 						</table>
 					</div>
 					<!-- input password1 -->
 					<!-- input password confirm0 -->
-					<div class="item">
+					<div class="item required" id="setPasswordConfirm" validationMsg="请再输入一遍和设置密码相同的密码！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
 									<span class="red">*</span>再次输入密码：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="password" name="passwor_confirm" value="" class="input field required" maxlength="16" size="20"/>
+									<input type="password" name="passwor_confirm" value="" class="input field" maxlength="16" size="20"/>
+								</td>
+								<td valign="top" class="value">
+									<div class="checkError"></div>
 								</td>
 							</tr>
 						</table>
