@@ -49,16 +49,19 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (3,'房屋出租(非合租)','zhengzu'),
 (3,'房屋合租','hezu'),
 (3,'二手房出售','ershoufang'),
-(3,'写字楼租售','xiezilou'),
+(3,'写字楼出售','xiezilouchushou'),
+(3,'写字楼出租','xiezilouchuzu'),
 (3,'店铺/公司转让','jingyingzhuanrang'),
 (3,'家庭旅馆/日租/短租','duanzu'),
-(3,'中介房源','zhongjie'),
 (3,'求租/求购','qiufang');
 
 -- init sub-category 宠物
 insert into `category`(`parent_category_id`,`name`,`slug`) values
-(4,'宠物/用品','chongwuxiangguan'),
-(4,'宠物配种','chongwupeizhong');
+(4,'宠物出售','chongwuchushou'),
+(4,'宠物免费赠送','chongwuzengsong'),
+(4,'宠物用品/食品','chongwuyongpin'),
+(4,'宠物服务/配种','chongwupeizhong'),
+(4,'求购','chongwuqiugou');
 
 -- init sub-category 招聘
 insert into `category`(`parent_category_id`,`name`,`slug`) values
@@ -80,8 +83,7 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (5,'美工/设计师','meigong'),
 (5,'美容师/保健师','meirongshi'),
 (5,'KTV/酒吧','ktvjiuba'),
-(5,'其他招聘','qitazhaopin'),
-(5,'工作中介','zhiyezhongjie');
+(5,'其他招聘','qitazhaopin');
 
 -- init sub-category 兼职
 insert into `category`(`parent_category_id`,`name`,`slug`) values
@@ -117,7 +119,7 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (9,'家教服务','jiajiaofuwu'),
 (9,'物品回收','huishou'),
 (9,'婚庆/摄影/司仪','siyi'),
-(9,'搬家/快递','banjia'),
+(9,'搬家/快递/送货','banjia'),
 (9,'旅游/活动/聚会','lvxingshe'),
 (9,'网页/平面设计/印刷','sheji'),
 (9,'会计/翻译/律师服务','kuaijifuwu'),
