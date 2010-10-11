@@ -29,3 +29,5 @@ gem 'ruby-mysql'
 # group :development, :test do
 #   gem 'webrat'
 # end
+
+gem 'rmagick'
