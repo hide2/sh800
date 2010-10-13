@@ -1,6 +1,9 @@
 Sh800::Application.routes.draw do
   
-  root :to => "welcome#index"
+  root :to => "site#index"
+  
+  match 'site/image_upload' => 'site#image_upload'
+  
   resources :city do
     collection do
       get 'list'

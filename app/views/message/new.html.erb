@@ -1356,6 +1356,41 @@ function formValidation() {
 						</table>
 					</div>
 					<!-- input content1 -->
+					<!-- input images0 -->
+					<div class="item" id="uploadImages">
+						<table>
+							<tr>
+								<td class="attribute">上传照片：</td>
+								<td valign="top" class="inputTd">
+									<table id="imagesTable">
+										<tr>
+											<td>
+												<ul id="imagesUl">
+													<li id="li_iframe_key_721888">
+														<input type="hidden" value="/upload/images/2010-10-13/1286963810142564_s.jpg" name="image[]">
+														<img id="this_is_for_test" width="64" height="64" class="imgBorderBeta" src="/upload/images/2010-10-13/1286963810142564_s.jpg">
+														<span class="imgBeta">
+															<img width="10" height="8" align="absmiddle" src="/images/dui.gif"> 上传成功 
+															<a onclick="RemovePreview(this)" href="javascript:void(0)">
+																<img width="10" height="10" border="0" align="absmiddle" alt="删除这张图片" src="/images/laji.gif">
+															</a>
+														</span>
+														<div class="blank10"></div>
+													</li>
+												</ul>
+											</td>
+										</tr>
+									</table>
+									<div id="iframes"></div>
+									<div style="display: block; float: left; border-right: 1px solid rgb(255, 255, 255); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(255, 255, 255) rgb(255, 255, 255);" id="uploadImgIframes">
+										<iframe width="580" scrolling="no" height="25" frameborder="0" src="/site/image_upload/" id="uploadframe" name="uploadframe" marginheight="0" framespacing="0" marginwidth="0">
+										</iframe>
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+					<!-- input images1 -->
 					<!-- input password0 -->
 					<div class="item required" id="setPassword" validationMsg="请设置一个密码并牢记（密码用来修改和删除信息）！">
 						<table>

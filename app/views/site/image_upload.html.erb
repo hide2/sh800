@@ -1,0 +1,56 @@
+<%= javascript_include_tag "jquery.min.js" %>
+
+<style>
+form,body{margin:0; padding:0; font:12px Verdana, Arial, "宋体", SimSun ,serif, sans-serif; line-height:1.6;}
+input{ line-height:1.6; font-size:12px; padding:2px 3px 3px 3px;}
+#inputTips{color:#747474; position:absolute; top:-100px;height:30px; left:0; padding:3px 15px 0 5px;}
+a{color:#0066CC;text-decoration:none;}
+</style>
+
+<div id="uploadForm">
+	<form enctype="multipart/form-data" method="post">
+		<input type="file" onchange="imgUploading();" size="30" id="image" name="image">
+	</form>
+</div>
+<span id="inputTips" style="top: 0px;">请点击“浏览”选择上传的照片</span>
+<script>
+function creatForm() {
+	$('#uploadForm').html('');
+	var iframeKey = 'iframe_key_' + Math.round(Math.random()*1000000);
+	$(parent.document.getElementById('iframes')).append('<iframe id="' + iframeKey + '" name="' + iframeKey + '" style="display:none;">');
+	var html = ('<form method="post" enctype="multipart/form-data" id="' + iframeKey + '" target = "' + iframeKey + '">');
+	html += ('<input name="image" id="image" size="30" onChange="imgUploading();" type="file" />');
+	html += ('</form>');
+	$('#uploadForm').html(html);
+	return;
+}
+
+function imgUploading() {
+	if(!$('#image').val().match(/(.jpg|.jpeg|.gif|.png)$/i)){
+		alert('图片格式错误，图片只能上传.jpg .jpeg .gif .png 格式的！');
+		return;
+	}
+	document.getElementsByTagName('form')[0].submit();
+	creatForm();
+}
+creatForm();
+function isChrome() {
+    var browserName=navigator.userAgent.toLowerCase();
+    if(/msie/i.test(browserName) && !/opera/.test(browserName)) {
+        return false;
+    }else if(/firefox/i.test(browserName)) {
+        return false;
+    }else if(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName)) {
+        return true;
+    }else if(/opera/i.test(browserName)){
+        return false;
+    }else if(/webkit/i.test(browserName) &&!(/chrome/i.test(browserName) && /webkit/i.test(browserName) && /mozilla/i.test(browserName))) {
+        return true;
+    }
+	return false;
+}
+var bn = isChrome();
+if(bn == false) {
+	$('#inputTips')[0].style.top = '0px';
+}
+</script>
