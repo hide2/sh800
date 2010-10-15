@@ -55,9 +55,9 @@
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
-		<a href="/message/new?category=<%=@c.name%>" rel="nofollow" target="_blank">免费发布信息</a> | 
-		<a href="/message/edit" rel="nofollow" target="_blank">修改删除信息</a> | 
-		<a href="/help.html" rel="nofollow" target="_blank">帮助</a>
+		<a href="/message/new?category=<%=@c.name%>" rel="nofollow" target="_blank">免费发布信息</a>
+		| <a href="/message/find_message" rel="nofollow" target="_blank">修改删除信息</a>
+		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
 	<% if !@pc %>
@@ -108,12 +108,12 @@
 			信息编号：<span id="adId"><%=@m.id%></span> &nbsp;
 			查看次数：<span id="counter"><%=@m.views_count%></span> &nbsp;
 			发布人IP：<%=@m.ip%> | 
-			<a href="/message/123123/edit">修改</a> | 
-			<a href="/message/123123/delete">删除</a> | 
-			<a href="/message/123123/shuaxin" target="_blank">刷新</a> | 
-			<a href="/message/123123/zhiding" target="_blank">置顶</a> | 
-			<a href="/message/123123/tuiguang" target="_blank">定向推广</a> | 
-			<a href="/message/123123/zhuanfa" target="_blank">转发给朋友</a>
+			<a href="/message/<%=@m.id%>/validate_message?rd_action=edit">修改</a> | 
+			<a href="/message/<%=@m.id%>/validate_message?rd_action=delete">删除</a> | 
+			<a href="/message/<%=@m.id%>/shuaxin" target="_blank">刷新</a> | 
+			<a href="/message/<%=@m.id%>/zhiding" target="_blank">置顶</a> | 
+			<a href="/message/<%=@m.id%>/tuiguang" target="_blank">定向推广</a> | 
+			<a href="/message/<%=@m.id%>/zhuanfa" target="_blank">转发给朋友</a>
 		</div>
 		<div id="datagrid" class="datagrid" style="margin:10px 0;">
 			<ul></ul>
@@ -122,56 +122,6 @@
 	</div>
 </div>
 <!-- content1 -->
-
-<!-- tuiguang0 -->
-<script type="text/javascript">
-var meta = {
-	prefix: "VAD",
-	cater: "dianyuan",
-	vsble: "1"
-}
-function addLoadEvent(func){
-	var oldonload = window.onload;
-	if(typeof window.onload != "function"){
-		window.onload = func;
-	} else{
-		window.onload = function (){
-			oldonload();
-			func();
-		}
-	}
-}
-addLoadEvent(function(){
-	var cookieKey = encodeURIComponent('click_' + window.location);
-	var clickTime = readCookie(cookieKey);
-	if(clickTime != null){
-		var delay = new Date().getTime() - clickTime;
-		if(delay < 60000 && delay > 0){
-			_gaq.push(['_trackEvent', 'RenderTime', 'ViewAd', '', delay]);
-			createCookie(cookieKey, 0, 1/86400);
-		}
-	}
-	var iframe = document.getElementById('addon');
-	iframe.innerHTML = '<iframe src="/x/viewad/addon/?adId=67710862" frameborder="0" id="tool" scrolling="no" width="100%" height="0" style="border:0"></iframe>';
-});
-
-var render={highlight:function(b,a,d){if(b.length===0){return;}var c=new RegExp("("+b.split(/\s+/).join("|")+")","ig");for(i in a){if(a[i].innerHTML){a[i].innerHTML=a[i].innerHTML.replace(c,(d&&typeof(landing)!="undefined"&&landing==1)?'<a href="/root/?query=$1" style="color:#c00;text-decoration:underline;">$1</a>':'<span style="color:#c00;">$1</span>');}}},counter:function(){var a=parent.document.createElement("script");a.src="http://www.baixing.com/x/viewad/count/?id=67710862";parent.document.body.appendChild(a);}};var gad={boxes:function(){return[parent.document.getElementById("datagrid").getElementsByTagName("ul")[0],parent.document.getElementById("sidebar").getElementsByTagName("ul")[0]];},display:function(c){if(0===c.length){return;}var e=this.nums;var b=gad.boxes();for(i in e){if(e[i]==0){continue;}b[i].style.display="block";var f=document.createElement("li");f.className="head";var d=(typeof(google_info)!="undefined"?google_info.feedback_url:"http://adwords.google.com/");f.innerHTML='<a href="'+d+'">Google提供的广告</a>';b[i].appendChild(f);for(j=0;j<e[i];j++){var a=document.createElement("li");a.innerHTML=gad._renderRow(c.shift());b[i].appendChild(a);}}},_renderRow:function(d){var b='<a target="_blank" href="'+d.url+'" onclick="trk.trans();return true;" onmouseover="window.status=\'http://'+d.visible_url+"'\" onmouseout=\"window.status=''\">";var c=b+d.line1+" "+d.visible_url+'</a><em style="font-size:12px;">'+d.line2+(d.line3?d.line3:"")+"</em>";return c;}};
-var renderDingXiang = function() {
-	var row = parent.document.createElement('li');
-	row.className = 'head';
-	row.innerHTML = '<a target="_blank" style="padding-right: 5px; float: right; font-weight: normal; font-size: 12px;" href="http://bbs.baixing.com/viewthread.php?tid=382431&amp;src=viewadRight">做推广30天10元起</a><a target="_blank" href="http://bbs.baixing.com/viewthread.php?tid=382431&amp;src=viewadTips">推广信息</a>';
-	var box = gad.boxes()[0];
-	box.appendChild(row);
-		row = parent.document.createElement('li');
-	row.innerHTML = "<a href=\"http://beijing.baixing.com/dianyuan/a57198975.html\" target=\"_blank\">LIJI品牌导购每月工作15天1000元加3%提 - 1800元</a><i>图</i>";
-	box.appendChild(row);
-				row = parent.document.createElement('li');
-	row.innerHTML = "<a href=\"http://beijing.baixing.com/dianyuan/a66122940.html\" target=\"_blank\">急招牡丹园翠微大厦促销员 - 面议</a><i>图</i>";
-	box.appendChild(row);
-			}
-renderDingXiang();
-</script>
-<!-- tuiguang1 -->
 
 <%
 	@title = @m.title + " - " + SITE_TITLE

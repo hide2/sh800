@@ -124,6 +124,18 @@ function formValidation() {
 function removePreview(x) {
 	$(x).parents('li').remove();
 }
+
+$(document).ready(function() {
+	chooseParentCategory(<%=@pc.id%>);
+	chooseSubCategory(<%=@pc.id%>, <%=@c.id%>, '<%=@pc.name%> » <%=@c.name%>', '<%=@pc.slug%>', '<%=@c.slug%>');
+	<% if !@m.area_id.blank? %>
+		$('#select_area').val(<%=@m.area_id%>);
+	<% end %>
+	chooseArea();
+	<% if !@m.location_id.blank? %>
+		$('#select_location').val(<%=@m.location_id%>);
+	<% end %>
+});
 </script>
 
 <style type="text/css">
@@ -222,7 +234,7 @@ function removePreview(x) {
 		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
-	&raquo; 免费发布信息（无需注册）
+	&raquo; 修改信息
 	<div style="clear:both">
 	</div>
 </div>
@@ -238,8 +250,9 @@ function removePreview(x) {
 				<a target="_blank" href="/zhuce">点击这里注册</a>
 			</div>
 			<!-- post form0 -->
-			<form id="postForm" method="POST" action="/message" onsubmit="return formValidation();">
+			<form id="postForm" method="POST" action="/message/<%=@m.id%>" onsubmit="return formValidation();">
 				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
+				<input type="hidden" name="_method" value="put" />
 				<div id="formInputBox">
 					<!-- choose category0 -->
 					<div class="item" id="selectedCategory" style="display:none">
@@ -251,8 +264,6 @@ function removePreview(x) {
 								<td valign="top" class="inputTd">
 									<div id="postNav">
 										<span id="chosen_category"> » </span>
-										<small><a onclick="return changeCategory()" href="#">重选类目</a></small>
-										<small id="number_of_messages" style="color: rgb(0, 153, 0);">本类目一天可以发布3条信息。</small>
 									</div>
 								</td>
 							</tr>
@@ -312,7 +323,7 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>标题：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="text" class="input" name="title" size="50" maxlength="50" />
+									<input type="text" class="input" name="title" size="50" maxlength="50" value="<%= @m.title %>" />
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>
@@ -377,7 +388,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">具体地点：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="30" size="20" class="input" name="other_attrs_具体地点" value="">
+									<input type="text" maxlength="30" size="20" class="input" name="other_attrs_具体地点" value="<%=@m.other_attr('具体地点')%>">
 								</td>
 					      </tr>
 						</table>
@@ -389,7 +400,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">公司名称：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_公司名称" value="">
+									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_公司名称" value="<%=@m.other_attr('公司名称')%>">
 								</td>
 					      </tr>
 						</table>
@@ -401,7 +412,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">公司地址：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_公司地址" value="">
+									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_公司地址" value="<%=@m.other_attr('公司地址')%>">
 								</td>
 					      </tr>
 						</table>
@@ -413,7 +424,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">工作地点：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_工作地点" value="">
+									<input type="text" maxlength="50" size="30" class="input" name="other_attrs_工作地点" value="<%=@m.other_attr('工作地点')%>">
 								</td>
 					      </tr>
 						</table>
@@ -425,17 +436,17 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="bijiben" type="radio" name="other_attrs_类型" value="笔记本"><label for="bijiben">笔记本</label>
+									<input id="bijiben" type="radio" name="other_attrs_类型" value="笔记本" <%=@m.other_attr('类型') == '笔记本' ? 'checked' : ''%> ><label for="bijiben">笔记本</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="shangwangben" type="radio" name="other_attrs_类型" value="上网本/iPad"><label for="shangwangben">上网本/iPad</label>
+									<input id="shangwangben" type="radio" name="other_attrs_类型" value="上网本/iPad" <%=@m.other_attr('类型') == '上网本/iPad' ? 'checked' : ''%> ><label for="shangwangben">上网本/iPad</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="taishiji" type="radio" name="other_attrs_类型" value="台式机"><label for="taishiji">台式机</label>
+									<input id="taishiji" type="radio" name="other_attrs_类型" value="台式机" <%=@m.other_attr('类型') == '台式机' ? 'checked' : ''%> ><label for="taishiji">台式机</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="xianshiqi" type="radio" name="other_attrs_类型" value="显示器"><label for="xianshiqi">显示器</label>
+									<input id="xianshiqi" type="radio" name="other_attrs_类型" value="显示器" <%=@m.other_attr('类型') == '显示器' ? 'checked' : ''%> ><label for="xianshiqi">显示器</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yingpan" type="radio" name="other_attrs_类型" value="硬盘"><label for="yingpan">硬盘</label>
+									<input id="yingpan" type="radio" name="other_attrs_类型" value="硬盘" <%=@m.other_attr('类型') == '硬盘' ? 'checked' : ''%> ><label for="yingpan">硬盘</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="neicun" type="radio" name="other_attrs_类型" value="内存"><label for="neicun">内存</label>
+									<input id="neicun" type="radio" name="other_attrs_类型" value="内存" <%=@m.other_attr('类型') == '内存' ? 'checked' : ''%> ><label for="neicun">内存</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -448,25 +459,25 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">品牌：</td>
 								<td class="inputTd">
-									<input id="nuojiya" type="radio" name="other_attrs_品牌" value="诺基亚"><label for="nuojiya">诺基亚</label>
+									<input id="nuojiya" type="radio" name="other_attrs_品牌" value="诺基亚" <%=@m.other_attr('品牌') == '诺基亚' ? 'checked' : ''%> ><label for="nuojiya">诺基亚</label>
 									&nbsp;&nbsp;
-									<input id="iphone" type="radio" name="other_attrs_品牌" value="iPhone"><label for="iphone">iPhone</label>
+									<input id="iphone" type="radio" name="other_attrs_品牌" value="iPhone" <%=@m.other_attr('品牌') == 'iPhone' ? 'checked' : ''%> ><label for="iphone">iPhone</label>
 									&nbsp;&nbsp;
-									<input id="sanxing" type="radio" name="other_attrs_品牌" value="三星"><label for="sanxing">三星</label>
+									<input id="sanxing" type="radio" name="other_attrs_品牌" value="三星" <%=@m.other_attr('品牌') == '三星' ? 'checked' : ''%> ><label for="sanxing">三星</label>
 									&nbsp;&nbsp;
-									<input id="suoai" type="radio" name="other_attrs_品牌" value="索爱"><label for="suoai">索爱</label>
+									<input id="suoai" type="radio" name="other_attrs_品牌" value="索爱" <%=@m.other_attr('品牌') == '索爱' ? 'checked' : ''%> ><label for="suoai">索爱</label>
 									&nbsp;&nbsp;
-									<input id="motuoluola" type="radio" name="other_attrs_品牌" value="摩托罗拉"><label for="motuoluola">摩托罗拉</label>
+									<input id="motuoluola" type="radio" name="other_attrs_品牌" value="摩托罗拉" <%=@m.other_attr('品牌') == '摩托罗拉' ? 'checked' : ''%> ><label for="motuoluola">摩托罗拉</label>
 									&nbsp;&nbsp;
-									<input id="heimei" type="radio" name="other_attrs_品牌" value="黑莓"><label for="heimei">黑莓</label>
+									<input id="heimei" type="radio" name="other_attrs_品牌" value="黑莓" <%=@m.other_attr('品牌') == '黑莓' ? 'checked' : ''%> ><label for="heimei">黑莓</label>
 									&nbsp;&nbsp;
-									<input id="xiapu" type="radio" name="other_attrs_品牌" value="夏普"><label for="xiapu">夏普</label>
+									<input id="xiapu" type="radio" name="other_attrs_品牌" value="夏普" <%=@m.other_attr('品牌') == '夏普' ? 'checked' : ''%> ><label for="xiapu">夏普</label>
 									&nbsp;&nbsp;
-									<input id="lg" type="radio" name="other_attrs_品牌" value="LG"><label for="lg">LG</label>
+									<input id="lg" type="radio" name="other_attrs_品牌" value="LG" <%=@m.other_attr('品牌') == 'LG' ? 'checked' : ''%> ><label for="lg">LG</label>
 									&nbsp;&nbsp;
-									<input id="htc" type="radio" name="other_attrs_品牌" value="多普达/HTC"><label for="htc">多普达/HTC</label>
+									<input id="htc" type="radio" name="other_attrs_品牌" value="多普达/HTC" <%=@m.other_attr('品牌') == '多普达/HTC' ? 'checked' : ''%> ><label for="htc">多普达/HTC</label>
 									&nbsp;&nbsp;
-									<input id="guochan" type="radio" name="other_attrs_品牌" value="国产品牌"><label for="guochan">国产品牌</label>
+									<input id="guochan" type="radio" name="other_attrs_品牌" value="国产品牌" <%=@m.other_attr('品牌') == '国产品牌' ? 'checked' : ''%> ><label for="guochan">国产品牌</label>
 									&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -479,9 +490,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="zhaoxiangji" type="radio" name="other_attrs_类型" value="照相机"><label for="zhaoxiangji">照相机</label>
+									<input id="zhaoxiangji" type="radio" name="other_attrs_类型" value="照相机" <%=@m.other_attr('类型') == '照相机' ? 'checked' : ''%> ><label for="zhaoxiangji">照相机</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="shexiangji" type="radio" name="other_attrs_类型" value="摄像机"><label for="shexiangji">摄像机</label>
+									<input id="shexiangji" type="radio" name="other_attrs_类型" value="摄像机" <%=@m.other_attr('类型') == '摄影机' ? 'checked' : ''%> ><label for="shexiangji">摄像机</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -494,11 +505,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="mp3" type="radio" name="other_attrs_类型" value="MP3"><label for="mp3">MP3</label>
+									<input id="mp3" type="radio" name="other_attrs_类型" value="MP3" <%=@m.other_attr('类型') == 'MP3' ? 'checked' : ''%> ><label for="mp3">MP3</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="mp4" type="radio" name="other_attrs_类型" value="MP4"><label for="mp4">MP4</label>
+									<input id="mp4" type="radio" name="other_attrs_类型" value="MP4" <%=@m.other_attr('类型') == 'MP4' ? 'checked' : ''%> ><label for="mp4">MP4</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="youxiji" type="radio" name="other_attrs_类型" value="游戏机"><label for="youxiji">游戏机</label>
+									<input id="youxiji" type="radio" name="other_attrs_类型" value="游戏机" <%=@m.other_attr('类型') == '游戏机' ? 'checked' : ''%> ><label for="youxiji">游戏机</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -511,13 +522,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="bingxiang" type="radio" name="other_attrs_类型" value="冰箱"><label for="bingxiang">冰箱</label>
+									<input id="bingxiang" type="radio" name="other_attrs_类型" value="冰箱" <%=@m.other_attr('类型') == '冰箱' ? 'checked' : ''%> ><label for="bingxiang">冰箱</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="kongtiao" type="radio" name="other_attrs_类型" value="空调"><label for="kongtiao">空调</label>
+									<input id="kongtiao" type="radio" name="other_attrs_类型" value="空调" <%=@m.other_attr('类型') == '空调' ? 'checked' : ''%> ><label for="kongtiao">空调</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="dianshi" type="radio" name="other_attrs_类型" value="电视"><label for="dianshi">电视</label>
+									<input id="dianshi" type="radio" name="other_attrs_类型" value="电视" <%=@m.other_attr('类型') == '电视机' ? 'checked' : ''%> ><label for="dianshi">电视</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="xiyiji" type="radio" name="other_attrs_类型" value="洗衣机"><label for="xiyiji">洗衣机</label>
+									<input id="xiyiji" type="radio" name="other_attrs_类型" value="洗衣机" <%=@m.other_attr('类型') == '洗衣机' ? 'checked' : ''%> ><label for="xiyiji">洗衣机</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -530,13 +541,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="chuang" type="radio" name="other_attrs_类型" value="床/床垫"><label for="chuang">床/床垫</label>
+									<input id="chuang" type="radio" name="other_attrs_类型" value="床/床垫" <%=@m.other_attr('类型') == '床/床垫' ? 'checked' : ''%> ><label for="chuang">床/床垫</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="guizi" type="radio" name="other_attrs_类型" value="柜子"><label for="guizi">柜子</label>
+									<input id="guizi" type="radio" name="other_attrs_类型" value="柜子" <%=@m.other_attr('类型') == '柜子' ? 'checked' : ''%> ><label for="guizi">柜子</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zhuoyi" type="radio" name="other_attrs_类型" value="桌椅"><label for="zhuoyi">桌椅</label>
+									<input id="zhuoyi" type="radio" name="other_attrs_类型" value="桌椅" <%=@m.other_attr('类型') == '桌椅' ? 'checked' : ''%> ><label for="zhuoyi">桌椅</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="shafa" type="radio" name="other_attrs_类型" value="沙发"><label for="shafa">沙发</label>
+									<input id="shafa" type="radio" name="other_attrs_类型" value="沙发" <%=@m.other_attr('类型') == '沙发' ? 'checked' : ''%> ><label for="shafa">沙发</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -549,13 +560,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="nvzhuang" type="radio" name="other_attrs_类型" value="女装"><label for="nvzhuang">女装</label>
+									<input id="nvzhuang" type="radio" name="other_attrs_类型" value="女装" <%=@m.other_attr('类型') == '女装' ? 'checked' : ''%> ><label for="nvzhuang">女装</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="nanzhuang" type="radio" name="other_attrs_类型" value="男装"><label for="nanzhuang">男装</label>
+									<input id="nanzhuang" type="radio" name="other_attrs_类型" value="男装" <%=@m.other_attr('类型') == '男装' ? 'checked' : ''%> ><label for="nanzhuang">男装</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zhongxingzhuang" type="radio" name="other_attrs_类型" value="中性装"><label for="zhongxingzhuang">中性装</label>
+									<input id="zhongxingzhuang" type="radio" name="other_attrs_类型" value="中性装" <%=@m.other_attr('类型') == '中性装' ? 'checked' : ''%> ><label for="zhongxingzhuang">中性装</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="shiping" type="radio" name="other_attrs_类型" value="饰品"><label for="shiping">饰品</label>
+									<input id="shiping" type="radio" name="other_attrs_类型" value="饰品" <%=@m.other_attr('类型') == '饰品' ? 'checked' : ''%> ><label for="shiping">饰品</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -568,11 +579,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="nvxie" type="radio" name="other_attrs_类型" value="女鞋"><label for="nvxie">女鞋</label>
+									<input id="nvxie" type="radio" name="other_attrs_类型" value="女鞋" <%=@m.other_attr('类型') == '女鞋' ? 'checked' : ''%> ><label for="nvxie">女鞋</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="nanxie" type="radio" name="other_attrs_类型" value="男鞋"><label for="nanxie">男鞋</label>
+									<input id="nanxie" type="radio" name="other_attrs_类型" value="男鞋" <%=@m.other_attr('类型') == '男鞋' ? 'checked' : ''%> ><label for="nanxie">男鞋</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="xiangbao" type="radio" name="other_attrs_类型" value="箱包"><label for="xiangbao">箱包</label>
+									<input id="xiangbao" type="radio" name="other_attrs_类型" value="箱包" <%=@m.other_attr('类型') == '箱包' ? 'checked' : ''%> ><label for="xiangbao">箱包</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -585,13 +596,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="yingershiping" type="radio" name="other_attrs_类型" value="食品"><label for="yingershiping">食品</label>
+									<input id="yingershiping" type="radio" name="other_attrs_类型" value="食品" <%=@m.other_attr('类型') == '食品' ? 'checked' : ''%> ><label for="yingershiping">食品</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yingerfushi" type="radio" name="other_attrs_类型" value="服饰"><label for="yingerfushi">服饰</label>
+									<input id="yingerfushi" type="radio" name="other_attrs_类型" value="服饰" <%=@m.other_attr('类型') == '服饰' ? 'checked' : ''%> ><label for="yingerfushi">服饰</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="wanju" type="radio" name="other_attrs_类型" value="玩具"><label for="wanju">玩具</label>
+									<input id="wanju" type="radio" name="other_attrs_类型" value="玩具" <%=@m.other_attr('类型') == '玩具' ? 'checked' : ''%> ><label for="wanju">玩具</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yingeryongpin" type="radio" name="other_attrs_类型" value="用品"><label for="yingeryongpin">用品</label>
+									<input id="yingeryongpin" type="radio" name="other_attrs_类型" value="用品" <%=@m.other_attr('类型') == '用品' ? 'checked' : ''%> ><label for="yingeryongpin">用品</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -604,15 +615,15 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="tushu" type="radio" name="other_attrs_类型" value="图书"><label for="tushu">图书</label>
+									<input id="tushu" type="radio" name="other_attrs_类型" value="图书" <%=@m.other_attr('类型') == '图书' ? 'checked' : ''%> ><label for="tushu">图书</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="baozhi" type="radio" name="other_attrs_类型" value="报纸"><label for="baozhi">报纸</label>
+									<input id="baozhi" type="radio" name="other_attrs_类型" value="报纸" <%=@m.other_attr('类型') == '报纸' ? 'checked' : ''%> ><label for="baozhi">报纸</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zazhi" type="radio" name="other_attrs_类型" value="杂志"><label for="zazhi">杂志</label>
+									<input id="zazhi" type="radio" name="other_attrs_类型" value="杂志" <%=@m.other_attr('类型') == '杂志' ? 'checked' : ''%> ><label for="zazhi">杂志</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="cd" type="radio" name="other_attrs_类型" value="光盘/CD"><label for="cd">光盘/CD</label>
+									<input id="cd" type="radio" name="other_attrs_类型" value="光盘/CD" <%=@m.other_attr('类型') == '光盘/CD' ? 'checked' : ''%> ><label for="cd">光盘/CD</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="cidai" type="radio" name="other_attrs_类型" value="磁带"><label for="cidai">磁带</label>
+									<input id="cidai" type="radio" name="other_attrs_类型" value="磁带" <%=@m.other_attr('类型') == '磁带' ? 'checked' : ''%> ><label for="cidai">磁带</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -625,11 +636,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="yueqi" type="radio" name="other_attrs_类型" value="乐器"><label for="yueqi">乐器</label>
+									<input id="yueqi" type="radio" name="other_attrs_类型" value="乐器" <%=@m.other_attr('类型') == '乐器' ? 'checked' : ''%> ><label for="yueqi">乐器</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="wenju" type="radio" name="other_attrs_类型" value="文具"><label for="wenju">文具</label>
+									<input id="wenju" type="radio" name="other_attrs_类型" value="文具" <%=@m.other_attr('类型') == '文具' ? 'checked' : ''%> ><label for="wenju">文具</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="bangongshebei" type="radio" name="other_attrs_类型" value="办公设备"><label for="bangongshebei">办公设备</label>
+									<input id="bangongshebei" type="radio" name="other_attrs_类型" value="办公设备" <%=@m.other_attr('类型') == '办公设备' ? 'checked' : ''%> ><label for="bangongshebei">办公设备</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -642,13 +653,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="huiyuanka" type="radio" name="other_attrs_类型" value="会员卡/打折卡"><label for="huiyuanka">会员卡/打折卡</label>
+									<input id="huiyuanka" type="radio" name="other_attrs_类型" value="会员卡/打折卡" <%=@m.other_attr('类型') == '会员卡/打折卡' ? 'checked' : ''%> ><label for="huiyuanka">会员卡/打折卡</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="dianyingpiao" type="radio" name="other_attrs_类型" value="门票/电影票"><label for="dianyingpiao">门票/电影票</label>
+									<input id="dianyingpiao" type="radio" name="other_attrs_类型" value="门票/电影票" <%=@m.other_attr('类型') == '门票/电影票' ? 'checked' : ''%> ><label for="dianyingpiao">门票/电影票</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="liquan" type="radio" name="other_attrs_类型" value="抵用券/礼券"><label for="liquan">抵用券/礼券</label>
+									<input id="liquan" type="radio" name="other_attrs_类型" value="抵用券/礼券" <%=@m.other_attr('类型') == '抵用券/礼券' ? 'checked' : ''%> ><label for="liquan">抵用券/礼券</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="jifen" type="radio" name="other_attrs_类型" value="积分"><label for="jifen">积分</label>
+									<input id="jifen" type="radio" name="other_attrs_类型" value="积分" <%=@m.other_attr('类型') == '积分' ? 'checked' : ''%> ><label for="jifen">积分</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -661,21 +672,21 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">品牌：</td>
 								<td class="inputTd">
-									<input id="sangtana" type="radio" name="other_attrs_品牌" value="桑塔纳"><label for="sangtana">桑塔纳</label>
+									<input id="sangtana" type="radio" name="other_attrs_品牌" value="桑塔纳" <%=@m.other_attr('品牌') == '桑塔纳' ? 'checked' : ''%> ><label for="sangtana">桑塔纳</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="jieda" type="radio" name="other_attrs_品牌" value="捷达"><label for="jieda">捷达</label>
+									<input id="jieda" type="radio" name="other_attrs_品牌" value="捷达" <%=@m.other_attr('品牌') == '捷达' ? 'checked' : ''%> ><label for="jieda">捷达</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="xiali" type="radio" name="other_attrs_品牌" value="夏利"><label for="xiali">夏利</label>
+									<input id="xiali" type="radio" name="other_attrs_品牌" value="夏利" <%=@m.other_attr('品牌') == '夏利' ? 'checked' : ''%> ><label for="xiali">夏利</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="fukang" type="radio" name="other_attrs_品牌" value="富康"><label for="fukang">富康</label>
+									<input id="fukang" type="radio" name="other_attrs_品牌" value="富康" <%=@m.other_attr('品牌') == '富康' ? 'checked' : ''%> ><label for="fukang">富康</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="bieke" type="radio" name="other_attrs_品牌" value="别克"><label for="bieke">别克</label>
+									<input id="bieke" type="radio" name="other_attrs_品牌" value="别克" <%=@m.other_attr('品牌') == '别克' ? 'checked' : ''%> ><label for="bieke">别克</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="pasate" type="radio" name="other_attrs_品牌" value="帕萨特"><label for="pasate">帕萨特</label>
+									<input id="pasate" type="radio" name="other_attrs_品牌" value="帕萨特" <%=@m.other_attr('品牌') == '帕萨特' ? 'checked' : ''%> ><label for="pasate">帕萨特</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="aotuo" type="radio" name="other_attrs_品牌" value="奥拓"><label for="aotuo">奥拓</label>
+									<input id="aotuo" type="radio" name="other_attrs_品牌" value="奥拓" <%=@m.other_attr('品牌') == '奥拓' ? 'checked' : ''%> ><label for="aotuo">奥拓</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="qirui" type="radio" name="other_attrs_品牌" value="奇瑞"><label for="qirui">奇瑞</label>
+									<input id="qirui" type="radio" name="other_attrs_品牌" value="奇瑞" <%=@m.other_attr('品牌') == '奇瑞' ? 'checked' : ''%> ><label for="qirui">奇瑞</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -688,9 +699,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="huoche" type="radio" name="other_attrs_类型" value="货车"><label for="huoche">货车</label>
+									<input id="huoche" type="radio" name="other_attrs_类型" value="货车" <%=@m.other_attr('类型') == '货车' ? 'checked' : ''%> ><label for="huoche">货车</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="mianbaoche" type="radio" name="other_attrs_类型" value="面包车"><label for="mianbaoche">面包车</label>
+									<input id="mianbaoche" type="radio" name="other_attrs_类型" value="面包车" <%=@m.other_attr('类型') == '面包车' ? 'checked' : ''%> ><label for="mianbaoche">面包车</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -703,13 +714,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">房型：</td>
 								<td class="inputTd">
-									<input id="yishi" type="radio" name="other_attrs_房型" value="一室"><label for="yishi">一室</label>
+									<input id="yishi" type="radio" name="other_attrs_房型" value="一室" <%=@m.other_attr('房型') == '一室' ? 'checked' : ''%> ><label for="yishi">一室</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="ershi" type="radio" name="other_attrs_房型" value="二室"><label for="ershi">二室</label>
+									<input id="ershi" type="radio" name="other_attrs_房型" value="二室" <%=@m.other_attr('房型') == '二室' ? 'checked' : ''%> ><label for="ershi">二室</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="sanshi" type="radio" name="other_attrs_房型" value="三室"><label for="sanshi">三室</label>
+									<input id="sanshi" type="radio" name="other_attrs_房型" value="三室" <%=@m.other_attr('房型') == '三室' ? 'checked' : ''%> ><label for="sanshi">三室</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="sishi" type="radio" name="other_attrs_房型" value="四室及以上"><label for="sishi">四室及以上</label>
+									<input id="sishi" type="radio" name="other_attrs_房型" value="四室及以上" <%=@m.other_attr('房型') == '四室及以上' ? 'checked' : ''%> ><label for="sishi">四室及以上</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -722,11 +733,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="zhuwo" type="radio" name="other_attrs_类型" value="主卧"><label for="zhuwo">主卧</label>
+									<input id="zhuwo" type="radio" name="other_attrs_类型" value="主卧" <%=@m.other_attr('类型') == '主卧' ? 'checked' : ''%> ><label for="zhuwo">主卧</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="ciwo" type="radio" name="other_attrs_类型" value="次卧"><label for="ciwo">次卧</label>
+									<input id="ciwo" type="radio" name="other_attrs_类型" value="次卧" <%=@m.other_attr('类型') == '次卧' ? 'checked' : ''%> ><label for="ciwo">次卧</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="chuangwei" type="radio" name="other_attrs_类型" value="床位"><label for="chuangwei">床位</label>
+									<input id="chuangwei" type="radio" name="other_attrs_类型" value="床位" <%=@m.other_attr('类型') == '床位' ? 'checked' : ''%> ><label for="chuangwei">床位</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -739,9 +750,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="menmian" type="radio" name="other_attrs_类型" value="商铺/门面/店面"><label for="menmian">商铺/门面/店面</label>
+									<input id="menmian" type="radio" name="other_attrs_类型" value="商铺/门面/店面" <%=@m.other_attr('类型') == '商铺/门面/店面' ? 'checked' : ''%> ><label for="menmian">商铺/门面/店面</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="tanwei" type="radio" name="other_attrs_类型" value="摊位/柜台"><label for="tanwei">摊位/柜台</label>
+									<input id="tanwei" type="radio" name="other_attrs_类型" value="摊位/柜台" <%=@m.other_attr('类型') == '摊位/柜台' ? 'checked' : ''%> ><label for="tanwei">摊位/柜台</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -754,15 +765,15 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="jiatinglvguan" type="radio" name="other_attrs_类型" value="家庭旅馆"><label for="jiatinglvguan">家庭旅馆</label>
+									<input id="jiatinglvguan" type="radio" name="other_attrs_类型" value="家庭旅馆" <%=@m.other_attr('类型') == '家庭旅馆' ? 'checked' : ''%> ><label for="jiatinglvguan">家庭旅馆</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="gaodanggongyu" type="radio" name="other_attrs_类型" value="高档公寓"><label for="gaodanggongyu">高档公寓</label>
+									<input id="gaodanggongyu" type="radio" name="other_attrs_类型" value="高档公寓" <%=@m.other_attr('类型') == '高档公寓' ? 'checked' : ''%> ><label for="gaodanggongyu">高档公寓</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="shangwujiudian" type="radio" name="other_attrs_类型" value="商务酒店"><label for="shangwujiudian">商务酒店</label>
+									<input id="shangwujiudian" type="radio" name="other_attrs_类型" value="商务酒店" <%=@m.other_attr('类型') == '商务酒店' ? 'checked' : ''%> ><label for="shangwujiudian">商务酒店</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="binguan" type="radio" name="other_attrs_类型" value="宾馆"><label for="binguan">宾馆</label>
+									<input id="binguan" type="radio" name="other_attrs_类型" value="宾馆" <%=@m.other_attr('类型') == '宾馆' ? 'checked' : ''%> ><label for="binguan">宾馆</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zhaodaisuo" type="radio" name="other_attrs_类型" value="招待所"><label for="zhaodaisuo">招待所</label>
+									<input id="zhaodaisuo" type="radio" name="other_attrs_类型" value="招待所" <%=@m.other_attr('类型') == '招待所' ? 'checked' : ''%> ><label for="zhaodaisuo">招待所</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -775,13 +786,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="dianzhang" type="radio" name="other_attrs_类型" value="店长"><label for="dianzhang">店长</label>
+									<input id="dianzhang" type="radio" name="other_attrs_类型" value="店长" <%=@m.other_attr('类型') == '店长' ? 'checked' : ''%> ><label for="dianzhang">店长</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="dianyuan" type="radio" name="other_attrs_类型" value="店员"><label for="dianyuan">店员</label>
+									<input id="dianyuan" type="radio" name="other_attrs_类型" value="店员" <%=@m.other_attr('类型') == '店员' ? 'checked' : ''%> ><label for="dianyuan">店员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yingyeyuan" type="radio" name="other_attrs_类型" value="营业员"><label for="yingyeyuan">营业员</label>
+									<input id="yingyeyuan" type="radio" name="other_attrs_类型" value="营业员" <%=@m.other_attr('类型') == '营业员' ? 'checked' : ''%> ><label for="yingyeyuan">营业员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="daogou" type="radio" name="other_attrs_类型" value="导购"><label for="daogou">导购</label>
+									<input id="daogou" type="radio" name="other_attrs_类型" value="导购" <%=@m.other_attr('类型') == '导购' ? 'checked' : ''%> ><label for="daogou">导购</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -794,9 +805,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="wenyuan" type="radio" name="other_attrs_类型" value="文员"><label for="wenyuan">文员</label>
+									<input id="wenyuan" type="radio" name="other_attrs_类型" value="文员" <%=@m.other_attr('类型') == '文员' ? 'checked' : ''%> ><label for="wenyuan">文员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zhuli" type="radio" name="other_attrs_类型" value="助理"><label for="zhuli">助理</label>
+									<input id="zhuli" type="radio" name="other_attrs_类型" value="助理" <%=@m.other_attr('类型') == '助理' ? 'checked' : ''%> ><label for="zhuli">助理</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -809,13 +820,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="xiaoshou" type="radio" name="other_attrs_类型" value="销售"><label for="xiaoshou">销售</label>
+									<input id="xiaoshou" type="radio" name="other_attrs_类型" value="销售" <%=@m.other_attr('类型') == '销售' ? 'checked' : ''%> ><label for="xiaoshou">销售</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="guwen" type="radio" name="other_attrs_类型" value="顾问"><label for="guwen">顾问</label>
+									<input id="guwen" type="radio" name="other_attrs_类型" value="顾问" <%=@m.other_attr('类型') == '顾问' ? 'checked' : ''%> ><label for="guwen">顾问</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="jingjiren" type="radio" name="other_attrs_类型" value="经纪人"><label for="jingjiren">经纪人</label>
+									<input id="jingjiren" type="radio" name="other_attrs_类型" value="经纪人" <%=@m.other_attr('类型') == '经纪人' ? 'checked' : ''%> ><label for="jingjiren">经纪人</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yewuyuan" type="radio" name="other_attrs_类型" value="业务员"><label for="yewuyuan">业务员</label>
+									<input id="yewuyuan" type="radio" name="other_attrs_类型" value="业务员" <%=@m.other_attr('类型') == '业务员' ? 'checked' : ''%> ><label for="yewuyuan">业务员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -828,11 +839,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="baomu" type="radio" name="other_attrs_类型" value="保姆"><label for="baomu">保姆</label>
+									<input id="baomu" type="radio" name="other_attrs_类型" value="保姆" <%=@m.other_attr('类型') == '保姆' ? 'checked' : ''%> ><label for="baomu">保姆</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yuesao" type="radio" name="other_attrs_类型" value="月嫂"><label for="yuesao">月嫂</label>
+									<input id="yuesao" type="radio" name="other_attrs_类型" value="月嫂" <%=@m.other_attr('类型') == '月嫂' ? 'checked' : ''%> ><label for="yuesao">月嫂</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zhongdiangong" type="radio" name="other_attrs_类型" value="钟点工"><label for="zhongdiangong">钟点工</label>
+									<input id="zhongdiangong" type="radio" name="other_attrs_类型" value="钟点工" <%=@m.other_attr('类型') == '钟点工' ? 'checked' : ''%> ><label for="zhongdiangong">钟点工</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -845,9 +856,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="baoan" type="radio" name="other_attrs_类型" value="保安"><label for="baoan">保安</label>
+									<input id="baoan" type="radio" name="other_attrs_类型" value="保安" <%=@m.other_attr('类型') == '保安' ? 'checked' : ''%> ><label for="baoan">保安</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="cangkuguanliyuan" type="radio" name="other_attrs_类型" value="仓库管理员"><label for="cangkuguanliyuan">仓库管理员</label>
+									<input id="cangkuguanliyuan" type="radio" name="other_attrs_类型" value="仓库管理员" <%=@m.other_attr('类型') == '仓库管理员' ? 'checked' : ''%> ><label for="cangkuguanliyuan">仓库管理员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -860,9 +871,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="kuaidiyuan" type="radio" name="other_attrs_类型" value="快递员"><label for="kuaidiyuan">快递员</label>
+									<input id="kuaidiyuan" type="radio" name="other_attrs_类型" value="快递员" <%=@m.other_attr('类型') == '快递员' ? 'checked' : ''%> ><label for="kuaidiyuan">快递员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="songhuoyuan" type="radio" name="other_attrs_类型" value="送货员"><label for="songhuoyuan">送货员</label>
+									<input id="songhuoyuan" type="radio" name="other_attrs_类型" value="送货员" <%=@m.other_attr('类型') == '送货员' ? 'checked' : ''%> ><label for="songhuoyuan">送货员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -875,9 +886,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="chushi" type="radio" name="other_attrs_类型" value="厨师"><label for="chushi">厨师</label>
+									<input id="chushi" type="radio" name="other_attrs_类型" value="厨师" <%=@m.other_attr('类型') == '厨师' ? 'checked' : ''%> ><label for="chushi">厨师</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="peicaiyuan" type="radio" name="other_attrs_类型" value="配菜员"><label for="peicaiyuan">配菜员</label>
+									<input id="peicaiyuan" type="radio" name="other_attrs_类型" value="配菜员" <%=@m.other_attr('类型') == '配菜员' ? 'checked' : ''%> ><label for="peicaiyuan">配菜员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -890,13 +901,13 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="kuaiji" type="radio" name="other_attrs_类型" value="会计"><label for="kuaiji">会计</label>
+									<input id="kuaiji" type="radio" name="other_attrs_类型" value="会计" <%=@m.other_attr('类型') == '会计' ? 'checked' : ''%> ><label for="kuaiji">会计</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="chuna" type="radio" name="other_attrs_类型" value="出纳"><label for="chuna">出纳</label>
+									<input id="chuna" type="radio" name="other_attrs_类型" value="出纳" <%=@m.other_attr('类型') == '出纳' ? 'checked' : ''%> ><label for="chuna">出纳</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="fanyi" type="radio" name="other_attrs_类型" value="翻译"><label for="fanyi">翻译</label>
+									<input id="fanyi" type="radio" name="other_attrs_类型" value="翻译" <%=@m.other_attr('类型') == '翻译' ? 'checked' : ''%> ><label for="fanyi">翻译</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="bianji" type="radio" name="other_attrs_类型" value="编辑"><label for="bianji">编辑</label>
+									<input id="bianji" type="radio" name="other_attrs_类型" value="编辑" <%=@m.other_attr('类型') == '编辑' ? 'checked' : ''%> ><label for="bianji">编辑</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -909,11 +920,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="chengxuyuan" type="radio" name="other_attrs_类型" value="程序员"><label for="chengxuyuan">程序员</label>
+									<input id="chengxuyuan" type="radio" name="other_attrs_类型" value="程序员" <%=@m.other_attr('类型') == '程序员' ? 'checked' : ''%> ><label for="chengxuyuan">程序员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="gongchengshi" type="radio" name="other_attrs_类型" value="工程师"><label for="gongchengshi">工程师</label>
+									<input id="gongchengshi" type="radio" name="other_attrs_类型" value="工程师" <%=@m.other_attr('类型') == '工程师' ? 'checked' : ''%> ><label for="gongchengshi">工程师</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="wangguan" type="radio" name="other_attrs_类型" value="网管"><label for="wangguan">网管</label>
+									<input id="wangguan" type="radio" name="other_attrs_类型" value="网管" <%=@m.other_attr('类型') == '网管' ? 'checked' : ''%> ><label for="wangguan">网管</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -926,11 +937,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="meigong" type="radio" name="other_attrs_类型" value="美工"><label for="meigong">美工</label>
+									<input id="meigong" type="radio" name="other_attrs_类型" value="美工" <%=@m.other_attr('类型') == '美工' ? 'checked' : ''%> ><label for="meigong">美工</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="pingmiansheji" type="radio" name="other_attrs_类型" value="平面设计"><label for="pingmiansheji">平面设计</label>
+									<input id="pingmiansheji" type="radio" name="other_attrs_类型" value="平面设计" <%=@m.other_attr('类型') == '平面设计' ? 'checked' : ''%> ><label for="pingmiansheji">平面设计</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="wangyesheji" type="radio" name="other_attrs_类型" value="网页设计"><label for="wangyesheji">网页设计</label>
+									<input id="wangyesheji" type="radio" name="other_attrs_类型" value="网页设计" <%=@m.other_attr('类型') == '网页设计' ? 'checked' : ''%> ><label for="wangyesheji">网页设计</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -943,11 +954,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="meirongshi" type="radio" name="other_attrs_类型" value="美容师"><label for="meirongshi">美容师</label>
+									<input id="meirongshi" type="radio" name="other_attrs_类型" value="美容师" <%=@m.other_attr('类型') == '美容师' ? 'checked' : ''%> ><label for="meirongshi">美容师</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="meifashi" type="radio" name="other_attrs_类型" value="美发师"><label for="meifashi">美发师</label>
+									<input id="meifashi" type="radio" name="other_attrs_类型" value="美发师" <%=@m.other_attr('类型') == '美发师' ? 'checked' : ''%> ><label for="meifashi">美发师</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="baojianshi" type="radio" name="other_attrs_类型" value="保健师"><label for="baojianshi">保健师</label>
+									<input id="baojianshi" type="radio" name="other_attrs_类型" value="保健师" <%=@m.other_attr('类型') == '保健师' ? 'checked' : ''%> ><label for="baojianshi">保健师</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -960,11 +971,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="mote" type="radio" name="other_attrs_类型" value="模特"><label for="mote">模特</label>
+									<input id="mote" type="radio" name="other_attrs_类型" value="模特" <%=@m.other_attr('类型') == '模特' ? 'checked' : ''%> ><label for="mote">模特</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yanyuan" type="radio" name="other_attrs_类型" value="演员"><label for="yanyuan">演员</label>
+									<input id="yanyuan" type="radio" name="other_attrs_类型" value="演员" <%=@m.other_attr('类型') == '演员' ? 'checked' : ''%> ><label for="yanyuan">演员</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="siyi" type="radio" name="other_attrs_类型" value="司仪"><label for="siyi">司仪</label>
+									<input id="siyi" type="radio" name="other_attrs_类型" value="司仪" <%=@m.other_attr('类型') == '司仪' ? 'checked' : ''%> ><label for="siyi">司仪</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -977,17 +988,17 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="lvyou" type="radio" name="other_attrs_类型" value="旅游"><label for="lvyou">旅游</label>
+									<input id="lvyou" type="radio" name="other_attrs_类型" value="旅游" <%=@m.other_attr('类型') == '旅游' ? 'checked' : ''%> ><label for="lvyou">旅游</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="zijiayou" type="radio" name="other_attrs_类型" value="自驾游"><label for="zijiayou">自驾游</label>
+									<input id="zijiayou" type="radio" name="other_attrs_类型" value="自驾游" <%=@m.other_attr('类型') == '自驾游' ? 'checked' : ''%> ><label for="zijiayou">自驾游</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yumaoqiu" type="radio" name="other_attrs_类型" value="羽毛球"><label for="yumaoqiu">羽毛球</label>
+									<input id="yumaoqiu" type="radio" name="other_attrs_类型" value="羽毛球" <%=@m.other_attr('类型') == '羽毛球' ? 'checked' : ''%> ><label for="yumaoqiu">羽毛球</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="lanqiu" type="radio" name="other_attrs_类型" value="篮球"><label for="lanqiu">篮球</label>
+									<input id="lanqiu" type="radio" name="other_attrs_类型" value="篮球" <%=@m.other_attr('类型') == '篮球' ? 'checked' : ''%> ><label for="lanqiu">篮球</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="paobu" type="radio" name="other_attrs_类型" value="跑步"><label for="paobu">跑步</label>
+									<input id="paobu" type="radio" name="other_attrs_类型" value="跑步" <%=@m.other_attr('类型') == '跑步' ? 'checked' : ''%> ><label for="paobu">跑步</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="taiqiu" type="radio" name="other_attrs_类型" value="台球"><label for="taiqiu">台球</label>
+									<input id="taiqiu" type="radio" name="other_attrs_类型" value="台球" <%=@m.other_attr('类型') == '台球' ? 'checked' : ''%> ><label for="taiqiu">台球</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1000,11 +1011,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="jiaxiao" type="radio" name="other_attrs_类型" value="驾校"><label for="jiaxiao">驾校</label>
+									<input id="jiaxiao" type="radio" name="other_attrs_类型" value="驾校" <%=@m.other_attr('类型') == '驾校' ? 'checked' : ''%> ><label for="jiaxiao">驾校</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="peijia" type="radio" name="other_attrs_类型" value="陪驾"><label for="peijia">陪驾</label>
+									<input id="peijia" type="radio" name="other_attrs_类型" value="陪驾" <%=@m.other_attr('类型') == '陪驾' ? 'checked' : ''%> ><label for="peijia">陪驾</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="daijia" type="radio" name="other_attrs_类型" value="代驾"><label for="daijia">代驾</label>
+									<input id="daijia" type="radio" name="other_attrs_类型" value="代驾" <%=@m.other_attr('类型') == '代驾' ? 'checked' : ''%> ><label for="daijia">代驾</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1017,9 +1028,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="jiazhengbaomu" type="radio" name="other_attrs_类型" value="家政保姆"><label for="jiazhengbaomu">家政保姆</label>
+									<input id="jiazhengbaomu" type="radio" name="other_attrs_类型" value="家政保姆" <%=@m.other_attr('类型') == '家政保姆' ? 'checked' : ''%> ><label for="jiazhengbaomu">家政保姆</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="baojieqingxi" type="radio" name="other_attrs_类型" value="保洁清洗"><label for="baojieqingxi">保洁清洗</label>
+									<input id="baojieqingxi" type="radio" name="other_attrs_类型" value="保洁清洗" <%=@m.other_attr('类型') == '保洁清洗' ? 'checked' : ''%> ><label for="baojieqingxi">保洁清洗</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1032,11 +1043,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="diannao" type="radio" name="other_attrs_类型" value="电脑"><label for="diannao">电脑</label>
+									<input id="diannao" type="radio" name="other_attrs_类型" value="电脑" <%=@m.other_attr('类型') == '电脑' ? 'checked' : ''%> ><label for="diannao">电脑</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="waiyu" type="radio" name="other_attrs_类型" value="外语"><label for="waiyu">外语</label>
+									<input id="waiyu" type="radio" name="other_attrs_类型" value="外语" <%=@m.other_attr('类型') == '外语' ? 'checked' : ''%> ><label for="waiyu">外语</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="jineng" type="radio" name="other_attrs_类型" value="技能"><label for="jineng">技能</label>
+									<input id="jineng" type="radio" name="other_attrs_类型" value="技能" <%=@m.other_attr('类型') == '技能' ? 'checked' : ''%> ><label for="jineng">技能</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1049,11 +1060,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="diannaoweixiu" type="radio" name="other_attrs_类型" value="电脑维修"><label for="diannaoweixiu">电脑维修</label>
+									<input id="diannaoweixiu" type="radio" name="other_attrs_类型" value="电脑维修" <%=@m.other_attr('类型') == '电脑维修' ? 'checked' : ''%> ><label for="diannaoweixiu">电脑维修</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="jiadianweixiu" type="radio" name="other_attrs_类型" value="家电维修"><label for="jiadianweixiu">家电维修</label>
+									<input id="jiadianweixiu" type="radio" name="other_attrs_类型" value="家电维修" <%=@m.other_attr('类型') == '家电维修' ? 'checked' : ''%> ><label for="jiadianweixiu">家电维修</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="fangwuweixiu" type="radio" name="other_attrs_类型" value="房屋维修"><label for="fangwuweixiu">房屋维修</label>
+									<input id="fangwuweixiu" type="radio" name="other_attrs_类型" value="房屋维修" <%=@m.other_attr('类型') == '房屋维修' ? 'checked' : ''%> ><label for="fangwuweixiu">房屋维修</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1066,11 +1077,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="hunqing" type="radio" name="other_attrs_类型" value="婚庆"><label for="hunqing">婚庆</label>
+									<input id="hunqing" type="radio" name="other_attrs_类型" value="婚庆" <%=@m.other_attr('类型') == '婚庆' ? 'checked' : ''%> ><label for="hunqing">婚庆</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="sheying" type="radio" name="other_attrs_类型" value="摄影"><label for="sheying">摄影</label>
+									<input id="sheying" type="radio" name="other_attrs_类型" value="摄影" <%=@m.other_attr('类型') == '摄影' ? 'checked' : ''%> ><label for="sheying">摄影</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="siyi" type="radio" name="other_attrs_类型" value="司仪服务"><label for="siyi">司仪服务</label>
+									<input id="siyifuwu" type="radio" name="other_attrs_类型" value="司仪服务" <%=@m.other_attr('类型') == '司仪服务' ? 'checked' : ''%> ><label for="siyifuwu">司仪服务</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1083,11 +1094,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="banjia" type="radio" name="other_attrs_类型" value="搬家"><label for="banjia">搬家</label>
+									<input id="banjia" type="radio" name="other_attrs_类型" value="搬家" <%=@m.other_attr('类型') == '搬家' ? 'checked' : ''%> ><label for="banjia">搬家</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="kuaidi" type="radio" name="other_attrs_类型" value="快递/送货"><label for="kuaidi">快递/送货</label>
+									<input id="kuaidi" type="radio" name="other_attrs_类型" value="快递/送货" <%=@m.other_attr('类型') == '快递/送货' ? 'checked' : ''%> ><label for="kuaidi">快递/送货</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="wuliu" type="radio" name="other_attrs_类型" value="物流货运"><label for="wuliu">物流货运</label>
+									<input id="wuliu" type="radio" name="other_attrs_类型" value="物流货运" <%=@m.other_attr('类型') == '物流货运' ? 'checked' : ''%> ><label for="wuliu">物流货运</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1100,11 +1111,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="wangyeshejifuwu" type="radio" name="other_attrs_类型" value="网页设计"><label for="wangyeshejifuwu">网页设计</label>
+									<input id="wangyeshejifuwu" type="radio" name="other_attrs_类型" value="网页设计" <%=@m.other_attr('类型') == '网页设计' ? 'checked' : ''%> ><label for="wangyeshejifuwu">网页设计</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="pingmianshejifuwu" type="radio" name="other_attrs_类型" value="平面设计"><label for="pingmianshejifuwu">平面设计</label>
+									<input id="pingmianshejifuwu" type="radio" name="other_attrs_类型" value="平面设计" <%=@m.other_attr('类型') == '平面设计' ? 'checked' : ''%> ><label for="pingmianshejifuwu">平面设计</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="yinshua" type="radio" name="other_attrs_类型" value="印刷"><label for="yinshua">印刷</label>
+									<input id="yinshua" type="radio" name="other_attrs_类型" value="印刷" <%=@m.other_attr('类型') == '印刷' ? 'checked' : ''%> ><label for="yinshua">印刷</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1117,11 +1128,11 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">类型：</td>
 								<td class="inputTd">
-									<input id="caiwujizhang" type="radio" name="other_attrs_类型" value="财务记账"><label for="caiwujizhang">财务记账</label>
+									<input id="caiwujizhang" type="radio" name="other_attrs_类型" value="财务记账" <%=@m.other_attr('类型') == '财务记账' ? 'checked' : ''%> ><label for="caiwujizhang">财务记账</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="falvzixun" type="radio" name="other_attrs_类型" value="法律咨询"><label for="falvzixun">法律咨询</label>
+									<input id="falvzixun" type="radio" name="other_attrs_类型" value="法律咨询" <%=@m.other_attr('类型') == '法律咨询' ? 'checked' : ''%> ><label for="falvzixun">法律咨询</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="fanyifuwu" type="radio" name="other_attrs_类型" value="翻译"><label for="fanyifuwu">翻译</label>
+									<input id="fanyifuwu" type="radio" name="other_attrs_类型" value="翻译" <%=@m.other_attr('类型') == '翻译' ? 'checked' : ''%> ><label for="fanyifuwu">翻译</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1134,9 +1145,9 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">性别：</td>
 								<td class="inputTd">
-									<input id="nan" type="radio" name="other_attrs_性别" value="男"><label for="nan">男</label>
+									<input id="nan" type="radio" name="other_attrs_性别" value="男" <%=@m.other_attr('性别') == '男' ? 'checked' : ''%> ><label for="nan">男</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="nv" type="radio" name="other_attrs_性别" value="女"><label for="nv">女</label>
+									<input id="nv" type="radio" name="other_attrs_性别" value="女" <%=@m.other_attr('性别') == '女' ? 'checked' : ''%> ><label for="nv">女</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 					      </tr>
@@ -1153,12 +1164,12 @@ function removePreview(x) {
 								<td valign="top" class="inputTd">
 									<select name="other_attrs_成色" style="width:100px;">
 										<option value="">&nbsp;</option>
-										<option value="全新">全新</option>
-										<option value="95成新">95成新</option>
-										<option value="9成新">9成新</option>
-										<option value="8成新">8成新</option>
-										<option value="7成新">7成新</option>
-										<option value="6成新及以下">6成新及以下</option>
+										<option value="全新" <%=@m.other_attr('成色') == '全新' ? 'selected' : ''%> >全新</option>
+										<option value="95成新" <%=@m.other_attr('成色') == '95成新' ? 'selected' : ''%> >95成新</option>
+										<option value="9成新" <%=@m.other_attr('成色') == '9成新' ? 'selected' : ''%> >9成新</option>
+										<option value="8成新" <%=@m.other_attr('成色') == '8成新' ? 'selected' : ''%> >8成新</option>
+										<option value="7成新" <%=@m.other_attr('成色') == '7成新' ? 'selected' : ''%> >7成新</option>
+										<option value="6成新及以下" <%=@m.other_attr('成色') == '6成新及以下' ? 'selected' : ''%> >6成新及以下</option>
 									</select>
 								</td>
 							</tr>
@@ -1171,7 +1182,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">价格：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_价格" style="text-align: right;" value="元">
+									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_价格" style="text-align: right;" value="<%= @m.other_attr('价格') %>">
 								</td>
 					      </tr>
 						</table>
@@ -1183,7 +1194,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">工资：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_工资" style="text-align: right;" value="元">
+									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_工资" style="text-align: right;" value="<%= @m.other_attr('工资') %>">
 								</td>
 					      </tr>
 						</table>
@@ -1195,7 +1206,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">面积：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_面积" style="text-align: right;" value="平米">
+									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_面积" style="text-align: right;" value="<%= @m.other_attr('面积') %>">
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>
@@ -1210,7 +1221,7 @@ function removePreview(x) {
 							<tr>
 								<td class="attribute">年龄：</td>
 								<td class="inputTd">
-									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_年龄" style="text-align: right;" value="岁">
+									<input type="text" maxlength="10" size="10" class="input" name="other_attrs_年龄" style="text-align: right;" value="<%= @m.other_attr('年龄') %>">
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>
@@ -1227,9 +1238,9 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>发布人：
 								</td>
 								<td class="inputTd">
-									<input id="shangjia" type="radio" name="other_attrs_发布人" value="商家"><label for="shangjia">商家</label>
+									<input id="shangjia" type="radio" name="other_attrs_发布人" value="商家" <%=@m.other_attr('发布人') == '商家' ? 'checked' : ''%> ><label for="shangjia">商家</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="geren" type="radio" name="other_attrs_发布人" value="个人"><label for="geren">个人</label>
+									<input id="geren" type="radio" name="other_attrs_发布人" value="个人" <%=@m.other_attr('发布人') == '个人' ? 'checked' : ''%> ><label for="geren">个人</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 								<td valign="top" class="value">
@@ -1247,9 +1258,9 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>发布者：
 								</td>
 								<td class="inputTd">
-									<input id="zhongjie4fang" type="radio" name="other_attrs_发布者" value="中介"><label for="zhongjie4fang">中介</label>
+									<input id="zhongjie4fang" type="radio" name="other_attrs_发布者" value="中介" <%=@m.other_attr('发布者') == '中介' ? 'checked' : ''%> ><label for="zhongjie4fang">中介</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
-									<input id="geren4fang" type="radio" name="other_attrs_发布者" value="个人"><label for="geren4fang">个人</label>
+									<input id="geren4fang" type="radio" name="other_attrs_发布者" value="个人" <%=@m.other_attr('发布者') == '个人' ? 'checked' : ''%> ><label for="geren4fang">个人</label>
 									&nbsp;&nbsp;&nbsp;&nbsp;
 								</td>
 								<td valign="top" class="value">
@@ -1267,9 +1278,7 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>描述：
 								</td>
 								<td valign="top" class="inputTd">
-									<textarea name="content" style="width:500px" rows="7" cols="70" class="textarea field">
-
-联系方式：</textarea>
+									<textarea name="content" style="width:500px" rows="7" cols="70" class="textarea field"><%= @m.content %></textarea>
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>
@@ -1288,6 +1297,18 @@ function removePreview(x) {
 										<tr>
 											<td>
 												<ul id="imagesUl">
+													<% @m.images_path.split(Message::IMGS).each do |i| %>
+													<li>
+														<input type="hidden" value="<%=i%>" name="images[]">
+														<img width="64" height="64" class="imgBorderBeta" src="<%=i.gsub('.', '_s.')%>">
+														<span class="imgBeta">
+															<a onclick="removePreview(this)" title="删除这张图片" href="#">
+																<img width="10" height="10" border="0" align="absmiddle" alt="删除这张图片" src="/images/laji.gif">
+															</a>
+														</span>
+														<div class="blank10"></div>
+													</li>
+													<% end if !@m.images_path.blank? %>
 												</ul>
 											</td>
 										</tr>
@@ -1310,7 +1331,7 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>设置密码：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="password" name="password" value="" class="input" maxlength="16" size="20"/>
+									<input type="password" name="password" value="<%=@m.password%>" class="input" maxlength="16" size="20"/>
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>
@@ -1327,7 +1348,7 @@ function removePreview(x) {
 									<span class="red">*&nbsp;</span>再次输入密码：
 								</td>
 								<td valign="top" class="inputTd">
-									<input type="password" name="passwor_confirm" value="" class="input field" maxlength="16" size="20"/>
+									<input type="password" name="passwor_confirm" value="<%=@m.password%>" class="input field" maxlength="16" size="20"/>
 								</td>
 								<td valign="top" class="value">
 									<div class="checkError"></div>

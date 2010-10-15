@@ -56,7 +56,7 @@
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
 		<a href="/message/new?category=<%=@c.name%>" rel="nofollow" target="_blank">免费发布信息</a>
-		| <a href="/message/edit" rel="nofollow" target="_blank">修改删除信息</a>
+		| <a href="/message/find_message" rel="nofollow" target="_blank">修改删除信息</a>
 		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
@@ -124,7 +124,7 @@
 				<li class="head"><%=@ct.name+@c.name%></li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
 				<% @ms.each do |m| %>
-				<li><%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a></li>
+				<li><%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a><% if !m.images_path.blank? %><i>图</i><% end %></li>
 				<% end %>
 			</ol>
 			<div class="line"></div>

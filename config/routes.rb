@@ -12,6 +12,11 @@ Sh800::Application.routes.draw do
   resources :message do
     collection do
       get 'list'
+      get 'find_message'
+    end
+    member do
+      get 'validate_message'
+      post 'validate_message'
     end
   end
   # The priority is based upon order of creation:
