@@ -27,6 +27,8 @@ class MessageController < ApplicationController
   
   def show
     @m = Message.find(params[:id])
+    @m.views_count += 1
+    @m.save!
     @c = Category.find(@m.category_id)
     if @c.parent_category_id
       @pc = Category.find(@c.parent_category_id)
@@ -47,11 +49,12 @@ class MessageController < ApplicationController
       end
     end
     other_attrs = other_attrs.join(Message::PS)
+    images_path = params[:images].join(Message::IMGS) if params["images"]
     
     if session[:user_id]
-      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :user_id=>session[:user_id], :ip=>request.remote_ip)
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :images_path=>images_path, :user_id=>session[:user_id], :ip=>request.remote_ip)
     else
-      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :password=>params[:password], :ip=>request.remote_ip)
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :images_path=>images_path, :password=>params[:password], :ip=>request.remote_ip)
     end
     redirect_to message_path(m)
   end

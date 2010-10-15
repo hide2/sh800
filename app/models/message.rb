@@ -3,4 +3,5 @@ class Message < ActiveRecord::Base
   
   KVS = '#$%'
   PS = '^&*'
+  IMGS = ';'
 end

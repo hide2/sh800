@@ -84,19 +84,25 @@
 			&#187; <a href="javascript:void(alert('谢谢举报！'))">举报其他问题</a>
 		</div>
 	
-		<p>发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
-		<br/>
-		所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
-		<br/>
-		<% @m.other_attrs.split(Message::PS).each do |t| %>
-			<%=t.split(Message::KVS)[0]%>：<%=t.split(Message::KVS)[1]%>
+		<p>
+			发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
 			<br/>
-		<% end if @m.other_attrs%>
+			所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
+			<br/>
+			<% @m.other_attrs.split(Message::PS).each do |t| %>
+				<%=t.split(Message::KVS)[0]%>：<%=t.split(Message::KVS)[1]%>
+				<br/>
+			<% end if @m.other_attrs%>
+			
+			<br/>
+			<%= raw whitelist @m.content %>
+			<br/>
+			联系我时请说明是在<%= SITE_TITLE %>看到的，谢谢！
+		</p>
 		
-		<br/>
-		<%= raw whitelist @m.content %>
-		<br/>
-		联系我时请说明是在<%= SITE_TITLE %>看到的，谢谢！
+		<% @m.images_path.split(Message::IMGS).each do |i| %>
+		<img src="<%=i.gsub('.','_c.')%>" >
+		<% end if !@m.images_path.blank? %>
 	
 		<div id="manage" style="border-top: 1px solid rgb(235, 235, 235); margin-top: 5px; padding: 5px;" class="nohist">
 			信息编号：<span id="adId"><%=@m.id%></span> &nbsp;

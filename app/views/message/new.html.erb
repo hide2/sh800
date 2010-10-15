@@ -126,6 +126,9 @@ function formValidation() {
 		return false;
 	}
 }
+function removePreview(x) {
+	$(x).parents('li').remove();
+}
 </script>
 
 <style type="text/css">
@@ -1366,17 +1369,6 @@ function formValidation() {
 										<tr>
 											<td>
 												<ul id="imagesUl">
-													<li id="li_iframe_key_721888">
-														<input type="hidden" value="/upload/images/2010-10-13/1286963810142564_s.jpg" name="image[]">
-														<img id="this_is_for_test" width="64" height="64" class="imgBorderBeta" src="/upload/images/2010-10-13/1286963810142564_s.jpg">
-														<span class="imgBeta">
-															<img width="10" height="8" align="absmiddle" src="/images/dui.gif"> 上传成功 
-															<a onclick="RemovePreview(this)" href="javascript:void(0)">
-																<img width="10" height="10" border="0" align="absmiddle" alt="删除这张图片" src="/images/laji.gif">
-															</a>
-														</span>
-														<div class="blank10"></div>
-													</li>
 												</ul>
 											</td>
 										</tr>
