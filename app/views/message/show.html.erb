@@ -55,9 +55,7 @@
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
-		<a href="/message/new?category=<%=@c.name%>" rel="nofollow" target="_blank">免费发布信息</a>
-		| <a href="/message/find_message" rel="nofollow" target="_blank">修改删除信息</a>
-		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
+		<%= render :partial=>'share/header' %>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
 	<% if !@pc %>
@@ -108,8 +106,13 @@
 			信息编号：<span id="adId"><%=@m.id%></span> &nbsp;
 			查看次数：<span id="counter"><%=@m.views_count%></span> &nbsp;
 			发布人IP：<%=@m.ip%> | 
+			<% if !@m.user_id.blank? && @m.user_id == login_user.id %>
+			<a href="/message/<%=@m.id%>/edit">修改</a> | 
+			<a href="/message/<%=@m.id%>/delete">删除</a> | 
+			<% else %>
 			<a href="/message/<%=@m.id%>/validate_message?rd_action=edit">修改</a> | 
 			<a href="/message/<%=@m.id%>/validate_message?rd_action=delete">删除</a> | 
+			<% end %>
 			<a href="/message/<%=@m.id%>/shuaxin" target="_blank">刷新</a> | 
 			<a href="/message/<%=@m.id%>/zhiding" target="_blank">置顶</a> | 
 			<a href="/message/<%=@m.id%>/tuiguang" target="_blank">定向推广</a> | 

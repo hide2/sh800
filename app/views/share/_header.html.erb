@@ -1,0 +1,12 @@
+<% if login? %>
+欢迎您，<a href="/user/<%=login_user.id%>"><%=login_user.login%></a> | 
+<% else %>
+<a href="/site/zhuce">注册</a> | <a href="/site/denglu">登录</a> | 
+<% end %>
+<a target="_blank" href="/message/new">免费发布信息</a> | 
+<% if login? %>
+<a target="_blank" href="/user/<%=login_user.id%>">修改删除信息</a>
+<% else %>
+<a target="_blank" href="/message/find_message">修改删除信息</a>
+<% end %>
+| <a target="_blank" href="/help.html">帮助</a>

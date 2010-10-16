@@ -81,12 +81,10 @@ CREATE TABLE `location` (
 -- create table user
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
-  `id` int(10) NOT NULL auto_increment,
+  `id` bigint(20) NOT NULL auto_increment,
   `login` varchar(255) NOT NULL,
-  `salt` varchar(40) NOT NULL,
-  `crypted_password` varchar(40) NOT NULL,
-  `email` varchar(40),
-  `phone` varchar(40),
+  `salt` varchar(255) NOT NULL,
+  `crypted_password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

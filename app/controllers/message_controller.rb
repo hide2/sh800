@@ -42,7 +42,7 @@ class MessageController < ApplicationController
 
   def edit
     @m = Message.find params[:id]
-    raise Exception if params[:token] != MD5.hexdigest(@m.password)
+    raise "Wrong password!" if !login? && params[:token] != MD5.hexdigest(@m.password) || login? && @m.user_id != login_user.id
     @c = Category.find(@m.category_id)
     @pc = Category.find(@c.parent_category_id)
   end
@@ -59,8 +59,8 @@ class MessageController < ApplicationController
     images_path = params[:images].join(Message::IMGS) if params["images"]
     _now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
     
-    if session[:user_id]
-      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :images_path=>images_path, :publish_time => _now, :created_at => _now, :user_id=>session[:user_id], :ip=>request.remote_ip)
+    if login?
+      m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :images_path=>images_path, :publish_time => _now, :created_at => _now, :user_id=>login_user.id, :ip=>request.remote_ip)
     else
       m = Message.create!(:parent_category_id=>params[:parent_category_id], :category_id=>params[:category_id], :city_id=>@ct.id, :area_id=>params[:area_id], :location_id=>params[:location_id], :title=>params[:title], :other_attrs => other_attrs, :content=>params[:content], :images_path=>images_path, :publish_time => _now, :created_at => _now, :password=>params[:password], :ip=>request.remote_ip)
     end
@@ -87,6 +87,15 @@ class MessageController < ApplicationController
     m.images_path = images_path
     m.save!
     redirect_to message_path(m)
+  end
+  
+  def delete
+    @m = Message.find params[:id]
+    raise "Wrong user!" if !login? || @m.user_id != login_user.id
+    @m.is_deleted = 1
+    @m.save!
+    redirect_to user_path(login_user)
+    flash[:deleted_message] = @m.title
   end
   
   def find_message

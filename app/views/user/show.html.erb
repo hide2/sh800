@@ -85,6 +85,13 @@
 	span.imgBeta{ display:block; background:#EEEEF0; font-size:12px; padding:2px 0 0 0; color:#5B5B68; margin:0 3px;
 	margin-top:-2px; border:1px solid #EEEEE7} #postTable{background:url(/images/jiantou.gif) no-repeat -500px 0;}
 	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute}
+	.error,.ok,.load{padding:5px 5px 5px 25px; color:#000}
+	.error{ border:1px solid #FF0000; background:#FEE9E1 url(http://static.baixing.net/images/css/global/error.gif) no-repeat 5px 6px;}
+	.ok{ border:1px solid #5EBF01; background: #E7FBC0 url(http://static.baixing.net/images/css/global/ok.gif) no-repeat 5px 6px;}
+	.input{padding:3px 2px 1px 2px; font-size:14px;border-top:1px solid #666666; border-left:1px solid #666666; border-bottom:1px solid #C2C2C2; border-right:1px solid #C2C2C2; background:#F5F5F5;}
+	.button{padding:5px; font-size:14px;} .hidden{ display:none} .show{display: block} .city{display:none;} #userInfo{float:left;margin:0;}
+	#manage{float:right;text-align:right;} #description{margin:4px 0;clear:both;} #list{clear:both;} td{font-size:14px;}
+	.msg{background:#FBFBFB url(http://static.baixing.net/images/koubei/xing_gb.gif) no-repeat 10px 15px;border:1px solid #E7E7E7; padding:10px;font-size:14px; color:red; margin-bottom:10px; padding-left:35px; margin-top:10px;}
 </style>
 
 <!-- header0 -->
@@ -93,7 +100,7 @@
 		<%= render :partial=>'share/header' %>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
-	&raquo; 修改删除信息
+	&raquo; <%=@user.login%> (<%=@user.id%>)
 	<div style="clear:both">
 	</div>
 </div>
@@ -101,29 +108,65 @@
 
 <!-- content0 -->
 <div id="container">
-	<div id="content">
-		<div style="font-size: 20px; margin: 10px 0 0 10px;">
-			<a href="/message/<%= @m.id %>"><%= @m.title %></a>
+	<div id="content" style="float:none;">
+		<table width="100%" style="border-bottom:1px solid #808080">
+			<tr>
+				<td>
+					<div id="userInfo">
+						<a href="/user/<%=@user.id%>">
+							<span style="font-size:18px;font-weight:bold"><%=@user.login%></span>
+						</a>
+					</div>
+					<% if login? && login_user.id == @user.id %>
+					<div id="manage">
+						<div style="font-size:12px;line-height:28px;">
+							余额0元
+							<a href="#" target="_blank" style="color:red">现在充值有惊喜！</a>
+							 | 
+							<a href="/user/<%=login_user.id%>/edit">修改密码</a>
+							 | 
+							<a href="/site/tuichu">退出登录</a>
+						</div>
+					</div>
+					<% end %>
+				</td>
+			</tr>
+		</table>
+		<% if login? && login_user.id == @user.id %>
+		<div id="vipInfo" style="clear:both;margin:8px 2px;">
+			您现在是普通用户，<a href="#" target="_blank">点击这里马上升级为VIP用户</a>，享受VIP专属特权！
 		</div>
-		<div style="border:1px solid #95D922;margin:10px;">
-			<form style="padding:5px 10px" action="" method="POST" autocomplete="off">
-				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
-				<% if @password_wrong %>
-				<div class="error">密码错误，请重新输入！</div>
+		<% end %>
+		<div class="datagrid block">
+			<h2 style="padding:2px 6px;">已发布的信息</h2>
+			<% if @ms.blank? %>
+			目前没有信息。
+			<% else %>
+			<table border="0" width="100%" cellspacing="2" cellpadding="0">
+				<% @ms.each do |m| %>
+				<tr>
+					<td width="50">
+						<nobr>
+						<span class="date"><%= m.publish_time.strftime("%m月%d日") %></span>
+						</nobr>
+					</td>
+					<td width="45%" style="font-size:14px;line-height:180%">
+						&nbsp;<a href="/message/<%=m.id%>" target="_blank"><%=m.title%></a>
+					</td>
+					<td style="font-size:12px;">
+						<% if login? && login_user.id == @user.id %>
+						<a href="/message/<%=m.id%>/delete">删除</a>
+						<% end %>
+					</td>
+				</tr>
 				<% end %>
-				<span class="title">请输入管理密码</span>
-				<br/>
-				<input type="password" name="password" class="input" value="" size="20" maxlength="20" autocomplete="off" />
-				<span style="color:#666">管理密码就是信息发布时的密码。</span>
-				<br/>
-				<button type="submit" class="button" style="padding:2px 10px;font-size:14px;">确 定</button>
-			</form>
+			</table>
+			<% end %>
 		</div>
 	</div>
-	<div style="clear:both;"></div>
 </div>
 <!-- content1 -->
 
 <%
-	@title = "修改删除信息 - " + SITE_TITLE
+	@title = @user.login + " (" + @user.id.to_s + ") - " + SITE_TITLE
 %>

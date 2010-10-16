@@ -84,7 +84,7 @@
 	span.red{color:red} /*beta*/ img.imgBorderBeta{padding:9px;background:#FFF;border:1px solid #EBEBEB;margin:2px;}
 	span.imgBeta{ display:block; background:#EEEEF0; font-size:12px; padding:2px 0 0 0; color:#5B5B68; margin:0 3px;
 	margin-top:-2px; border:1px solid #EEEEE7} #postTable{background:url(/images/jiantou.gif) no-repeat -500px 0;}
-	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute}
+	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute} td{font-size:14px;}
 </style>
 
 <!-- header0 -->
@@ -92,8 +92,8 @@
 	<span id="header_links" style="float:right;text-align:right">
 		<%= render :partial=>'share/header' %>
 	</span>
-	<a href="/"><%=@ct.name+SITE_TITLE%></a>
-	&raquo; 修改删除信息
+	<a href="/"><%=SITE_TITLE%></a>
+	&raquo; 登录
 	<div style="clear:both">
 	</div>
 </div>
@@ -102,28 +102,57 @@
 <!-- content0 -->
 <div id="container">
 	<div id="content">
-		<div style="font-size: 20px; margin: 10px 0 0 10px;">
-			<a href="/message/<%= @m.id %>"><%= @m.title %></a>
-		</div>
-		<div style="border:1px solid #95D922;margin:10px;">
-			<form style="padding:5px 10px" action="" method="POST" autocomplete="off">
-				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
-				<% if @password_wrong %>
-				<div class="error">密码错误，请重新输入！</div>
+		<br/>
+		<div class="block">
+			<h2>登录</h2>
+			<form method="POST" action="" id="dengluForm">
+				<% if request.referrer.include?(request.request_uri) && flash[:error] %>
+				<div style="text-align: left;" class="error" id="gaiMimaFeedback"><%=flash[:error]%></div>
 				<% end %>
-				<span class="title">请输入管理密码</span>
-				<br/>
-				<input type="password" name="password" class="input" value="" size="20" maxlength="20" autocomplete="off" />
-				<span style="color:#666">管理密码就是信息发布时的密码。</span>
-				<br/>
-				<button type="submit" class="button" style="padding:2px 10px;font-size:14px;">确 定</button>
+				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
+				<table width="500" border="0" cellpadding="2" cellspacing="2" style="margin-top: 10px">
+					<tr>
+						<td align="right" valign="top">
+							用户名：
+						</td>
+						<td>
+							<input type="text" maxlength="20" name="login" id="login" size="20" class="input" value="" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">
+							密码：
+						</td>
+						<td>
+							<input type="password" maxlength="20" name="password" id="password" size="20" class="input" value="" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">&nbsp;</td>
+						<td>
+							<input type="submit" id="tijiao" value="登录" style="padding:4px;font-size:14px;"/>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">&nbsp;</td>
+						<td>
+							如果您没有帐号，<a href="/site/zhuce">点此注册</a>！
+						</td>
+						<td></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
+
+	<div id="sidebar">
+	</div>
+
 	<div style="clear:both;"></div>
 </div>
 <!-- content1 -->
 
 <%
-	@title = "修改删除信息 - " + SITE_TITLE
+	@title = "登录 - " + SITE_TITLE
 %>

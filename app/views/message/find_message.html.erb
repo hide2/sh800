@@ -90,9 +90,7 @@
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
-		<a href="/message/new" rel="nofollow" target="_blank">免费发布信息</a>
-		| <a href="/message/find_message" rel="nofollow" target="_blank">修改删除信息</a>
-		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
+		<%= render :partial=>'share/header' %>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
 	&raquo; 修改删除信息

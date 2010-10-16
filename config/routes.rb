@@ -3,6 +3,9 @@ Sh800::Application.routes.draw do
   root :to => "site#index"
   
   match 'site/image_upload' => 'site#image_upload'
+  match 'site/zhuce' => 'site#zhuce'
+  match 'site/denglu' => 'site#denglu'
+  match 'site/tuichu' => 'site#tuichu'
   
   resources :city do
     collection do
@@ -16,8 +19,11 @@ Sh800::Application.routes.draw do
     end
     member do
       get 'validate_message'
+      get 'delete'
       post 'validate_message'
     end
+  end
+  resources :user do
   end
   # The priority is based upon order of creation:
   # first created -> highest priority.

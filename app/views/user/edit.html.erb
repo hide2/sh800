@@ -84,16 +84,35 @@
 	span.red{color:red} /*beta*/ img.imgBorderBeta{padding:9px;background:#FFF;border:1px solid #EBEBEB;margin:2px;}
 	span.imgBeta{ display:block; background:#EEEEF0; font-size:12px; padding:2px 0 0 0; color:#5B5B68; margin:0 3px;
 	margin-top:-2px; border:1px solid #EEEEE7} #postTable{background:url(/images/jiantou.gif) no-repeat -500px 0;}
-	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute}
+	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute} td{font-size:14px;}
 </style>
+
+
+<script>
+function checkForm(v)  {
+	if(v.password.value.length < 4){
+		alert('密码的长度要在4个字符以上！');
+		return false;
+	}
+	if(v.password_confirm.value == ''){
+		alert('请再输一次你的密码！');
+		return false;
+	}
+	if(v.password_confirm.value != v.password.value){
+		alert('两次输入的密码不相同，请重新输入！');
+		return false;
+	}
+	return true;
+}
+</script>
 
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
 		<%= render :partial=>'share/header' %>
 	</span>
-	<a href="/"><%=@ct.name+SITE_TITLE%></a>
-	&raquo; 修改删除信息
+	<a href="/"><%=SITE_TITLE%></a>
+	&raquo; 修改密码
 	<div style="clear:both">
 	</div>
 </div>
@@ -102,28 +121,51 @@
 <!-- content0 -->
 <div id="container">
 	<div id="content">
-		<div style="font-size: 20px; margin: 10px 0 0 10px;">
-			<a href="/message/<%= @m.id %>"><%= @m.title %></a>
-		</div>
-		<div style="border:1px solid #95D922;margin:10px;">
-			<form style="padding:5px 10px" action="" method="POST" autocomplete="off">
-				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
-				<% if @password_wrong %>
-				<div class="error">密码错误，请重新输入！</div>
+		<br/>
+		<div class="block">
+			<h2 style="background: white">修改密码</h2>
+			<form method="POST" action="/user/<%=@user.id%>" id="zhuceForm" onsubmit="return checkForm(this)">
+				<% if request.referrer.include?(request.request_uri) && flash[:notice] %>
+				<div style="text-align: left;" class="ok" id="gaiMimaFeedback"><%=flash[:notice]%></div>
 				<% end %>
-				<span class="title">请输入管理密码</span>
-				<br/>
-				<input type="password" name="password" class="input" value="" size="20" maxlength="20" autocomplete="off" />
-				<span style="color:#666">管理密码就是信息发布时的密码。</span>
-				<br/>
-				<button type="submit" class="button" style="padding:2px 10px;font-size:14px;">确 定</button>
+				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
+				<input type="hidden" name="_method" value="put" />
+				<table width="500" border="0" cellpadding="2" cellspacing="2" style="margin-top: 10px">
+					<tr>
+						<td align="right" valign="top">
+							输入新密码：
+						</td>
+						<td>
+							<input type="password" maxlength="20" name="password" id="password" size="20" class="input" value="" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">
+							再次输入新密码：
+						</td>
+						<td>
+							<input type="password" maxlength="20" name="password_confirm" id="password_confirm" size="20" class="input" value="" />
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">&nbsp;</td>
+						<td>
+							<input type="submit" id="tijiao" value="修改密码" style="padding:4px;font-size:14px;"/>
+						</td>
+						<td></td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
+
+	<div id="sidebar">
+	</div>
+
 	<div style="clear:both;"></div>
 </div>
 <!-- content1 -->
 
 <%
-	@title = "修改删除信息 - " + SITE_TITLE
+	@title = "修改密码 - " + SITE_TITLE
 %>

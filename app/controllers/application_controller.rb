@@ -4,6 +4,15 @@ class ApplicationController < ActionController::Base
   before_filter :redirect_by_ip
   before_filter :set_charset
   before_filter :configure_charsets
+  helper_method :login?, :login_user
+  
+  def login?
+    session[:user_id]
+  end
+  
+  def login_user
+    User.find session[:user_id]
+  end
   
   def redirect_by_ip
     return if request.fullpath == "/city/list"
@@ -33,4 +42,5 @@ class ApplicationController < ActionController::Base
       ActiveRecord::Base.connection.execute 'SET NAMES UTF8'
     end
   end
+  
 end

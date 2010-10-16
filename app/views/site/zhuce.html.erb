@@ -84,16 +84,48 @@
 	span.red{color:red} /*beta*/ img.imgBorderBeta{padding:9px;background:#FFF;border:1px solid #EBEBEB;margin:2px;}
 	span.imgBeta{ display:block; background:#EEEEF0; font-size:12px; padding:2px 0 0 0; color:#5B5B68; margin:0 3px;
 	margin-top:-2px; border:1px solid #EEEEE7} #postTable{background:url(/images/jiantou.gif) no-repeat -500px 0;}
-	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute}
+	.red{color:#FF0000} form{padding:0; margin:0} #denglu{ top:5px; right:15px;position:absolute} td{font-size:14px;}
 </style>
+
+
+<script>
+function checkForm(v)  {
+	var uv = v.login.value;
+	if(uv == ''){
+		alert('用户名不能为空！');
+		return false;
+	}
+	if(uv.length < 4){
+		alert('用户名的长度要在4个字符以上！');
+		return false;
+	}
+	if(v.password.value == ''){
+		alert('密码不能为空！');
+		return false;
+	}
+	if(v.password.value.length < 4){
+		alert('密码的长度要在4个字符以上！');
+		return false;
+	}
+	if(v.password_confirm.value == ''){
+		alert('请再输一次你的密码！');
+		return false;
+	}
+	if(v.password_confirm.value != v.password.value){
+		alert('两次输入的密码不相同，请重新输入！');
+		return false;
+	}
+	return true;
+}
+</script>
 
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
 		<%= render :partial=>'share/header' %>
 	</span>
-	<a href="/"><%=@ct.name+SITE_TITLE%></a>
-	&raquo; 修改删除信息
+	<a href="/"><%=SITE_TITLE%></a>
+	&raquo; 用户注册
 	<div style="clear:both">
 	</div>
 </div>
@@ -102,28 +134,75 @@
 <!-- content0 -->
 <div id="container">
 	<div id="content">
-		<div style="font-size: 20px; margin: 10px 0 0 10px;">
-			<a href="/message/<%= @m.id %>"><%= @m.title %></a>
-		</div>
-		<div style="border:1px solid #95D922;margin:10px;">
-			<form style="padding:5px 10px" action="" method="POST" autocomplete="off">
-				<input type="hidden" name="<%=request_forgery_protection_token%>" value="<%=form_authenticity_token%>" />
-				<% if @password_wrong %>
-				<div class="error">密码错误，请重新输入！</div>
+		<h1 style="font-size:20px;font-weight:bold;margin-bottom:10px;">用户注册</h1>
+		<p style="margin-bottom:20px;"><b><%=SITE_TITLE%>可以不注册<a href="/message/new">直接发布信息</a>！</b>那么，注册以后有什么不一样的地方？<br />
+			<ul style="margin-top:-16px;">
+				<li>注册后不用每次发布信息都输入密码，查找和管理已发布信息更方便</li>
+				<li>注册用户可以先充值再使用付费服务，充值赠送刷新抵用券</li>
+				<li>注册用户可以升级成为VIP用户，获得更多收费服务折扣（<a href="#">VIP用户特权</a>）</li>
+			</ul>
+		</p>
+		<div class="block">
+			<h2>马上注册</h2>
+			<form method="post" action="" id="zhuceForm" onsubmit="return checkForm(this)">
+				<% if request.referrer.include?(request.request_uri) && flash[:error] %>
+				<div style="color: red; margin: 8px;"><%= flash[:error] %></div>
 				<% end %>
-				<span class="title">请输入管理密码</span>
-				<br/>
-				<input type="password" name="password" class="input" value="" size="20" maxlength="20" autocomplete="off" />
-				<span style="color:#666">管理密码就是信息发布时的密码。</span>
-				<br/>
-				<button type="submit" class="button" style="padding:2px 10px;font-size:14px;">确 定</button>
+				<table width="500" border="0" cellpadding="2" cellspacing="2">
+					<tr>
+						<td width="120" align="right" valign="top">
+							<span class="red"> * </span> 用户名：
+						</td>
+						<td width="160">
+							<input type="text" maxlength="20" name="login" id="login" size="20" class="input" value="" />
+						</td>
+						<td>
+							4个字符以上
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">
+							<span class="red"> * </span> 登录密码：
+						</td>
+						<td>
+							<input type="password" maxlength="20" name="password" id="password" size="20" class="input" value="" />
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">
+							<span class="red"> * </span> 重复登录密码：
+						</td>
+						<td>
+							<input type="password" maxlength="20" name="password_confirm" id="password_confirm" size="20" class="input" value="" />
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top">&nbsp;</td>
+						<td>
+							<input type="submit" id="tijiao" value="注 册" style="padding:4px;font-size:14px;"/>
+						</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"></td>
+						<td colspan="2">
+							注册即代表您已阅读并同意<a href="/user.html" target="_blank">《<%=SITE_TITLE%>用户协议》</a>
+						</td>
+					</tr>
+				</table>
 			</form>
 		</div>
 	</div>
+
+	<div id="sidebar">
+	</div>
+
 	<div style="clear:both;"></div>
 </div>
 <!-- content1 -->
 
 <%
-	@title = "修改删除信息 - " + SITE_TITLE
+	@title = "用户注册 - " + SITE_TITLE
 %>

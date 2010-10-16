@@ -87,7 +87,7 @@ function formValidation() {
 					_e = true;
 				}
 			} else if(_id == "setPassword") {
-				if($(this).find('input').val() == "" || $(this).find('input').val().length < 8) {
+				if($(this).find('input').val() == "" || $(this).find('input').val().length < 4) {
 					_e = true;
 				}
 			} else if(_id == "setPasswordConfirm") {
@@ -229,9 +229,7 @@ $(document).ready(function() {
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float:right;text-align:right">
-		<a href="/message/new" rel="nofollow" target="_blank">免费发布信息</a>
-		| <a href="/message/find_message" rel="nofollow" target="_blank">修改删除信息</a>
-		| <a href="/help.html" rel="nofollow" target="_blank">帮助</a>
+		<%= render :partial=>'share/header' %>
 	</span>
 	<a href="/"><%=@ct.name+SITE_TITLE%></a>
 	&raquo; 修改信息
@@ -247,7 +245,7 @@ $(document).ready(function() {
 		<div id="postTable">
 			<div style="padding-left: 124px;">
 				推荐：我们建议您注册成为<%=SITE_TITLE%>的注册用户，这样发布管理信息更方便。
-				<a target="_blank" href="/zhuce">点击这里注册</a>
+				<a target="_blank" href="/site/zhuce">点击这里注册</a>
 			</div>
 			<!-- post form0 -->
 			<form id="postForm" method="POST" action="/message/<%=@m.id%>" onsubmit="return formValidation();">
@@ -1323,8 +1321,9 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- input images1 -->
+					<% if !login? %>
 					<!-- input password0 -->
-					<div class="item required" id="setPassword" validationMsg="请设置一个大于等于8位的密码并牢记（密码用来修改和删除信息）！">
+					<div class="item required" id="setPassword" validationMsg="请设置一个4位以上的密码并牢记（密码用来修改和删除信息）！">
 						<table>
 							<tr>
 								<td valign="top" class="attribute">
@@ -1357,6 +1356,7 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- input password confirm1 -->
+					<% end %>
 					<!-- input submit0 -->
 					<div class="item">
 						<table>
@@ -1366,7 +1366,7 @@ $(document).ready(function() {
 									<table border="0" cellspacing="0" cellpadding="0">
 										<tr>
 											<td style="vertical-align:middle">
-												<button type="submit" class="button">立即免费发布</button>
+												<button type="submit" class="button">修改信息</button>
 											</td>
 											<td style="vertical-align:middle">
 												<span style="font-size:12px;">
@@ -1390,5 +1390,5 @@ $(document).ready(function() {
 <!-- content1 -->
 
 <%
-	@title = "免费发布信息(无需注册) - " + SITE_TITLE
+	@title = "修改信息 - " + SITE_TITLE
 %>

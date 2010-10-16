@@ -31,13 +31,23 @@
 <div id="header" class="nohist">
 	<span id="header_links" style="float: right; text-align: right;">
 		<span id="loginBox">
-			<a href="/zhuce">注册</a> | <a href="/denglu">登录</a>
+			<% if login? %>
+			欢迎您，<a href="/user/<%=login_user.id%>"><%=login_user.login%></a>
+			<% else %>
+			<a href="/site/zhuce">注册</a> | <a href="/site/denglu">登录</a>
+			<% end %>
 			<br/>
 		</span>
 		<span style="font-size: 20px; line-height: 1.5;">
 			<strong><a target="_blank" href="/message/new">免费发布信息</a></strong>
-				| 
-			<strong><a target="_blank" href="/message/find_message">修改删除信息</a></strong>
+			 | 
+			<strong>
+				<% if login? %>
+				<a target="_blank" href="/user/<%=login_user.id%>">修改删除信息</a>
+				<% else %>
+				<a target="_blank" href="/message/find_message">修改删除信息</a>
+				<% end %>
+			</strong>
 		</span>
 	</span>
 	<a href="/" id="logo"><img src="/images/logo.gif" alt="<%= SITE_TITLE %>"></a>
