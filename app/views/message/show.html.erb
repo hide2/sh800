@@ -71,7 +71,16 @@
 <div id="container">
 	<!-- subheader0 -->
 	<div id="subheader" style="border-bottom:1px solid #C5EC83;">
-		<h1><img src="/images/site/<%=@m.site%>.ico"> <%=@m.title%></h1>
+		<h1>
+			<% if !@m.site_url.blank? %>
+			<a href="<%=@m.site_url%>">
+			<% end %>
+			<img src="/images/site/<%=@m.site%>.ico">
+			<% if !@m.site_url.blank? %>
+			</a>
+			<% end %> 
+			<%=@m.title%>
+		</h1>
 	</div>
 	<!-- subheader1 -->
 	<div id="sidebar"></div>
@@ -88,14 +97,14 @@
 			所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
 			<br/>
 			<% @m.other_attrs.split(Message::PS).each do |t| %>
-				<%=t.split(Message::KVS)[0]%>：<%=t.split(Message::KVS)[1]%>
+				<%=t.split(Message::KVS)[0]%>：<%=raw whitelist t.split(Message::KVS)[1]%>
 				<br/>
 			<% end if @m.other_attrs%>
 			
 			<br/>
 			<%= raw whitelist @m.content %>
 			<br/>
-			联系我时请说明是在<%= SITE_TITLE %>看到的，谢谢！
+			联系我时请说明是在 <a href="http://<%=SITE_DOMAIN%>"><%=SITE_TITLE%></a> 看到的，谢谢！
 		</p>
 		
 		<% @m.images_path.split(Message::IMGS).each do |i| %>

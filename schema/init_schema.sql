@@ -18,6 +18,7 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
   `id` bigint(20) NOT NULL auto_increment,
   `site` varchar(20) NOT NULL default '800',
+  `site_url` varchar(255),
   `user_id` bigint(20),
   `password` varchar(255),
   `parent_category_id` int(10) NOT NULL,

@@ -1,6 +1,6 @@
 module ApplicationHelper
 
-  ALLOWED_TAGS = %w(br) unless defined?(ALLOWED_TAGS)
+  ALLOWED_TAGS = %w(a br) unless defined?(ALLOWED_TAGS)
 
   def whitelist(html)
     html.gsub!(/\r\n/, '<br/>')

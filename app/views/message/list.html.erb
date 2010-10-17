@@ -124,7 +124,18 @@
 				<li class="head"><%=@ct.name+@c.name%></li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
 				<% @ms.each do |m| %>
-				<li><img src="/images/site/<%=m.site%>.ico"> <%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a><% if !m.images_path.blank? %><i>图</i><% end %></li>
+				<li>
+					<% if !m.site_url.blank? %>
+					<a href="<%=m.site_url%>">
+					<% end %>
+					<img src="/images/site/<%=m.site%>.ico">
+					<% if !m.site_url.blank? %>
+					</a>
+					<% end %> 
+					<%= m.publish_time.strftime("%m月%d日") %>
+					<a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a>
+					<% if !m.images_path.blank? %><i>图</i><% end %>
+				</li>
 				<% end %>
 			</ol>
 			<div class="line"></div>
