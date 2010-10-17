@@ -136,6 +136,7 @@
 					</li>
 						<% @ms.each do |m| %>
 						<li>
+							<img src="/images/site/<%=m.site%>.ico"> 
 							<span class="date"> <%= m.publish_time.strftime("%m月%d日") %> </span>
 							<a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a>
 						</li>

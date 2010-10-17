@@ -27,6 +27,15 @@
 	.datagrid .line{overflow:hidden;height:1px;background:#C5EC83;}
 </style>
 
+<script>
+function beforeSearch() {
+	if($('select[name=category]').val() == 'root') {
+		alert('请选择类目！');
+		return false;
+	}
+}
+</script>
+
 <!-- header0 -->
 <div id="header" class="nohist">
 	<span id="header_links" style="float: right; text-align: right;">
@@ -200,7 +209,7 @@
 		</table>
 		<!-- categories1 -->
 		<!-- search0 -->
-		<form id="search" method="get" action="/search" style="float: right; padding: 0pt 5px; text-align: right;">
+		<form id="search" method="get" action="/message/list" style="float: right; padding: 0pt 5px; text-align: right;" onsubmit="return beforeSearch();">
 			<input size="18" name="keyword" type="text">
 			<select name="category">
 				<option selected="selected" value="root">请选择类目</option>

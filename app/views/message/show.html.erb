@@ -71,7 +71,7 @@
 <div id="container">
 	<!-- subheader0 -->
 	<div id="subheader" style="border-bottom:1px solid #C5EC83;">
-		<h1><%=@m.title%></h1>
+		<h1><img src="/images/site/<%=@m.site%>.ico"> <%=@m.title%></h1>
 	</div>
 	<!-- subheader1 -->
 	<div id="sidebar"></div>
@@ -106,10 +106,10 @@
 			信息编号：<span id="adId"><%=@m.id%></span> &nbsp;
 			查看次数：<span id="counter"><%=@m.views_count%></span> &nbsp;
 			发布人IP：<%=@m.ip%> | 
-			<% if !@m.user_id.blank? && @m.user_id == login_user.id %>
+			<% if !@m.user_id.blank? && login? && @m.user_id == login_user.id %>
 			<a href="/message/<%=@m.id%>/edit">修改</a> | 
 			<a href="/message/<%=@m.id%>/delete">删除</a> | 
-			<% else %>
+			<% elsif @m.site == '800' %>
 			<a href="/message/<%=@m.id%>/validate_message?rd_action=edit">修改</a> | 
 			<a href="/message/<%=@m.id%>/validate_message?rd_action=delete">删除</a> | 
 			<% end %>

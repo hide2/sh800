@@ -108,8 +108,10 @@
 				</table>
 				<%	end %>
 				<!-- area1 -->
-				<input type="text" name="keyword" id="query" alt="搜索: 请输入关键字" size="50" class="tips hasTips" value=""/>
-				<input name="category" type="hidden" value="jiaoyou"/> <input type="submit" value="搜索" class="submit"/>
+				<input type="text" name="keyword" id="keyword" alt="搜索: 请输入关键字" size="50" class="tips hasTips" value="<%=params[:keyword]%>"/>
+				<input name="category" type="hidden" value="<%=@c.slug%>"/>
+				<input name="area" type="hidden" value="<%= @a ? @a.slug : ''%>"/> 
+				<input type="submit" value="搜索" class="submit"/>
 				<br/>
 			</form>
 		</div>
@@ -122,7 +124,7 @@
 				<li class="head"><%=@ct.name+@c.name%></li>
 				<a href="/zhiding.html" target="_blank" style="padding-right:5px;float:right;font-size:12px;">置顶让信息效果更好(10元起)！</a>
 				<% @ms.each do |m| %>
-				<li><%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a><% if !m.images_path.blank? %><i>图</i><% end %></li>
+				<li><img src="/images/site/<%=m.site%>.ico"> <%= m.publish_time.strftime("%m月%d日") %><a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a><% if !m.images_path.blank? %><i>图</i><% end %></li>
 				<% end %>
 			</ol>
 			<div class="line"></div>
