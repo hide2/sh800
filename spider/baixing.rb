@@ -71,8 +71,8 @@ Category.find_by_sql("select * from category where parent_category_id is null").
     category_id = ca.id
     category_name = ca.slug
     
-    # Run each 2 hour (31 cities)
-    cities_capital = City.find_by_sql("select * from city where is_capital = 1").map{|c| [c.id, c.slug]}
+    # Run each 1 hour (4 cities)
+    cities_capital = City.find_by_sql("select * from city where province_id = 1").map{|c| [c.id, c.slug]}
     cities_capital.each do |c|
       city_id = c[0]
       city_name = c[1]
@@ -87,8 +87,11 @@ Category.find_by_sql("select * from category where parent_category_id is null").
   end
 end
 
+# Run each 2 hour (27 cities)
+# cities_capital = City.find_by_sql("select * from city where province_id != 1 and is_capital = 1").map{|c| [c.id, c.slug]}
+
 # Run each 4 hour (65 cities)
 # cities_premium = City.find_by_sql("select distinct c.id, c.slug from city c, area a where a.city_id = c.id and c.is_capital = 0").map{|c| [c.id, c.slug]}
 
-# Run each 6 hour (251 cities)
-# cities_non_premium = City.find_by_sql("select * from city c where c.id not in(select distinct a.city_id from area a)").map{|c| [c.id, c.slug]}
+# Not run (251 cities)
+# cities_small = City.find_by_sql("select * from city c where c.id not in(select distinct a.city_id from area a)").map{|c| [c.id, c.slug]}
