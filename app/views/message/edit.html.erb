@@ -39,7 +39,7 @@ function chooseSubCategory(pid, sid, m, pc, c) {
 			}
 		}
 	});
-	if(c == 'ershoujiaoche' || c == 'ershouhuoche' || c == 'ershoufang' || c == 'xiezilouchushou' || c == 'xiezilouchuzu' || c == 'jingyingzhuanrang') {
+	if(c == 'ershouqiche' || c == 'ershoukache' || c == 'ershoufang' || c == 'shoufang' || c == 'shangpu' || c == 'jingyingzhuanrang') {
 		if($('#setPrice').find('input').val() == "元") {
 			$('#setPrice').find('input').val("万元");
 		}
@@ -381,7 +381,7 @@ $(document).ready(function() {
 					<!-- input location1 -->
 					<% end %>
 					<!-- input jutididian0 -->
-					<div class="item" parent_item_for="ershou_cheliang_fang_chongwu" item_for="yiqilvyou" style="display: none">
+					<div class="item" parent_item_for="ershou_cheliang_fang_chongwuleimu" item_for="daqiu" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">具体地点：</td>
@@ -393,7 +393,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input jutididian1 -->
 					<!-- input gongsimingcheng0 -->
-					<div class="item" parent_item_for="zhaopin" item_for="cuxiao_mote_qitajianzhi" style="display: none">
+					<div class="item" parent_item_for="gongzuo" item_for="cuxiao_mote_qitajianzhi" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">公司名称：</td>
@@ -405,7 +405,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input gongsimingcheng1 -->
 					<!-- input gongsidizhi0 -->
-					<div class="item" parent_item_for="zhaopin" item_for="mote_qitajianzhi" style="display: none">
+					<div class="item" parent_item_for="gongzuo" item_for="mote_qitajianzhi" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">公司地址：</td>
@@ -664,8 +664,8 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- input quantype1 -->
-					<!-- input ershoujiaochetype0 -->
-					<div class="item" item_for="ershoujiaoche" style="display: none">
+					<!-- input ershouqichetype0 -->
+					<div class="item" item_for="ershouqiche" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">品牌：</td>
@@ -690,9 +690,9 @@ $(document).ready(function() {
 					      </tr>
 						</table>
 					</div>
-					<!-- input ershoujiaochetype1 -->
-					<!-- input ershouhuochetype0 -->
-					<div class="item" item_for="ershouhuoche" style="display: none">
+					<!-- input ershouqichetype1 -->
+					<!-- input ershoukachetype0 -->
+					<div class="item" item_for="ershoukache" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">类型：</td>
@@ -705,7 +705,7 @@ $(document).ready(function() {
 					      </tr>
 						</table>
 					</div>
-					<!-- input ershouhuochetype1 -->
+					<!-- input ershoukachetype1 -->
 					<!-- input zhengzutype0 -->
 					<div class="item" item_for="zhengzu_ershoufang" style="display: none">
 						<table>
@@ -980,8 +980,8 @@ $(document).ready(function() {
 						</table>
 					</div>
 					<!-- input mote1 -->
-					<!-- input yiqilvyou0 -->
-					<div class="item" item_for="yiqilvyou" style="display: none">
+					<!-- input daqiu0 -->
+					<div class="item" item_for="daqiu" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">类型：</td>
@@ -1002,7 +1002,7 @@ $(document).ready(function() {
 					      </tr>
 						</table>
 					</div>
-					<!-- input yiqilvyou1 -->
+					<!-- input daqiu1 -->
 					<!-- input jiaxiaofuwu0 -->
 					<div class="item" item_for="jiaxiaofuwu" style="display: none">
 						<table>
@@ -1175,7 +1175,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input chengse1 -->
 					<!-- input jiage0 -->
-					<div class="item" id="setPrice" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche_zhengzu_hezu_ershoufang_xiezilouchushou_xiezilouchuzu_jingyingzhuanrang_duanzu_chongwuchushou_chongwuyongpin_chongwupeizhong" style="display: none">
+					<div class="item" id="setPrice" item_for="diannao_shouji_shoujihaoma_zhaoxiangji_shuma_dianqi_jiaju_riyongping_fushi_xiemao_yinger_huazhuangping_shu_yueqi_yundongqicai_shoucang_quan_huochepiao_qitazhuanrang_ershouqiche_ershoukache_ershoumotuoche_ershoudiandongche_ershouzixingche_zhengzu_hezu_ershoufang_shoufang_shangpu_jingyingzhuanrang_duanzu_chongwujiaoyi_chongwuyongpin_chongwupeizhong" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">价格：</td>
@@ -1187,7 +1187,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input jiage1 -->
 					<!-- input gongzi0 -->
-					<div class="item" id="setGongzi" parent_item_for="zhaopin_jianzhi_qiuzhi" style="display: none">
+					<div class="item" id="setGongzi" parent_item_for="gongzuo_jianzhi_qiuzhi" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">工资：</td>
@@ -1199,7 +1199,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input gongzi1 -->
 					<!-- input mianji0 -->
-					<div class="item" id="setMianji" item_for="ershoufang_xiezilouchushou_xiezilouchuzu_jingyingzhuanrang" style="display: none">
+					<div class="item" id="setMianji" item_for="ershoufang_shoufang_shangpu_jingyingzhuanrang" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">面积：</td>
@@ -1229,7 +1229,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input nianling1 -->
 					<!-- input faburen0 -->
-					<div class="item required" id="setFaburen" validationMsg="请选择发布人！" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_fushi_xiemao_yinger_huazhuangping_yueqi_yundongqicai_shoucang_qitazhuanrang_ershoujiaoche_ershouhuoche_ershoumotuoche_ershoudiandongche_ershouzixingche_chongwuchushou_chongwuyongpin" style="display: none">
+					<div class="item required" id="setFaburen" validationMsg="请选择发布人！" item_for="diannao_shouji_zhaoxiangji_shuma_dianqi_jiaju_fushi_xiemao_yinger_huazhuangping_yueqi_yundongqicai_shoucang_qitazhuanrang_ershouqiche_ershoukache_ershoumotuoche_ershoudiandongche_ershouzixingche_chongwujiaoyi_chongwuyongpin" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">
@@ -1249,7 +1249,7 @@ $(document).ready(function() {
 					</div>
 					<!-- input faburen1 -->
 					<!-- input faburen4fang0 -->
-					<div class="item required" id="setFaburen4fang" validationMsg="请选择发布者！" item_for="zhengzu_hezu_ershoufang_xiezilouchushou_xiezilouchuzu_jingyingzhuanrang" style="display: none">
+					<div class="item required" id="setFaburen4fang" validationMsg="请选择发布者！" item_for="zhengzu_hezu_ershoufang_shoufang_shangpu_jingyingzhuanrang" style="display: none">
 						<table>
 							<tr>
 								<td class="attribute">

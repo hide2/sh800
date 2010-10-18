@@ -3,11 +3,11 @@ insert into `category`(`id`,`parent_category_id`,`name`,`slug`) values
 (1,NULL,'物品交易','ershou'),
 (2,NULL,'二手车买卖','cheliang'),
 (3,NULL,'房屋租售','fang'),
-(4,NULL,'宠物','chongwu'),
-(5,NULL,'招聘','zhaopin'),
+(4,NULL,'宠物','chongwuleimu'),
+(5,NULL,'招聘','gongzuo'),
 (6,NULL,'兼职','jianzhi'),
 (7,NULL,'求职','qiuzhi'),
-(8,NULL,'交友活动','jiaoyou'),
+(8,NULL,'交友活动','huodong'),
 (9,NULL,'生活服务','fuwu');
 
 -- init sub-category 物品交易
@@ -33,12 +33,12 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (1,'打折卡/票券/积分','quan'),
 (1,'火车票/汽车票','huochepiao'),
 (1,'其他转让物品','qitazhuanrang'),
-(1,'求购','wupinqiugou');
+(1,'求购','qiumai');
 
 -- init sub-category 二手车买卖
 insert into `category`(`parent_category_id`,`name`,`slug`) values
-(2,'二手轿车','ershoujiaoche'),
-(2,'二手货车/面包车','ershouhuoche'),
+(2,'二手轿车','ershouqiche'),
+(2,'二手货车/面包车','ershoukache'),
 (2,'二手摩托车/燃气车','ershoumotuoche'),
 (2,'二手电动车','ershoudiandongche'),
 (2,'二手自行车','ershouzixingche'),
@@ -49,16 +49,16 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (3,'房屋出租(非合租)','zhengzu'),
 (3,'房屋合租','hezu'),
 (3,'二手房出售','ershoufang'),
-(3,'写字楼出售','xiezilouchushou'),
-(3,'写字楼出租','xiezilouchuzu'),
+(3,'写字楼出售','shoufang'),
+(3,'写字楼出租','shangpu'),
 (3,'店铺/公司转让','jingyingzhuanrang'),
 (3,'家庭旅馆/日租/短租','duanzu'),
 (3,'求租/求购','qiufang');
 
 -- init sub-category 宠物
 insert into `category`(`parent_category_id`,`name`,`slug`) values
-(4,'宠物出售','chongwuchushou'),
-(4,'宠物免费赠送','chongwuzengsong'),
+(4,'宠物出售','chongwujiaoyi'),
+(4,'宠物免费赠送','chongwulingyang'),
 (4,'宠物用品/食品','chongwuyongpin'),
 (4,'宠物服务/配种','chongwupeizhong'),
 (4,'求购','chongwuqiugou');
@@ -95,20 +95,20 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 insert into `category`(`parent_category_id`,`name`,`slug`) values
 (7,'司机求职','sijiqiuzhi'),
 (7,'兼职求职','jianzhiqiuzhi'),
-(7,'其他求职','qitaqiuzhi');
+(7,'其他求职','qiuzhijianli');
 
 -- init sub-category 交友活动
 insert into `category`(`parent_category_id`,`name`,`slug`) values
 (8,'女找男','nvzhaonan'),
 (8,'男找女','nanzhaonv'),
 (8,'征婚','zhenghun'),
-(8,'一起运动/旅游','yiqilvyou'),
+(8,'一起运动/旅游','daqiu'),
 (8,'拼车/顺风车','pinche'),
 (8,'寻人/寻物','xunrenqishi');
 
 -- init sub-category 生活服务
 insert into `category`(`parent_category_id`,`name`,`slug`) values
-(9,'汽车出租','qichechuzu'),
+(9,'汽车出租','gerenzuche'),
 (9,'驾校/陪驾/代驾','jiaxiaofuwu'),
 (9,'验车/上牌年检/保险','qichefuwu'),
 (9,'家政服务','baomu'),
