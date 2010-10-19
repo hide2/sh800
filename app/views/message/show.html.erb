@@ -74,11 +74,11 @@
 		<h1>
 			<% if !@m.site_url.blank? %>
 			<a href="<%=@m.site_url%>">
+			<% else %>
+			<a href="/message/<%=@m.id%>">
 			<% end %>
 			<img src="/images/site/<%=@m.site%>.ico">
-			<% if !@m.site_url.blank? %>
 			</a>
-			<% end %> 
 			<%=@m.title%>
 		</h1>
 	</div>
@@ -90,11 +90,19 @@
 			&#155; <a href="javascript:void(alert('谢谢举报！'))">举报：这是骗子信息</a><br/>
 			&#187; <a href="javascript:void(alert('谢谢举报！'))">举报其他问题</a>
 		</div>
-	
+		<%
+			if @m.site == 'baixing'
+				require 'open-uri'
+				m_url = @m.site_url
+				m_page = Nokogiri::HTML(open(m_url))
+				content = m_page.at_css("div#content p")
+		%>
+		<%= raw content.to_html.gsub('联系我时请说明是在百姓网看到的，谢谢！', '').gsub('联系时，别忘了询问百姓网用户有什么特别优惠。','') %>
+		<% else %>
 		<p>
 			发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
 			<br/>
-			所在地：<%=@m.area_id ? '，'+Area.find(@m.area_id).name : ''%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
+			所在地：<%=@m.area_id ? Area.find(@m.area_id).name : ''%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
 			<br/>
 			<% @m.other_attrs.split(Message::PS).each do |t| %>
 				<%=t.split(Message::KVS)[0]%>：<%=raw whitelist t.split(Message::KVS)[1]%>
@@ -103,9 +111,9 @@
 			
 			<br/>
 			<%= raw whitelist @m.content %>
-			<br/>
-			联系我时请说明是在 <a href="http://<%=SITE_DOMAIN%>"><%=SITE_TITLE%></a> 看到的，谢谢！
 		</p>
+		<% end %>
+		<p>联系我时请说明是在 <a href="http://<%=SITE_DOMAIN%>"><%=SITE_TITLE%></a> 看到的，谢谢！</p>
 		
 		<% @m.images_path.split(Message::IMGS).each do |i| %>
 		<img src="<%=i.gsub('.','_c.')%>" >

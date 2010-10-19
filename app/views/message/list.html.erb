@@ -127,11 +127,11 @@
 				<li>
 					<% if !m.site_url.blank? %>
 					<a href="<%=m.site_url%>">
+					<% else %>
+					<a href="/message/<%=m.id%>">
 					<% end %>
 					<img src="/images/site/<%=m.site%>.ico">
-					<% if !m.site_url.blank? %>
 					</a>
-					<% end %> 
 					<%= m.publish_time.strftime("%m月%d日") %>
 					<a target="_blank" href="/message/<%= m.id %>"><%= m.title %></a>
 					<% if !m.images_path.blank? %><i>图</i><% end %>

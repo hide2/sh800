@@ -31,3 +31,4 @@ gem 'ruby-mysql'
 # end
 
 gem 'rmagick'
+gem 'nokogiri'
