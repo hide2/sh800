@@ -127,6 +127,8 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (9,'招商加盟/代理','jiameng'),
 (9,'其他服务','qitafuwu');
 
+update `category` set priority = 2 where slug in ('diannao','shouji','dianqi','ershouqiche','zhengzu','hezu','ershoufang','dianyuan','xiaoshou','qiuzhijianli','gerenzuche','baomu','zhuangxiu','weixiu','banjia','qitafuwu');
+
 -- init province
 insert into `province`(`id`,`name`) values
 (1,'直辖市'),
@@ -655,7 +657,7 @@ insert into `area`(`city_id`,`name`,`slug`) values
 -- init area 抚顺
 insert into `area`(`city_id`,`name`,`slug`) values
 (7,'新抚','xinfu'),
-(7,'东州','dongzhou'),
+(7,'东洲','dongzhou'),
 (7,'望花','wanghua'),
 (7,'顺城','shuncheng'),
 (7,'抚顺县','fushunxian'),
@@ -781,7 +783,7 @@ insert into `area`(`city_id`,`name`,`slug`) values
 (36,'都江堰','dujiangyan'),
 (36,'大邑县','dayixian'),
 (36,'彭州市','pengzhoushi'),
-(36,'浦江县','pujiangxian'),
+(36,'蒲江县','pujiangxian'),
 (36,'双流县','shuangliuxian'),
 (36,'新津县','xinjinxian'),
 (36,'崇州市','chongzhoushi'),

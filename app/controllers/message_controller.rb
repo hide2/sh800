@@ -34,7 +34,6 @@ class MessageController < ApplicationController
     if @c.parent_category_id
       @pc = Category.find(@c.parent_category_id)
     end
-    @a = Area.find(@m.area_id)
   end
   
   def new

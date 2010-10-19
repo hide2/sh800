@@ -94,7 +94,7 @@
 		<p>
 			发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
 			<br/>
-			所在地：<%=@a.name%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
+			所在地：<%=@m.area_id ? '，'+Area.find(@m.area_id).name : ''%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
 			<br/>
 			<% @m.other_attrs.split(Message::PS).each do |t| %>
 				<%=t.split(Message::KVS)[0]%>：<%=raw whitelist t.split(Message::KVS)[1]%>

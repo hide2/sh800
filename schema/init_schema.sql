@@ -10,6 +10,7 @@ CREATE TABLE `category` (
   `parent_category_id` int(10),
   `name` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
+  `priority` int(10) NOT NULL default 1,
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -24,7 +25,7 @@ CREATE TABLE `message` (
   `parent_category_id` int(10) NOT NULL,
   `category_id` int(10) NOT NULL,
   `city_id` int(10) NOT NULL,
-  `area_id` int(10) NOT NULL,
+  `area_id` int(10),
   `location_id` int(10),
   `title` varchar(255) NOT NULL,
   `publish_time` datetime NOT NULL,
