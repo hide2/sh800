@@ -27,4 +27,14 @@ module ApplicationHelper
     html
   end
   
+  require 'open-uri'
+  
+  def random_ip
+    rand(99).to_s + "." + rand(99).to_s + "." + rand(99).to_s + "." + rand(99).to_s
+  end
+  
+  def fake_ip_open(url)
+    open(url, "X_FORWARDED_FOR" => random_ip)
+  end
+  
 end

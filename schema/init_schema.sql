@@ -43,6 +43,18 @@ CREATE TABLE `message` (
   PRIMARY KEY  (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- create table messages_count
+DROP TABLE IF EXISTS `messages_count`;
+CREATE TABLE `messages_count` (
+  `id` bigint(20) NOT NULL auto_increment,
+  `category_id` int(10) NOT NULL,
+  `city_id` int(10) NOT NULL,
+  `area_id` int(10),
+  `messages_count` int(10) NOT NULL default 0,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- create table province
 DROP TABLE IF EXISTS `province`;
 CREATE TABLE `province` (

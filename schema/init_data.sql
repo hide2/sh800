@@ -127,7 +127,9 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 (9,'招商加盟/代理','jiameng'),
 (9,'其他服务','qitafuwu');
 
-update `category` set priority = 2 where slug in ('diannao','shouji','dianqi','ershouqiche','zhengzu','hezu','ershoufang','dianyuan','xiaoshou','qiuzhijianli','gerenzuche','baomu','zhuangxiu','weixiu','banjia','qitafuwu');
+update category set priority  = 1;
+update category set priority = 2 where id in (1061,1080,1002,1085,1003,1016,1049,1050,1083,1064,1048,1024,1034,1053,1068,1067,1033,1076,1046,1047,1017,1072,1052,1011,1045,1018,1057,1051,1009,1022,1063);
+update category set priority = 3 where id in (1025,1010,1055,1005,1043,1004,1023,1054,1014,1069,1056,1073,1013,1030,1015,1012,1062,1059,1036,1037,1038,1060,1020,1008,1070,1065);
 
 -- init province
 insert into `province`(`id`,`name`) values

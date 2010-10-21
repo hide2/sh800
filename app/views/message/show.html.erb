@@ -92,9 +92,8 @@
 		</div>
 		<%
 			if @m.site == 'baixing'
-				require 'open-uri'
 				m_url = @m.site_url
-				m_page = Nokogiri::HTML(open(m_url))
+				m_page = Nokogiri::HTML(fake_ip_open(m_url))
 				content = m_page.at_css("div#content p")
 		%>
 		<%= raw content.to_html.gsub('联系我时请说明是在百姓网看到的，谢谢！', '').gsub('联系时，别忘了询问百姓网用户有什么特别优惠。','') %>
