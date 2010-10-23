@@ -5,6 +5,8 @@ require 'open-uri'
 ENV['RAILS_ENV'] = 'production'
 require File.dirname(__FILE__)+'/../config/environment.rb'
 
+SITE = "baixing"
+
 def random_ip
   rand(99).to_s + "." + rand(99).to_s + "." + rand(99).to_s + "." + rand(99).to_s
 end
@@ -14,47 +16,54 @@ def fake_ip_open(url)
 end
 
 def parse_messages(parent_category_id, category_id, category_slug, city_id, city_slug, area_id=nil, area_slug=nil)
-  p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " ============================================================"
-  p city_id.to_s + "_" + city_slug + "_" + parent_category_id.to_s + "_" + category_id.to_s + "_" + category_slug
-  list_url = "http://#{city_slug}.baixing.com/#{category_slug}/"
-  list_url += "?areaName=#{area_slug}" if area_id && area_slug
-  p list_url
-  list_page = Nokogiri::HTML(fake_ip_open(list_url))
-  lis = list_page.css("div#content ol li")
-  ms = []
-  lis.each do |li|
-    a = li.at_css("a")
-    next if !a
-    pub_time = li.to_html
-    today = Date.today.month.to_s + '月'+ Date.today.day.to_s + '日'
-    next if !(pub_time =~ /\d+月\d+日/)
-    break if !(pub_time =~ /#{today}/)
-    ms << a
-  end
-  ms.each do |a|
-    message_url = "http://#{city_slug}.baixing.com/#{category_slug}/" + a.attr('href')
-    message_title = a.text
-    _m = Message.find_by_site_url(message_url)
-    if _m
-      next
+  begin
+    p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " ============================================================"
+    p city_id.to_s + "_" + city_slug + "_" + parent_category_id.to_s + "_" + category_id.to_s + "_" + category_slug
+    list_url = "http://#{city_slug}.#{SITE}.com/#{category_slug}/"
+    list_url += "?areaName=#{area_slug}" if area_id && area_slug
+    p list_url
+    list_page = Nokogiri::HTML(fake_ip_open(list_url))
+    lis = list_page.css("div#content ol li")
+    ms = []
+    lis.each do |li|
+      a = li.at_css("a")
+      next if !a
+      pub_time = li.to_html
+      today = Date.today.month.to_s + '月'+ Date.today.day.to_s + '日'
+      next if !(pub_time =~ /\d+月\d+日/)
+      break if !(pub_time =~ /#{today}/)
+      ms << a
     end
-    p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " " + message_title
-    begin
-      m = Message.new
-      m.site = 'baixing'
-      m.site_url = message_url
-      m.parent_category_id = parent_category_id
-      m.category_id = category_id
-      m.city_id = city_id
-      m.area_id = area_id
-      m.title = message_title
-      now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
-      m.publish_time = now
-      m.created_at = now
-      m.save!
-    rescue Exception => e
-      p e.message
+    dup_count = 0
+    ms.each do |a|
+      message_url = "http://#{city_slug}.#{SITE}.com/#{category_slug}/" + a.attr('href')
+      message_title = a.text
+      _m = Message.find_by_site_url(message_url)
+      if _m
+        dup_count += 1
+        break if dup_count >= 10
+        next
+      end
+      p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " " + message_title
+      begin
+        m = Message.new
+        m.site = SITE
+        m.site_url = message_url
+        m.parent_category_id = parent_category_id
+        m.category_id = category_id
+        m.city_id = city_id
+        m.area_id = area_id
+        m.title = message_title
+        now = Time.now.strftime("%Y-%m-%d %H:%M:%S")
+        m.publish_time = now
+        m.created_at = now
+        m.save!
+      rescue Exception => e
+        p e.message
+      end
     end
+  rescue Exception => e
+    p e.message
   end
 end
 

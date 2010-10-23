@@ -90,34 +90,12 @@
 			&#155; <a href="javascript:void(alert('谢谢举报！'))">举报：这是骗子信息</a><br/>
 			&#187; <a href="javascript:void(alert('谢谢举报！'))">举报其他问题</a>
 		</div>
-		<%
-			if @m.site == 'baixing'
-				begin
-					m_url = @m.site_url
-					m_page = Nokogiri::HTML(fake_ip_open(m_url))
-					content = m_page.at_css("div#content p")
-				rescue Exception
-		%>
-		<h2>该消息已被删除!</h2>
-		<%
-				else
-		%>
-		<%= raw content.to_html.gsub('联系我时请说明是在百姓网看到的，谢谢！', '').gsub('联系时，别忘了询问百姓网用户有什么特别优惠。','') %>
-		<%		end %>
-		<% else %>
-		<p>
-			发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>
-			<br/>
-			所在地：<%=@m.area_id ? Area.find(@m.area_id).name : ''%><%=@m.location_id ? '，'+Location.find(@m.location_id).name : ''%>
-			<br/>
-			<% @m.other_attrs.split(Message::PS).each do |t| %>
-				<%=t.split(Message::KVS)[0]%>：<%=raw whitelist t.split(Message::KVS)[1]%>
-				<br/>
-			<% end if @m.other_attrs%>
-			
-			<br/>
-			<%= raw whitelist @m.content %>
-		</p>
+		<% if @m.site == 'baixing' %>
+		<%= render :partial=>'message/show_baixing' %>
+		<% elsif @m.site == 'ganji' %>
+		<%= render :partial=>'message/show_ganji' %>
+		<% elsif @m.site == '800' %>
+		<%= render :partial=>'message/show_800' %>
 		<% end %>
 		<p>联系我时请说明是在 <a href="http://<%=SITE_DOMAIN%>"><%=SITE_TITLE%></a> 看到的，谢谢！</p>
 		

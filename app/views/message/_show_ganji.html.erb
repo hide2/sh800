@@ -1,0 +1,27 @@
+<%
+	begin
+		m_url = @m.site_url
+		m_page = Nokogiri::HTML(fake_ip_open(m_url))
+		ps = m_page.css("div.body_left p")
+	rescue Exception => e
+%>
+<h2>该消息已被发布人删除!</h2>
+<% else %>
+<p>
+	<%
+		ps.each do |p|
+			if p.attr("class") != "f12"
+	%>
+	<%= raw p.to_html.gsub('联系我时请说是赶集网看到的...', '').gsub('给发布人留言','').gsub('短信发送至手机','').gsub('href','xxx') %>
+	
+	<%
+			end
+			if p.to_html.include?("所在地")
+	%>
+	<br/>
+	<%
+			end
+		end
+	%>
+</p>
+<%	end %>

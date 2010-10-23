@@ -106,7 +106,7 @@ module QQWry
   end
 
   class QQWryFile
-    def initialize(filename = "#{RAILS_ROOT}/vendor/plugins/ruby-qqwry/lib/qqwry.dat")
+    def initialize(filename = "#{Rails.root.to_s}/vendor/plugins/ruby-qqwry/lib/qqwry.dat")
       @filename = filename
     end
 

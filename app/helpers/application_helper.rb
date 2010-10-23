@@ -34,7 +34,7 @@ module ApplicationHelper
   end
   
   def fake_ip_open(url)
-    open(url, "X_FORWARDED_FOR" => random_ip)
+    open(url, "X_FORWARDED_FOR" => random_ip, "USER_AGENT" => "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; zh-CN; rv:1.9.2.11) Gecko/20101012 Firefox/3.6.11")
   end
   
 end

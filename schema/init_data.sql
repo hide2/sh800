@@ -99,8 +99,8 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 
 -- init sub-category 交友活动
 insert into `category`(`parent_category_id`,`name`,`slug`) values
-(8,'女找男','nvzhaonan'),
-(8,'男找女','nanzhaonv'),
+(8,'美女','nvzhaonan'),
+(8,'帅哥','nanzhaonv'),
 (8,'征婚','zhenghun'),
 (8,'一起运动/旅游','daqiu'),
 (8,'拼车/顺风车','pinche'),
@@ -129,7 +129,7 @@ insert into `category`(`parent_category_id`,`name`,`slug`) values
 
 update category set priority  = 1;
 update category set priority = 2 where id in (1061,1080,1002,1085,1003,1016,1049,1050,1083,1064,1048,1024,1034,1053,1068,1067,1033,1076,1046,1047,1017,1072,1052,1011,1045,1018,1057,1051,1009,1022,1063);
-update category set priority = 3 where id in (1025,1010,1055,1005,1043,1004,1023,1054,1014,1069,1056,1073,1013,1030,1015,1012,1062,1059,1036,1037,1038,1060,1020,1008,1070,1065);
+update category set priority = 3 where id in (1025,1010,1055,1005,1043,1004,1023,1054,1014,1069,1056,1073,1013,1030,1015,1012,1062,1059,1036,1037,1038,1060,1020,1008,1070,1065,1026,1039);
 
 -- init province
 insert into `province`(`id`,`name`) values
@@ -314,7 +314,7 @@ insert into `city`(`id`,`province_id`,`name`,`slug`,`is_capital`) values
 (148,12,'盐城','yancheng',0),
 (149,12,'连云港','lianyungang',0),
 (150,12,'宿迁','suqian',0),
-(151,12,'泰州','taizhou',0),
+(151,12,'泰州','tz',0),
 (152,12,'镇江','zhenjiang',0),
 (153,13,'济南','jinan',1),
 (154,13,'青岛','qingdao',0),

@@ -6,12 +6,12 @@ class ImageUtil
   def self.save_image(img)
     img_name = Time.now.to_i.to_s + Time.now.tv_usec.to_s + ".jpg"
     directory = IMAGE_PATH + Date.today.strftime("%Y-%m-%d")
-    abs_directory = RAILS_ROOT + "/public" + directory
+    abs_directory = Rails.root.to_s + "/public" + directory
     if !File.exist?(abs_directory)
       Dir.mkdir abs_directory
     end
     img_path = File.join(directory, img_name)
-    abs_path = RAILS_ROOT + "/public" + img_path
+    abs_path = Rails.root.to_s + "/public" + img_path
     File.open(abs_path, "wb") { |f| f.write(img.read) }
     generate_thumbnail(abs_path)
     generate_composite(abs_path)
