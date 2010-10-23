@@ -73,7 +73,7 @@
 	<div id="subheader" style="border-bottom:1px solid #C5EC83;">
 		<h1>
 			<% if !@m.site_url.blank? %>
-			<a href="<%=@m.site_url%>">
+			<a target="_blank" href="<%=@m.site_url%>">
 			<% else %>
 			<a href="/message/<%=@m.id%>">
 			<% end %>
@@ -92,11 +92,18 @@
 		</div>
 		<%
 			if @m.site == 'baixing'
-				m_url = @m.site_url
-				m_page = Nokogiri::HTML(fake_ip_open(m_url))
-				content = m_page.at_css("div#content p")
+				begin
+					m_url = @m.site_url
+					m_page = Nokogiri::HTML(fake_ip_open(m_url))
+					content = m_page.at_css("div#content p")
+				rescue Exception
+		%>
+		<h2>该消息已被删除!</h2>
+		<%
+				else
 		%>
 		<%= raw content.to_html.gsub('联系我时请说明是在百姓网看到的，谢谢！', '').gsub('联系时，别忘了询问百姓网用户有什么特别优惠。','') %>
+		<%		end %>
 		<% else %>
 		<p>
 			发布时间：<%= @m.publish_time.strftime("%m月%d日%H:%M") %>

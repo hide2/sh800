@@ -126,7 +126,7 @@
 				<% @ms.each do |m| %>
 				<li>
 					<% if !m.site_url.blank? %>
-					<a href="<%=m.site_url%>">
+					<a target="_blank" href="<%=m.site_url%>">
 					<% else %>
 					<a href="/message/<%=m.id%>">
 					<% end %>
