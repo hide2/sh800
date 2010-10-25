@@ -5,7 +5,7 @@ require 'open-uri'
 ENV['RAILS_ENV'] = 'production'
 require File.dirname(__FILE__)+'/../config/environment.rb'
 
-SITE = "ganji"
+SITE = "58"
 
 CITY_SLUG = {
   "beijing" => "bj",
@@ -16,125 +16,125 @@ CITY_SLUG = {
   "dalian" => "dl",
   "fushun" => "fushun",
   "jinzhou" => "jinzhou",
-  "anshan" => "anshan",
-  "huludao" => "huludao",
-  "fuxin" => "fuxin",
-  "yingkou" => "yingkou",
+  "anshan" => "as",
+  "huludao" => "hld",
+  "fuxin" => "fx",
+  "yingkou" => "yk",
   "wuhan" => "wh",
-  "yichang" => "yichang",
+  "yichang" => "yc",
   "chengdu" => "cd",
   "mianyang" => "mianyang",
   "xian" => "xa",
   "shijiazhuang" => "sjz",
-  "tangshan" => "tangshan",
-  "baoding" => "baoding",
+  "tangshan" => "ts",
+  "baoding" => "bd",
   "cangzhou" => "cangzhou",
-  "langfang" => "langfang",
-  "xingtai" => "xingtai",
-  "handan" => "handan",
-  "qinhuangdao" => "qinhuangdao",
-  "hengshui" => "hengshui",
+  "langfang" => "lf",
+  "xingtai" => "xt",
+  "handan" => "hd",
+  "qinhuangdao" => "qhd",
+  "hengshui" => "hs",
   "taiyuan" => "ty",
   "yuncheng" => "yuncheng",
-  "jinzhong" => "jinzhong",
+  "jinzhong" => "jz",
   "zhengzhou" => "zz",
   "luoyang" => "luoyang",
   "jiaozuo" => "jiaozuo",
-  "xinxiang" => "xinxiang",
-  "nanyang" => "nanyang",
+  "xinxiang" => "xx",
+  "nanyang" => "ny",
   "changchun" => "cc",
-  "jilin" => "jilin",
+  "jilin" => "jl",
   "haerbin" => "hrb",
-  "daqing" => "daqing",
-  "qiqihaer" => "qiqihaer",
-  "jiamusi" => "jiamusi",
+  "daqing" => "dq",
+  "qiqihaer" => "qqhr",
+  "jiamusi" => "jms",
   "jixi" => "jixi",
-  "shuangyashan" => "shuangyashan",
-  "huhehaote" => "nmg",
-  "baotou" => "baotou",
+  "shuangyashan" => "sys",
+  "huhehaote" => "hu",
+  "baotou" => "bt",
   "nanjing" => "nj",
   "suzhou" => "su",
   "wuxi" => "wx",
-  "xuzhou" => "xuzhou",
-  "changzhou" => "changzhou",
-  "huaian" => "huaian",
-  "yangzhou" => "yangzhou",
-  "nantong" => "nantong",
+  "xuzhou" => "xz",
+  "changzhou" => "cz",
+  "huaian" => "ha",
+  "yangzhou" => "yz",
+  "nantong" => "nt",
   "yancheng" => "yancheng",
-  "lianyungang" => "lianyungang",
+  "lianyungang" => "lyg",
   "suqian" => "suqian",
-  "tz" => "jstaizhou",
+  "tz" => "taizhou",
   "jinan" => "jn",
   "qingdao" => "qd",
-  "zibo" => "zibo",
-  "weifang" => "weifang",
-  "yantai" => "yantai",
+  "zibo" => "zb",
+  "weifang" => "wf",
+  "yantai" => "yt",
   "linyi" => "linyi",
   "jining" => "jining",
-  "binzhou" => "binzhou",
-  "dezhou" => "dezhou",
-  "dongying" => "dongying",
+  "binzhou" => "bz",
+  "dezhou" => "dz",
+  "dongying" => "dy",
   "zaozhuang" => "zaozhuang",
-  "liaocheng" => "liaocheng",
-  "taian" => "taian",
+  "liaocheng" => "lc",
+  "taian" => "ta",
   "rizhao" => "rizhao",
   "heze" => "heze",
   "hefei" => "hf",
   "hangzhou" => "hz",
   "ningbo" => "nb",
-  "jiaxing" => "jiaxiing",
-  "wenzhou" => "wenzhou",
+  "jiaxing" => "jx",
+  "wenzhou" => "wz",
   "fuzhou" => "fz",
   "xiamen" => "xm",
-  "quanzhou" => "quanzhou",
+  "quanzhou" => "qz",
   "changsha" => "cs",
   "guangzhou" => "gz",
   "shenzhen" => "sz",
   "dongguan" => "dg",
-  "zhuhai" => "zhuhai",
-  "zhongshan" => "zhongshan",
-  "foshan" => "foshan",
+  "zhuhai" => "zh",
+  "zhongshan" => "zs",
+  "foshan" => "fs",
   "nanning" => "nn",
   "nanchang" => "nc",
   "guiyang" => "gy",
   "kunming" => "km",
-  "lasa" => "xz",
-  "haikou" => "hn",
+  "lasa" => "lasa",
+  "haikou" => "haikou",
   "lanzhou" => "lz",
-  "yinchuan" => "yc",
+  "yinchuan" => "yinchuan",
   "xining" => "xn",
   "wulumuqi" => "xj"
 }
 
 CATEGORY_SLUG = {
-  "diannao" => "ershoubijibendiannao",
+  "diannao" => "diannao",
   "dianqi" => "jiadian",
-  "jiaju" => "jiaju",
-  "qitazhuanrang" => "qitawupin",
+  "jiaju" => "ershoujiaju",
+  "qitazhuanrang" => "xxxxxx",
   "ershouqiche" => "ershouche",
-  "zhengzu" => "fang1",
-  "hezu" => "fang3",
-  "ershoufang" => "fang5",
-  "shangpu" => "fang8",
-  "jingyingzhuanrang" => "fang6",
-  "chongwujiaoyi" => "gou",
-  "dianyuan" => "zpyingyeyuan",
-  "gongren" => "zpjigongyibangongren",
-  "wenmi" => "zpwenmiwenyuan",
-  "xiaoshou" => "zpshichangyingxiao",
+  "zhengzu" => "zufang",
+  "hezu" => "hezu",
+  "ershoufang" => "ershoufang",
+  "shangpu" => "zhaozu",
+  "jingyingzhuanrang" => "shangpu",
+  "chongwujiaoyi" => "dog",
+  "dianyuan" => "yingyeyuan",
+  "gongren" => "zpshengchankaifa",
+  "wenmi" => "wenziluru",
+  "xiaoshou" => "yewu",
   "qitazhaopin" => "xxxxxx",
-  "nanzhaonv" => "jiaoyou7",
+  "nanzhaonv" => "nvyou",
   "gerenzuche" => "zuche",
-  "baomu" => "jiazheng",
-  "jineng" => "zhiyepeixun",
+  "baomu" => "baomu",
+  "jineng" => "zhiyepeix",
   "zhuangxiu" => "zhuangxiu",
-  "weixiu" => "jiadianweixiu",
-  "jiajiaofuwu" => "jiajiao",
-  "siyi" => "liyihunqing",
+  "weixiu" => "weixiu",
+  "jiajiaofuwu" => "fudao",
+  "siyi" => "huizhan",
   "banjia" => "banjia",
-  "sheji" => "sheji",
-  "daibanzhuce" => "gongshangdaili",
-  "jiameng" => "zhaoshangjiameng",
+  "sheji" => "pingmian",
+  "daibanzhuce" => "zhuce",
+  "jiameng" => "zhaoshang",
   "qitafuwu" => "xxxxxx"
 }
 
@@ -147,25 +147,18 @@ def fake_ip_open(url)
 end
 
 def parse_messages(parent_category_id, category_id, category_slug, city_id, city_slug, area_id=nil, area_slug=nil)
+  area_slug = "tongzhouqu" if area_slug == "tongzhou"
   begin
     p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " ============================================================"
     p city_id.to_s + "_" + city_slug + "_" + parent_category_id.to_s + "_" + category_id.to_s + "_" + category_slug
     list_url = "http://#{city_slug}.#{SITE}.com/#{category_slug}/"
-    list_url += "#{area_slug}" if area_id && area_slug
+    list_url = list_url = "http://#{city_slug}.#{SITE}.com/#{area_slug}/#{category_slug}/" if area_id && area_slug
     p list_url
-    list_page = Nokogiri::HTML(fake_ip_open(list_url))
+    list_page = Nokogiri::HTML `curl #{list_url}`
     ms = []
-    lis1 = list_page.css("div#content div.list dl")
+    lis1 = list_page.css("table#infolist tr")
     if lis1.size > 0
       lis1.each do |li|
-        a = li.at_css("a[target=_blank]")
-        next if !a || a.text.size <= 12
-        ms << a
-      end
-    end
-    lis2 = list_page.css("div.wp div.list p")
-    if lis2.size > 0
-        lis2.each do |li|
         a = li.at_css("a[target=_blank]")
         next if !a || a.text.size <= 12
         ms << a
@@ -174,7 +167,8 @@ def parse_messages(parent_category_id, category_id, category_slug, city_id, city
     dup_count = 0
     ms_count = 0
     ms.each do |a|
-      message_url = "http://#{city_slug}.#{SITE}.com" + a.attr('href')
+      message_url = a.attr('href')
+      next if message_url.include?("google.com") || !message_url.include?("58.com")
       message_title = a.text.gsub("\r\n", "").strip
       _m = Message.find_by_site_url(message_url)
       if _m

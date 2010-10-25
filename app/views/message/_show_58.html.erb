@@ -1,0 +1,60 @@
+<%
+	begin
+		m_url = @m.site_url
+		m_page = Nokogiri::HTML(fake_ip_open(m_url))
+	rescue Exception => e
+%>
+<h2>该消息已被发布人删除!</h2>
+<% else %>
+<p>
+	<%
+		lis = m_page.css("ul.info li")
+		lis.each do |li|
+			if li.attr("class") != "operate"
+	%>
+	<%= raw li.to_html.gsub('href','xxx') %>
+	<%
+			end
+		end if lis.size > 0
+		detail = m_page.at_css("div.content div.conleft")
+		if detail
+	%>
+	<br/>
+	<%= raw detail.to_html.gsub('-- 该信息来自58手机版(wap.58.com)发布','').gsub('联系我时请说明是在58同城看到的，谢谢！','') %>
+	<%
+		end
+	%>
+	<p>
+	联系方式：
+	<%
+		contacts = m_page.css("ul.userinfo li")
+		contacts.each do |c|
+			if c.attr("class") != "n"
+				if c.to_html.include?("联系电话")
+					phone_a = c.at_css("span.belong a")
+					if phone_a
+						phone_url = phone_a.attr("href")
+						phone_page = Nokogiri::HTML(fake_ip_open(phone_url))
+						phone_number = phone_page.at_css("input#mobile").attr("value")
+	%>
+	<li>
+		<i>联系电话：</i>
+		<%= phone_number %>
+	</li>
+	<%
+					else
+	%>
+	<%= raw c.to_html %>
+	<%
+					end
+				else
+	%>
+	<%= raw c.to_html %>
+	<%
+				end
+			end
+		end 
+	%>
+	</p>
+</p>
+<%	end %>

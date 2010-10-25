@@ -35,6 +35,7 @@ def parse_messages(parent_category_id, category_id, category_slug, city_id, city
       ms << a
     end
     dup_count = 0
+    ms_count = 0
     ms.each do |a|
       message_url = "http://#{city_slug}.#{SITE}.com/#{category_slug}/" + a.attr('href')
       message_title = a.text
@@ -44,6 +45,8 @@ def parse_messages(parent_category_id, category_id, category_slug, city_id, city
         break if dup_count >= 10
         next
       end
+      ms_count += 1
+      break if ms_count >= 10
       p Time.now.strftime('%Y-%m-%d %H:%M:%S') + " " + message_title
       begin
         m = Message.new

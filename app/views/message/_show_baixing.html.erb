@@ -2,10 +2,10 @@
 	begin
 		m_url = @m.site_url
 		m_page = Nokogiri::HTML(fake_ip_open(m_url))
-		content = m_page.at_css("div#content p")
 	rescue Exception => e
 %>
 <h2>该消息已被发布人删除!</h2>
 <% else %>
+<% content = m_page.at_css("div#content p") %>
 <%= raw content.to_html.gsub('联系我时请说明是在百姓网看到的，谢谢！', '').gsub('联系时，别忘了询问百姓网用户有什么特别优惠。','') %>
 <%	end %>
